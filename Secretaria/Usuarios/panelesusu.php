@@ -13,6 +13,7 @@
               <li class="tab col s3"><a href="#test2">Modificar Socio</a></li>
               <li class="tab col s3"><a href="#test3">Eliminar Socio</a></li>
               <li class="tab col s3"><a href="#test4">Generar Nueva Contraseña</a></li>
+              <li class="tab col s3"><a href="#test5">Registro Historico</a></li>
             </ul>
           </div>
           <!--  PRIMER PANEL (AFILIACION SOCIO) -->
@@ -46,7 +47,29 @@
               ?> 
           </div>
 
+          <!--  QUINTO PANEL (REGISTRO USUARIO HISTORICO) -->
+          <div id="test5" class="col s12">
+            <br>
+              <?php
+                include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Secretaria/Usuarios/historico.php";
+              ?> 
+            <br>
+            <div id="historia_afi">
+              
+            </div>
+          </div>
+
         </div>       
       </div>           
     </div>  
 </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    </div>
+  </div>

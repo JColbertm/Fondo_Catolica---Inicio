@@ -19,6 +19,57 @@
           obtenerSolicitud();
           listar();
           listar2();
+
+          $('#historico').on('click', function(){
+            var historia =  '<div class="row">'+
+                              '<div class="col s12 m12">'+
+                                '<div class="card">'+
+                                  '<div class="card-content">'+
+                                    '<div class="row">'+
+                                      '<form class="col s12">'+
+                                        '<div class="row">'+
+                                          '<div class="input-field col s6">'+
+                                            '<input placeholder="Oscar Paz Garcia" id="last_name" type="text" class="validate">'+
+                                            '<label>Nombre y Apellido</label>'+
+                                          '</div>'+
+                                          '<div class="input-field col s6">'+
+                                            '<input value="5633233" id="last_name" type="text" class="validate">'+
+                                            '<label>CI</label>'+
+                                          '</div>'+
+                                        '</div>'+
+                                        '<div class="row">'+
+                                          '<div class="input-field col s6">'+
+                                            '<input placeholder="12/04/2016" id=" type="text" class="validate">'+
+                                            '<label>Fecha Afiliacion</label>'+
+                                          '</div>'+
+                                          '<div class="input-field col s6">'+
+                                            '<input placeholder="ASDSA12412ASD" id="password" type="text" class="validate">'+
+                                            '<label>Nueva Contraseña</label>'+
+                                          '</div>'+
+                                        '</div>'+
+                                      '</form>'+
+                                    '</div>'+
+                                    '<div class="row">'+
+                                      '<div class="col offset-m9">'+
+                                        '<button class="waves-effect waves-light modal-trigger btn" href="#modal1" type="button"><i class="fa fa-check"></i>Finalizar</button>'
+                                      '</div>'+
+                                    '</div>'+ 
+                                  '</div>'+
+                                '</div>'+ 
+                              '</div>'+
+                            '</div>'+
+
+                            '<div id="modal1" class="modal modal-fixed-footer">'+
+                              '<div class="modal-content">'+
+                                '<h4>Modal Header</h4>'+
+                                '<p>A bunch of text</p>'+
+                              '</div>'+
+                              '<div class="modal-footer">'+
+                                '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>'
+                              '</div>'+
+                            '</div>';
+            $('#historia_afi').html(historia);
+          });
           
     	});
         function obtenerSolicitud(){
