@@ -14,6 +14,10 @@
           $(".button-collapse").sideNav();
           $('select').material_select();
           $('.crearAfiliado').on('click', crearAfiliado);
+          $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+          });
 
           $('#test2').find('#modAfiliado').on('click',modificarAfiliado);
           obtenerSolicitud();
@@ -23,43 +27,60 @@
           $('#historico').on('click', function(){
             var historia =  '<div class="row">'+
                               '<div class="col s12 m12">'+
-                                '<div class="card">'+
+                                '<div class="card">'+                                
                                   '<div class="card-content">'+
                                     '<div class="row">'+
-                                      '<form class="col s12">'+
-                                        '<div class="row">'+
-                                          '<div class="input-field col s6">'+
-                                            '<input placeholder="Oscar Paz Garcia" id="last_name" type="text" class="validate">'+
-                                            '<label>Nombre y Apellido</label>'+
-                                          '</div>'+
-                                          '<div class="input-field col s6">'+
-                                            '<input value="5633233" id="last_name" type="text" class="validate">'+
-                                            '<label>CI</label>'+
-                                          '</div>'+
-                                        '</div>'+
-                                        '<div class="row">'+
-                                          '<div class="input-field col s6">'+
-                                            '<input placeholder="12/04/2016" id=" type="text" class="validate">'+
-                                            '<label>Fecha Afiliacion</label>'+
-                                          '</div>'+
-                                          '<div class="input-field col s6">'+
-                                            '<input placeholder="ASDSA12412ASD" id="password" type="text" class="validate">'+
-                                            '<label>Nueva Contraseña</label>'+
-                                          '</div>'+
-                                        '</div>'+
-                                      '</form>'+
+                                      '<center><h4>Registro de Movimiento</h4></center>'+
                                     '</div>'+
                                     '<div class="row">'+
-                                      '<div class="col offset-m9">'+
-                                        '<button class="waves-effect waves-light modal-trigger btn" href="#modal1" type="button"><i class="fa fa-check"></i>Finalizar</button>'
+                                      '<div class=" col s6">'+
+                                        '<label><i class="fa fa-user" aria-hidden="true"></i> Nombre:</label>'+
+                                        '<input readonly value="Juan Perez Molina" type="text">'+
                                       '</div>'+
-                                    '</div>'+ 
-                                  '</div>'+
-                                '</div>'+ 
+                                      '<div class="col s6">'+
+                                        '<label><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de Afiliacion:</label>'+
+                                        '<input type="text" readonly>'+
+                                      '</div>'+
+                                    '</div>'+
+                                    '<div class="row">'+
+                                      '<div class="input-field col s6">'+
+                                        '<input type="text" class="validate" required>'+
+                                        '<label><i class="fa fa-money" aria-hidden="true"></i> Total Ganado:</label>'+
+                                      '</div>'+
+                                      '<div class="input-field col s6">'+
+                                        '<input type="text" class="validate" required>'+
+                                        '<label><i class="fa fa-money" aria-hidden="true"></i> Liquido Pagable:</label>'+
+                                      '</div>'+                                      
+                                    '</div>'+
+                                    '<div class="row">'+
+                                      '<div class="input-field col s6">'+
+                                        '<input type="text" class="validate" required>'+
+                                        '<label><i class="fa fa-money" aria-hidden="true"></i> Monto Aporte:</label>'+
+                                      '</div>'+
+                                      '<div class="col s6">'+
+                                        '<div class="col s3">'+
+                                          '<label><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de Afiliacion:</label>'+
+                                        '</div>'+
+                                        '<div class="col offset-s3">'+
+                                          '<input type="date" class="datepicker" required>'+
+                                        '</div>'+                                        
+                                      '</div>'+                                 
+                                    '</div>'+
+                                    '<div class="row">'+
+                                      '<div class="col offset-s6 s3">'+
+                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Aceptar</button>'+
+                                      '</div>'+        
+                                      '<div class="col s3">'+
+                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Finalizar</button>'+
+                                      '</div>'+                                   
+                                    '</div>'+
+
+                                  '</div>'+                            
+                                '</div>'+
                               '</div>'+
                             '</div>'+
 
-                            '<div id="modal1" class="modal modal-fixed-footer">'+
+                            '<div id="modalfin" class="modal modal-fixed-footer">'+
                               '<div class="modal-content">'+
                                 '<h4>Modal Header</h4>'+
                                 '<p>A bunch of text</p>'+
