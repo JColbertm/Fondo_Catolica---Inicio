@@ -1,44 +1,11 @@
 <div class="row">
-  <div class="col s4 m3">
-    <div class="card">
-      <div class="card-action">
-        <a>Solicitudes</a>
-      </div>
-      <div class="card-content">
-        <table class="highlight centered">
-          <thead>
-            <tr>
-              <th>Nro.</th>
-              <th>Solicitud</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>24214</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>43123</td> 
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>24312</td> 
-            </tr>
-          </tbody>
-        </table>
-      </div>           
-    </div> 
-  </div>  
-  <div class="col s8 m9">
+	 <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
         <div align="right">
           <a class="btn-floating btn waves-effect waves-light red"><i class="fa fa-print"></i></a>
         </div>
-
-        <!-- formulario de prestamo -->
-        
+                <!-- formulario de prestamo Registrar -->
           <div class="card">
   <div class="card-action">
     <a>Formularios</a>
@@ -53,7 +20,7 @@
         </div>
         <div class="row">       
           <div class="col s3 m3 l3">
-                      <img class="responsive-img" src="/Fondo_Catolica/Imagenes/logo_form.png" width="100%" heigth="100%">
+                      <img class="rerponsive-img" src="/Fondo_Catolica/Imagenes/logo_form.png" width="100%" heigth="100%">
                     </div>
                     <div class="col s8 m8 center">
                     <br>
@@ -69,49 +36,49 @@
         <br>
         <div class="row">
           <div class="input-field col s4">
-              <input type="text" id="num-sp" readonly="" value="PRE-1">
+              <input type="text" id="num-rp" readonly="" value="PRE-1">
                 <label >Solicitud N°:</label>
           </div>
           <div class="input-field col s4 offset-s4">
-              <input type="text" id="fechaactual-sp" readonly="" value="<?php echo date("d-m-Y");?>">
+              <input type="text" id="fechaactual-rp" readonly="" value="<?php echo date("d-m-Y");?>">
               <label>Fecha:</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s3">
-            Ci:<input type="text" name="" id="ci-sp" class="validate" required>
+            Ci:<input type="text" name="" id="ci-rp" class="validate" required>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
             <i class="fa fa-user prefix "></i>
-            .<input type="text" id="nombres-sp" class="validate" required>
+            .<input type="text" id="nombres-rp" class="validate" required>
 
           </div>
           <div class="input-field col s6">
-        Apellidos:<input type="text" id="apellidos-sp" class="validate" required>
+        Apellidos:<input type="text" id="apellidos-rp" class="validate" required>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            Direccion:<input type="text" id="direccion-sp" class="validate" required>
+            Direccion:<input type="text" id="direccion-rp" class="validate" required>
           </div>
           <div class="input-field col s6">
-            N° Celular:<input type="text" id="celular-sp" class="validate" required>
+            N° Celular:<input type="text" id="celular-rp" class="validate" required>
             <label></label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            Departamento UCB:<input type="text" id="depar-ucb-sp" class="validate" required>
+            Departamento UCB:<input type="text" id="depar-ucb-rp" class="validate" required>
           </div>
           <div class="input-field col s6">
-            Interno:<input type="text" id="interno-sp" class="validate" required>
+            Interno:<input type="text" id="interno-rp" class="validate" required>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            Correo Electronico:<input type="email" id="correo-sp" class="validate" required>
+            Correo Electronico:<input type="email" id="correo-rp" class="validate" required>
             <label data-error="Correo Electronico no valido"></label>
           </div>
         </div>
@@ -119,18 +86,14 @@
         <p>Señores del Comité de Crédito:</p>
         <p>Presento a Uds. mi solicitud de préstamo por la cantidad de Bs:</p>
           <div class="input-field col s4">
-            <input type="text" id="cantidad-sp" class="validate" required>
+            <input type="text" id="cantidad-rp" class="validate" required>
             <label>Cantidad</label>
-          </div>
-          <div class="input-field col s8">
-            <input type="text" id="literal-sp" class="validate" required>
-            <label>00/100 bolivianos</label>
           </div>
         </div>
         <div class="row">
         <p>Comprometiéndome a su total cancelación en un plazo de:</p>
           <div class="input-field col s2 l2">
-            <input type="text" id="plazo-mes-sp" class="validate"required>
+            <input type="text" id="plazo-mes-rp" class="validate"required>
             <label>Meses</label>
           </div>
           <div class=" col s1 l1">
@@ -138,7 +101,7 @@
             <p>a</p>
           </div>
           <div class="input-field col s2 l2">
-            <input type="text" id="porcentaje-sp" class="validate" required>
+            <input type="text" id="porcentaje-rp" class="validate" required>
             <label>%</label>
           </div>
           <div class="col s7 l7">
@@ -149,7 +112,7 @@
         <div class="row ">
         <p>También me comprometo a seguir aportando la cantidad de Bs</p>
           <div class="input-field col s2 l2">
-            <input type="text" id="aporte-sp" class="validate" required>
+            <input type="text" id="aporte-rp" class="validate" required>
           </div>
           <div class="col s10 l10">
             <br><br>
@@ -164,7 +127,7 @@
             <p>CI:</p>
           </div>
           <div class="input-field col s3 l3">
-            <input type="text" id="ci-garante-sp" class="validate" required>
+            <input type="text" id="ci-garante-rp" class="validate" required>
             <label>Ci</label>
           </div>
         </div>
@@ -174,14 +137,14 @@
             <p>Nombre</p>
           </div>
           <div class="input-field col s4 l4">
-            <input type="text" id="nombre-garante-sp" class="validate" required>
+            <input type="text" id="nombre-garante-rp" class="validate" required>
           </div>
           <div class="col s2 l2">
             <br><br>
             <p>Apellido</p>
           </div>
           <div class="input-field col s4 l4">
-            <input type="text" id="apellido-garante-sp" class="validate" required>
+            <input type="text" id="apellido-garante-rp" class="validate" required>
           </div>
         </div>
         
@@ -202,7 +165,7 @@
             <p>Total Ganado:</p>
           </div>
           <div class="input-field col s4 l4">
-            <input type="text" id="ganado-sp" class="validate"required >
+            <input type="text" id="ganado-rp" class="validate"required >
           </div>
         </div>
         <div class="row">
@@ -211,7 +174,7 @@
             <p>Liquido Pagable:</p>
           </div>
           <div class="input-field col s4 l4">
-            <input type="text" id="liquido-sp" class="validate"required>
+            <input type="text" id="liquido-rp" class="validate"required>
           </div>
         </div>
         <div id="cheque">
@@ -221,7 +184,7 @@
             <p>Nº de Cheque</p>
           </div>
           <div class="input-field col s7 l4" >
-            <input type="text" id="nu-cheque-sp" placeholder="numero">
+            <input type="text" id="nu-cheque-rp" placeholder="numero">
           </div>
         </div>
         </div>
@@ -229,8 +192,7 @@
     </div>
   </div>
   </div>
-          <!-- Fin formulario de prestamo -->
-
+          <!-- FIN formulario de prestamo -->
         <div class="row">
           <div class="col offset-m5">
             <a class="waves-effect waves-light btn"><i class="fa fa-ban"></i> Rechazar</a>
@@ -239,5 +201,5 @@
         </div>                    
       </div>           
     </div> 
-  </div>  
+  </div> 
 </div>

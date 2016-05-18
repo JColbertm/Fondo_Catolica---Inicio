@@ -1,28 +1,18 @@
 <?php 
 	include("databaseA.php");
+	include("claseUsuario.php");
+?>
+<?php 
 $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 	switch ($opcion) {
 		case "buscar_garante":
-			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.ci LIKE '%$a%' and a.idUsuario=b.idUsuario"); 
-			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) {
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-			{
-					$resultados[$c]=array('ci'=> $data[1],'nombre'=> $data[2],'nombre2'=> $data[3],'apellido_p'=> $data[4],'apellido_m'=> $data[5],'direccion'=> $data[10],'celular'=> $data[12],'departamento'=> $data[13],'interno'=> $data[14],'correo'=> $data[15]);
-					$c++;
-				}	
-			}
-			else {
-				$resultados=array(0);
-			}
+		$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
+		$uses=ClaseUsuario::encontrar_por_ci($rt);
+		 $resultados=array('ci'=> $uses->ci,'nombre'=>$uses->nombre ,'nombre2'=> $uses->nombre2,'apellido_p'=> $uses->apellido_p,'apellido_m'=>$uses->apellido_m );
 			echo json_encode($resultados);
 			flush();
+		break;
 
-
-			
-			break;
 		case "buscar_ganancia":
 
 			$a = $_POST['a'];
@@ -45,21 +35,21 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			break;
 			case "buscar_datos_socio":
 
-			$a = $_POST['a'];
-			$result= execSqlA("SELECT a.ci, a.nombre, a.nombre2, a.apellido_p, a.apellido_m,b.direccion, b.telefono, b.celular, b.departamento, b.correos,b.interno FROM usuario a,datos_secundario b WHERE a.idUsuario=b.idUsuario and a.idUsuario like '%$a%'");
-			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) {
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-			{
-					$resultados[$c]=array('ci'=> $data[0],'nombre'=> $data[1],'nombre2'=> $data[2],'apellido_p'=> $data[3],'apellido_m'=> $data[4],'direccion'=> $data[5],'telefono'=> $data[6],'celular'=> $data[7],'departamento'=> $data[8],'correos'=> $data[9],'interno'=> $data[10]);
-					$c++;
-				}	
-			}
-			else {
-				$resultados=array(0);
-			}
-			echo json_encode($resultados);
+			$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
+		$use=ClaseUsuario::encontrar_por_ci($rt);
+		 $resultado=array(
+		 	'ci'=> $use->ci,
+		 	'nombre'=>$use->nombre ,
+		 	'nombre2'=> $use->nombre2,
+		 	'apellido_p'=> $use->apellido_p,
+		 	'apellido_m'=>$use->apellido_m,
+		 	'direccion'=> $use->direccion,
+		 	'telefono'=>$use->telefono,
+		 	'celular'=>$use->celular,
+		 	'departamento'=>$use->departamento,
+		 	'correos'=>$use->correos,
+		 	'interno'=>$use->interno);
+			echo json_encode($resultado);
 			flush();
 
 			break;

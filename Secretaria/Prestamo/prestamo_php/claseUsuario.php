@@ -25,8 +25,8 @@
 			}
 			return $objeto_array;
 		}
-		public static function encontrar_por_id($id){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.ci=$id limit 1");
+		public static function encontrar_por_ci($ci){
+			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.ci=$ci");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);

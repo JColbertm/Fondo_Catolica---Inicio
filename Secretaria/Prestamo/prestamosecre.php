@@ -1,6 +1,4 @@
- <?php 
-  include('../../clases/claseUsuario.php');
- ?>
+ 
  <!DOCTYPE html> 
  <html>
     <head>
@@ -16,15 +14,15 @@
       		$('.slider').slider();
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
-          $('#ci-sp').on('change', buscar_usuario);
-          $('#ci-garante-sp').on('change', buscar_garante);
+          $('#ci-rp').on('change', buscar_usuario);
+          $('#ci-garante-rp').on('change', buscar_garante);
           buscar_teclado();
     	});
       function buscar_usuario(){
-      var n = $('#ci-sp').val();
+      var n = $('#ci-rp').val();
       if(n.length>=5){
             console.log(n);
-            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_garante');//{a: n, opcion:'buscar'};
+            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_datos_socio');//{a: n, opcion:'buscar'};
             console.log(o);
             
               $.ajax({
@@ -36,27 +34,23 @@
                 var resp = $.parseJSON(data2);//json a objeto
                 console.log(data2);
                 console.log(resp);
-                  var ci_ga=resp[0].ci;
-                    var nombre_ga=resp[0].nombre+" "+resp[0].nombre2;
-                    var apellido_ga=resp[0].apellido_p+" "+resp[0].apellido_m;
-                  console.log(nombre_ga);
-                  console.log(apellido_ga);
-                  $("#nombres-sp").val(nombre_ga);
-                  $("#apellidos-sp").val(apellido_ga);
-                  $("#ci-sp").val(ci_ga);
-                  $("#direccion-sp").val(resp[0].direccion);
-                  $("#celular-sp").val(resp[0].celular);
-                  $("#depar-ucb-sp").val(resp[0].departamento);
-                  $("#interno-sp").val(resp[0].interno);
-                  $("#correo-sp").val(resp[0].correo);
+                  var ci_ga=resp.ci;
+                    var nombre_ga=resp.nombre+" "+resp.nombre2;
+                    var apellido_ga=resp.apellido_p+" "+resp.apellido_m;
+                  $("#nombres-rp").val(nombre_ga);
+                  $("#apellidos-rp").val(apellido_ga);
+                  $("#ci-rp").val(ci_ga);
+                  $("#direccion-rp").val(resp.direccion);
+                  $("#celular-rp").val(resp.celular);
+                  $("#depar-ucb-rp").val(resp.departamento);
+                  $("#interno-rp").val(resp.interno);
+                  $("#correo-rp").val(resp.correos);
                   salario();
-                  var fd=$('#nombres-sp').val();
-                  console.log(fd);
             });
           }
             }
             function buscar_garante(){
-      var n = $('#ci-garante-sp').val();
+      var n = $('#ci-garante-rp').val();
       if(n.length>=5){
             console.log(n);
             var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_garante');//{a: n, opcion:'buscar'};
@@ -71,30 +65,30 @@
                 var resp = $.parseJSON(data2);//json a objeto
                 console.log(data2);
                 console.log(resp);
-                  var ci_ga=resp[0].ci;
-                    var nombre_ga=resp[0].nombre+" "+resp[0].nombre2;
-                    var apellido_ga=resp[0].apellido_p+" "+resp[0].apellido_m;
+                    var ci_ga=resp.ci;
+                    var nombre_ga=resp.nombre+" "+resp.nombre2;
+                    var apellido_ga=resp.apellido_p+" "+resp.apellido_m;
                   console.log(nombre_ga);
                   console.log(apellido_ga);
-                  $("#nombre-garante-sp").val(nombre_ga);
-                  $("#apellido-garante-sp").val(apellido_ga);
-                  $("#ci-garante-sp").val(ci_ga);
-                  var fd=$('#nombres-sp').val();
+                  $("#nombre-garante-rp").val(nombre_ga);
+                  $("#apellido-garante-rp").val(apellido_ga);
+                  $("#ci-garante-rp").val(ci_ga);
+                  var fd=$('#nombres-rp').val();
                   console.log(fd);
             });
           }
             }
            function registrar_prestamo(){
-            //var ci=$("#ci-sp").val();
+            //var ci=$("#ci-rp").val();
             var ci=1;
-            var cantidad=$("#cantidad-sp").val();
-            var literal=$("#literal-sp").val();
-            var meses=$("#plazo-mes-sp").val();
-            var porcentaje=$("#porcentaje-sp").val();
-            //var garante=$("#ci-garante-sp").val();
+            var cantidad=$("#cantidad-rp").val();
+            var literal=$("#literal-rp").val();
+            var meses=$("#plazo-mes-rp").val();
+            var porcentaje=$("#porcentaje-rp").val();
+            //var garante=$("#ci-garante-rp").val();
             var garante=2;
             var registrador=2;
-            var numero_cheque=$("#nu-cheque-sp").val();
+            var numero_cheque=$("#nu-cheque-rp").val();
             var o = "opcion="+ encodeURIComponent('registrar_prestamo')+"&ci="+ encodeURIComponent(ci)+"&cantidad="+ encodeURIComponent(cantidad)+"&literal="+ encodeURIComponent(literal)+"&meses="+ encodeURIComponent(meses)+"&porcentaje="+ encodeURIComponent(porcentaje)+"&garante="+ encodeURIComponent(porcentaje)+"&garante="+ encodeURIComponent(garante)+"&registrador="+ encodeURIComponent(registrador)+"&numero_cheque="+ encodeURIComponent(numero_cheque);
             console.log(o);
 
