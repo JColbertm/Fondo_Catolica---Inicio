@@ -21,8 +21,15 @@
 
           $('#test2').find('#modAfiliado').on('click',modificarAfiliado);
           obtenerSolicitud();
-          listar();
-          listar2();
+
+
+          $('#test2').find('#modAfiliado').on('click',modificarAfiliado);
+          $('#test3').find('#elim_afiliado').on('click',eliminarAfiliado);
+          obtenerSolicitud();
+          listar('1');
+          listar('2');
+          listar('3');
+
 
           $('#historico').on('click', function(){
             var historia =  '<div class="row">'+
@@ -131,7 +138,7 @@
                $('#modal1 label').addClass('active');
                $('#usuarioModal').val(resp.usuario);
                $('#passwordModal').val(resp.password);
-              listar();    listar2();    
+              listar('1');    listar('2');   listar('3'); 
             }
              if(t==2)
             {
@@ -169,8 +176,42 @@
             {
               console.log("success");
               Materialize.toast('Modificado!', 4000)
+              listar('1');    listar('2');   listar('3'); 
+            }
+             if(t==2)
+            {
 
-              listar();     listar2();   
+              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+          
+        }
+
+        function eliminarAfiliado()
+        {
+          var m = "id="+encodeURIComponent(idU);
+          m += "&opcion=" + 'eliminarAfiliado';
+          console.log(m);
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: $('#formAfiliacion').attr('method'),
+            data: m
+          })
+          .done(function(data) {
+            var resp = $.parseJSON(data);
+            var t= resp.resp;
+            console.log(t);
+           if(t==1)
+            {
+              console.log("success");
+              Materialize.toast('Modificado!', 4000)
+              listar('1');    listar('2');   listar('3'); 
             }
              if(t==2)
             {
@@ -188,80 +229,23 @@
         }
 
         //funciones pertenecientes a modificacion
-        function listar()
+      function listar(numero)
       {
           //setTimeout("$('.ocultar').hide();", 5000);
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: 'POST',
-            data: {opcion: 'listar'}
+            data: {opcion: 'listar', numero: numero}
           })
           .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                var html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
-                 
-
-                  for(i in resp){ 
-                    //si encuentra un resultado
-                    if(resp[i].res==1)
-                    {
-
-                    html+='<tr onclick="mostrar_datos(this)"><td width=1>'+resp[i].idAfiliado+'</td><td>'+resp[i].nombre+'</td><td>'+resp[i].apellido+'</td></tr>';
-                    }
-                  }
-                  
-                html+= '</tbody></table>';
-
-                $('#listado').html(html);
-
+                $('#listado'+numero+'').html(data2);
               })
           .fail(function() {
             console.log("error");
           })
-          
-        
-      }
-      function listar2()
-      {
-          //setTimeout("$('.ocultar').hide();", 5000);
-          $.ajax({
-            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
-            type: 'POST',
-            data: {opcion: 'listar'}
-          })
-          .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                var html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
-                 
-
-                  for(i in resp){ 
-                    //si encuentra un resultado
-                    if(resp[i].res==1)
-                    {
-
-                    html+='<tr onclick="mostrar_datos2(this)"><td width=1>'+resp[i].idAfiliado+'</td><td>'+resp[i].nombre+'</td><td>'+resp[i].apellido+'</td></tr>';
-                    }
-                  }
-                  
-                html+= '</tbody></table>';
-
-                $('#listado2').html(html);
-
-              })
-          .fail(function() {
-            console.log("error");
-          })
-          
-        
       }
       var idU;
-      function mostrar_datos(f)
+      function mostrar_datos1(f)
       {
 
         row= $(f).find('td:eq(0)').text();
@@ -304,6 +288,122 @@
               $('#test2').find('#aporte-sp').val(resp.monto_aporte);
               $('#test2').find('#literal-sp').val(resp.literal);
               $('#test2').find('.select-dropdown').val(''+resp.idMes+'');              
+            }
+             if(t==2)
+            {
+
+              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+
+
+
+
+
+       // $('#test2').find('#nombres-sp').val(row2);
+        //$('#test2').find('#apellidos-sp').val(row3);
+        //idU=row;
+//          $('#modCategoria').val(row3);
+        console.log(row,row2,row3);
+        
+      }
+
+
+      function mostrar_datos2(f)
+      {
+
+        row= $(f).find('td:eq(0)').text();
+        row2 = $(f).find('td:eq(1)').text();
+        row3 = $(f).find('td:eq(2)').text();
+        //$('#modNombre2').val(row);
+        idU=row;
+        var m = 'id='+row;
+          m += "&opcion=" + encodeURIComponent('obtenerAfiliado');
+          console.log(m);
+
+
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: m
+          })
+          .done(function(data) {
+            var resp = $.parseJSON(data);
+            var t= resp.resp;
+            console.log(t);
+           if(t==1)
+            {
+              console.log("success");
+              $('label').addClass('active');
+              $('#test3').find('#first_name').val(resp.nombre+' '+resp.apellido);
+              $('#test3').find('#ci').val(resp.ci);
+              
+              $('#test3').find('#depar-ucb-sp').val(resp.departamento);
+                         
+            }
+             if(t==2)
+            {
+
+              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+
+
+
+
+
+       // $('#test2').find('#nombres-sp').val(row2);
+        //$('#test2').find('#apellidos-sp').val(row3);
+        //idU=row;
+//          $('#modCategoria').val(row3);
+        console.log(row,row2,row3);
+        
+      }
+
+       function mostrar_datos3(f)
+      {
+
+        row= $(f).find('td:eq(0)').text();
+        row2 = $(f).find('td:eq(1)').text();
+        row3 = $(f).find('td:eq(2)').text();
+        //$('#modNombre2').val(row);
+        idU=row;
+        var m = 'id='+row;
+          m += "&opcion=" + encodeURIComponent('generarPass');
+          console.log(m);
+
+
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: m
+          })
+          .done(function(data) {
+            var resp = $.parseJSON(data);
+            var t= resp.resp;
+            console.log(t);
+           if(t==1)
+            {
+              console.log(resp.nuevo_p+"<br>"+resp.nuevo_pp+"<br>"+resp.original);
+              $('label').addClass('active');
+              $('#test4').find('#last_name').val(resp.nombre+' '+resp.apellido);
+              $('#test4').find('#carnet').val(resp.ci);
+              $('#test4').find('#fecha_afi').val(resp.fecha_afi);
+              $('#test4').find('#password1').val(resp.pass);
+              $('#test4').find('#password2').val(resp.original);
+                         
             }
              if(t==2)
             {
