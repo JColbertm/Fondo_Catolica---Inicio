@@ -74,7 +74,6 @@
                                          '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Finalizar</button>'+
                                       '</div>'+                                   
                                     '</div>'+
-
                                   '</div>'+                            
                                 '</div>'+
                               '</div>'+
