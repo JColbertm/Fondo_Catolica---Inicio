@@ -34,7 +34,7 @@
                     <label>Solicitud No:</label>
                   </div>
                   <div class="input-field col s4 m6 offset-s4 offset-m1">
-                    <input id="fechaactual" name="fechaactual" type="text" readonly="" value="<?php echo date('d-m-Y') ?>">
+                    <input id="fechaactual" name="fechaactual" type="date" readonly="" value="<?php echo date('d-m-Y') ?>" class="datepicker">
                     <label>Fecha:</label>
                   </div>
                 </div>
@@ -128,12 +128,7 @@
                       <label>bs:</label>
                     </div>
                 </div>
-                <div class="row">
-                  <div class="input-field col s12 m12 l12">
-                    <input type="text" id="literal-sp" name="literal-sp" class="validate">
-                    <label>00/100 bolivianos</label>
-                  </div>
-                </div>
+                
                 <div class="row">
                   <div class="col s7 m7 l5">
                       <br><br> 
@@ -141,7 +136,7 @@
                     </div>
                     <div class="input-field col s5 m4 l5">
                         <select name="mes-sp">
-                          <option value="" disabled selected>Elija un mes</option>
+                          <option value="0" disabled selected>Elija un mes</option>
                           <option value="1">Enero</option>
                           <option value="2">Febrero</option>
                           <option value="3">Marzo</option>

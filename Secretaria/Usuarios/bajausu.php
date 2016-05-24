@@ -32,7 +32,7 @@
                 <div class="card">
                   <div class="card-content">
                     <div class="row">
-                      <form class="col s12">
+                      <form class="col s12" id="eliForm">
                         <div class="row">
                           <div class="input-field col s9">
                             <input placeholder="Placeholder" id="first_name" type="text" class="validate" readonly="">

@@ -18,7 +18,9 @@
 	 }
 	$rt=123456;
 	$seres= new ClaseUsuario;
+	//poner nombre
 	$seress=$seres->nombre="asdas";
+	//recupera
 	echo $seress.'<br>';
 	echo $seress2=$seres->nombre.'<br>';;
 	$use=ClaseUsuario::encontrar_por_id($rt);

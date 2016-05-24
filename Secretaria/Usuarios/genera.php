@@ -30,7 +30,7 @@
     <div class="card">
       <div class="card-content">
         <div class="row">
-          <form class="col s12">
+          <form class="col s12" id="formGenera">
             <div class="row">
               <div class="input-field col s9">
                 <input placeholder="Nombre" id="last_name" type="text" class="validate" readonly="">
@@ -61,7 +61,7 @@
         </div>
         <div class="row">
           <div class="col offset-m7">
-            <button class="waves-effect waves-light btn"><i class="fa fa-check"></i>Guardar Nueva Contraseña</button>
+            <button id="guardaNP" class="waves-effect waves-light btn"><i class="fa fa-check"></i>Guardar Nueva Contraseña</button>
           </div>   
         </div>                      
       </div>           
