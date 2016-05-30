@@ -25,11 +25,11 @@
         <li class="divider"></li>
         <li><a class="modal-trigger" href="#cierre_sesion"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>
       </ul>
-        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
+        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user-plus" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="/Fondo_Catolica/Secretaria/indexsecre.php"><i class="fa fa-home"></i> HOME</a></li>
-        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
+        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user-plus" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
         <li><a href="/Fondo_Catolica/Secretaria/Usuarios/usuariossecre.php"><i class="fa fa-users" aria-hidden="true"></i> Usuarios</a></li>
         <li><a href="/Fondo_Catolica/Secretaria/Prestamo/prestamosecre.php"><i class="fa fa-money" aria-hidden="true"></i> Prestamos</a></li>
         <li><a href="/Fondo_Catolica/Secretaria/Bienuso/bienusosecre.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Bienes de Uso</a></li>

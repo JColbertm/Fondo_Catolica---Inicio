@@ -22,12 +22,12 @@
           <li class="divider"></li>
           <li><a class="modal-trigger" href="#cierre_sesion"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>
         </ul>
-        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
+        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user-secret" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
         <li><a href="/Fondo_Catolica/Administrador/indexadmin.php"><i class="fa fa-home"></i> HOME</a></li>
-        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
+        <li><a class="dropdown-button" data-activates="perfil_usuario"><i class="fa fa-user-secret" aria-hidden="true"></i> <?php echo $_SESSION['nombre'].' '.$_SESSION['apellidop'].' '.$_SESSION['apellidom'] ?></a></li>
         <li><a href="/Fondo_Catolica/Administrador/Imagen/imagen.php"><i class="fa fa-picture-o" aria-hidden="true"></i> Imagenes</a></li>
         <li><a href="/Fondo_Catolica/Administrador/Parametros/parametro.php"><i class="fa fa-cogs" aria-hidden="true"></i> Parametros</a></li>
         <li><a href="/Fondo_Catolica/Administrador/Directiva/directiva.php"><i class="fa fa-users" aria-hidden="true"></i> Directiva</a></li>

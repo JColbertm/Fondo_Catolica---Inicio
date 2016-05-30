@@ -25,7 +25,7 @@
           $(".button-collapse").sideNav();
           var usuario ='<?php echo $_SESSION['nombre'] ?>';
           var app ='<?php echo $_SESSION['apellidop'] ?>';
-          var apm ='<?php echo $_SESSION['apellidom'] ?>';
+          var apm ='<?php echo $_SESSION['apellidom'] ?>'; 
           var $toastContent = $('<span><i class="fa fa-user-plus" aria-hidden="true"></i> Bienvenida(o): '+usuario+' '+app+' '+apm+'</span>');
           Materialize.toast($toastContent, 8000);
           $('#cierre_sesion').on('click', function()
