@@ -28,14 +28,12 @@
           {
             window.location="/Fondo_Catolica/index.php"; 
           });
-
-          //$(".btncargar").on('click', cargar_imagen);
+          //$(".btncargar").on('click', cargar_imagen1);
     	 });
 
         function llenar_imagenes(){
 
           var m = "&opcion=" + encodeURIComponent('cargarimagenes');
-          console.log(m);
           $.ajax({
             url: '/Fondo_Catolica/Administrador/controlador/cargar_imagen.php',
             type: 'POST',
@@ -57,9 +55,9 @@
            
         }
 
-        function cargar_imagen(){     
+        function cargar_imagen1(){     
           var m = $('.form_imagen').serialize();
-          m += "&opcion=" + encodeURIComponent('cargaimagen');
+          m += "&opcion=" + encodeURIComponent('imagen1');
           console.log(m);
           $.ajax({
             url: '/Fondo_Catolica/Administrador/controlador/data_imagen.php',

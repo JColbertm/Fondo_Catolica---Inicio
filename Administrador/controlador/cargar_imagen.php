@@ -1,27 +1,24 @@
 <?php
 	$opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 	include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/gral_php/databaseA.php";
-	switch ($opcion) {
+	switch ($opcion) 
+	{
 		case "cargarimagenes":
-
-			$result= execSqlA("select idParametros, imagen from parametros where idParametros = 3");
-			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) 
+			$result=execSqlA("select MAX(idParametros) as idparametro, MAX(fecha_creacion) as fecha from parametros where parametro = 'imagen1'");
+			while( $fila = $result->fetch_array() )
 			{
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-				{
-					$resultados[$c]=array('idPara'=> $data[0],'img'=> $data[1], 'res'=>1);
-					$c++;
-				}	
-			}
-			else {
-				$resultados=array('res' => 0);
-			}
-			echo json_encode($resultados);
-			flush();
+			    $sql=execSqlA("select imagen from parametros where idParametros = ".$fila["idparametro"]." and fecha_creacion =\"".$fila["fecha"]."\" ");
 
-
+			    while( $datos = $sql->fetch_array(MYSQLI_ASSOC) )
+			    {
+					header("Content-type:"."jpg");
+					$imagen = $datos["imagen"];
+					echo json_encode('img'=>$imagen,'resp'=>1);					 
+			    }   
+			}
 		break;
 	}
 ?>
+
+
+

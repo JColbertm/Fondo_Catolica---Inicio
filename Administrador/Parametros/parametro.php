@@ -27,7 +27,36 @@
           {
             window.location="/Fondo_Catolica/index.php"; 
           });
-    	});
+          $('#btn_guarda_parametro').on('click',function(){
+            guardar_parametro();
+          })
+    	  });
+        function guardar_parametro()
+        {
+          var datos= $('#form_parametro').serialize();
+          datos += "&opcion=" + encodeURIComponent('registrar_pagina');
+          console.log(datos);
+          $.ajax({
+            url: '/Fondo_Catolica/Administrador/controlador/.php',
+            type: 'POST',
+            data: datos
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            console.log(resp);
+            var t= resp.resp; 
+            if(t==1)
+            {
+              mostrar();   
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+        
+        }
       </script>
 
       <!--Let browser know website is optimized for mobile-->
@@ -49,119 +78,10 @@
 	
 <!--  Creacion del contenido del index -->
 	<br><br>
-	<div class="row">
-		<div class="col offset-m1 m10 s12">			
-		  <div class="card">
-            <div class="card-action">
-              <a>Modificacion Parametros</a>
-            </div>
-            <div class="card-content">
-              <!--  CONTENIDO DE LA OPCION PARAMETROS -->
-              <div class="row">
-                <div class="col m4 s12">     
-                  <div class="card">
-                        <div class="card-content">
-                          <!--  CONTENIDO TABLA DE PARAMETROS -->
-                            <table class="highlight centered">
-                              <thead>
-                                <tr>
-                                    <th data-field="id">Name</th>
-                                    <th data-field="name">Item Name</th>
-                                    <th data-field="price">Item Price</th>
-                                </tr>
-                              </thead>
-
-                              <tbody>
-                                <tr>
-                                  <td>Alvin</td>
-                                  <td>Eclair</td>
-                                  <td>$0.87</td>
-                                </tr>
-                                <tr>
-                                  <td>Alan</td>
-                                  <td>Jellybean</td>
-                                  <td>$3.76</td>
-                                </tr>
-                                <tr>
-                                  <td>Jonathan</td>
-                                  <td>Lollipop</td>
-                                  <td>$7.00</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          
-                                
-                        </div>
-                  </div>      
-                </div>
-              
-
-
-                <div class="col m8 s12">     
-                  <div class="card">
-                        <div class="card-content">
-                          <!--  CONTENIDO TABLA DE PARAMETROS -->                          
-                          
-                          <div class="row">
-                            <center><h4>Modificacion Parametros</h4></center>
-                          </div>
-
-                          <div class="row">
-                            <form class="col s12">
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <i class="fa fa-info-circle prefix"></i>
-                                  <textarea id="textarea1" class="materialize-textarea"></textarea>
-                                  <label>Informacion</label>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-
-                          <div class="row">
-                            <form class="col s12">
-                              <div class="row">
-                                <div class="input-field col s6">
-                                  <input id="first_name" type="text" class="validate">
-                                  <label for="first_name">First Name</label>
-                                </div>
-                                <div class="input-field col s6">
-                                  <input id="last_name" type="text" class="validate">
-                                  <label for="last_name">Last Name</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                                  <label for="disabled">Disabled</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <input id="password" type="password" class="validate">
-                                  <label for="password">Password</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <input id="email" type="email" class="validate">
-                                  <label for="email">Email</label>
-                                </div>
-                              </div>
-                              <a class="waves-effect waves-light btn right"><i class="fa fa-wrench left"></i>Modificar</a>
-                            </form>
-                          </div>
-
-                        </div>
-                  </div>      
-                </div>
-              </div>
-              
-                    
-            </div>
-      </div>			
-		</div>
-	</div>
+  <?php 
+    require_once $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Administrador/Parametros/abmparametro.php";
+  ?>
+	
 
 <!--  Llamada al pie de pagina -->
 	<?php 

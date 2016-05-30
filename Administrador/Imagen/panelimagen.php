@@ -23,7 +23,7 @@
                   <div class="card">
                     <div class="card-content">
                       <!--  CONTENIDO DEL MENU CARRUSEL -->
-
+                      <!-- MODIFICACION DE LA PRIMERA IMAGEN -->
                       <div class="row">
                         <form method="POST" enctype="multipart/form-data" class="form_imagen" action="/Fondo_Catolica/Administrador/controlador/data_imagen.php">
                           <div class="col s12 m6">
@@ -33,7 +33,7 @@
                             <div class="row">
                               <div class="row">
                                 <div class="input-field">
-                                  <input id="direccion" type="text" readonly="">
+                                  <input id="direccion" type="text" readonly>
                                   <label>Direccion</label>
                                 </div>                                    
                               </div>                                                            
@@ -44,19 +44,21 @@
                                   <input type="file" name="archivo" id="archivo"><i class="fa fa-picture-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text" required>
+                                  <input class="file-path validate" type="text" id="imagen1" name="imagen1" required>
                                 </div>
                               </div>
-                              <button class="waves-effect waves-light btn right btncargar" type="submit"><i class="fa fa-upload right"></i>
+                              <button class="waves-effect waves-light btn right btncargar" type="submit" id="1" name="1" value="1"><i class="fa fa-upload right"></i>
                                 Cargar
                               </button>
                             </div>
                           </div>
                         </form>  
                       </div>  
+                      <!-- FIN DE L MODIFICACION DE LA PRIMERA IMAGEN -->
 
+                      <!-- MODIFICACION DE LA SEGUNDA IMGEN -->
                       <div class="row">
-                        <form>
+                        <form method="POST" enctype="multipart/form-data" class="form_imagen" action="/Fondo_Catolica/Administrador/controlador/data_imagen1.php">
                           <div class="col s12 m6">
                             <img class="materialboxed responsive-img" src="/Fondo_Catolica/Imagenes/banner2.jpg"> 
                           </div>
@@ -64,28 +66,31 @@
                             <div class="row">
                               <div class="row">
                                 <div class="input-field">
-                                  <input id="direccion" type="text" readonly="">
+                                  <input id="direccion" type="text" readonly>
                                   <label>Direccion</label>
                                 </div>                                    
-                              </div>                                  
+                              </div>                                                            
                             
                               <div class="file-field input-field">
                                 <div class="btn">
-                                  <span>Imagen</span>
-                                  <input type="file">
+                                  <span>Imagen </span>
+                                  <input type="file" name="archivo" id="archivo"><i class="fa fa-picture-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text">
+                                  <input class="file-path validate" type="text" id="imagen1" name="imagen1" required>
                                 </div>
                               </div>
-                              <a class="waves-effect waves-light btn right"><i class="fa fa-upload right"></i>Cargar</a>
+                              <button class="waves-effect waves-light btn right btncargar" type="submit" id="1" name="1" value="1"><i class="fa fa-upload right"></i>
+                                Cargar
+                              </button>
                             </div>
                           </div>
-                        </form>
-                      </div>
-
+                        </form>  
+                      </div>  
+                      <!-- FIN DE LA MODIFICACION DE LA SEGUNDA IMAGEN -->
+                      <!-- MODIFICACION DE LA TERCERA IMAGEN -->
                       <div class="row">
-                        <form>
+                        <form method="POST" enctype="multipart/form-data" class="form_imagen" action="/Fondo_Catolica/Administrador/controlador/data_imagen2.php">
                           <div class="col s12 m6">
                             <img class="materialboxed responsive-img" src="/Fondo_Catolica/Imagenes/banner3.jpg"> 
                           </div>
@@ -93,27 +98,31 @@
                             <div class="row">
                               <div class="row">
                                 <div class="input-field">
-                                  <input id="direccion" type="text" readonly="">
+                                  <input id="direccion" type="text" readonly>
                                   <label>Direccion</label>
                                 </div>                                    
-                              </div>                                
+                              </div>                                                            
+                            
                               <div class="file-field input-field">
                                 <div class="btn">
-                                  <span>Imagen</span>
-                                  <input type="file">
+                                  <span>Imagen </span>
+                                  <input type="file" name="archivo" id="archivo"><i class="fa fa-picture-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text">
+                                  <input class="file-path validate" type="text" id="imagen1" name="imagen1" required>
                                 </div>
-                                <a class="waves-effect waves-light btn right"><i class="fa fa-upload right"></i>Cargar</a>
                               </div>
+                              <button class="waves-effect waves-light btn right btncargar" type="submit" id="1" name="1" value="1"><i class="fa fa-upload right"></i>
+                                Cargar
+                              </button>
                             </div>
                           </div>
-                        </form>
+                        </form>  
                       </div>  
-                    
+                      <!-- FIN DE LA MODIFICACION DE LA TERCERA IMAGEN -->
+                      <!-- MODIFICACION DE LA CUARTA IMAGEN -->                    
                       <div class="row">
-                        <form>
+                        <form method="POST" enctype="multipart/form-data" class="form_imagen" action="/Fondo_Catolica/Administrador/controlador/data_imagen3.php">
                           <div class="col s12 m6">
                             <img class="materialboxed responsive-img" src="/Fondo_Catolica/Imagenes/banner4.jpg"> 
                           </div>
@@ -121,24 +130,28 @@
                             <div class="row">
                               <div class="row">
                                 <div class="input-field">
-                                  <input id="direccion" type="text" readonly="">
+                                  <input id="direccion" type="text" readonly>
                                   <label>Direccion</label>
                                 </div>                                    
-                              </div>                                                        
+                              </div>                                                            
+                            
                               <div class="file-field input-field">
                                 <div class="btn">
-                                  <span>Imagen</span>
-                                  <input type="file">
+                                  <span>Imagen </span>
+                                  <input type="file" name="archivo" id="archivo"><i class="fa fa-picture-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="file-path-wrapper">
-                                  <input class="file-path validate" type="text">
+                                  <input class="file-path validate" type="text" id="imagen1" name="imagen1" required>
                                 </div>
-                                <a class="waves-effect waves-light btn right"><i class="fa fa-upload right"></i>Cargar</a>
-                              </div>    
+                              </div>
+                              <button class="waves-effect waves-light btn right btncargar" type="submit" id="1" name="1" value="1"><i class="fa fa-upload right"></i>
+                                Cargar
+                              </button>
                             </div>
                           </div>
                         </form>  
-                      </div>
+                      </div>                        
+                      <!-- FIN DE LA MODIFICACION DE LA CUARTA IMAGEN -->
 
                     </div>
                   </div>      
