@@ -1,3 +1,14 @@
+<?php
+@session_start();
+  if (isset($_SESSION['ideusuario']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /Fondo_Catolica/index.php');  
+  }
+?>
  <!DOCTYPE html> 
  <html>
     <head>
@@ -12,6 +23,10 @@
       		$('.slider').slider();
           	$('.modal-trigger').leanModal();          	
           	$(".button-collapse").sideNav();
+          	$('#cierre_sesion').on('click', function()
+	          {
+	            window.location="/Fondo_Catolica/index.php"; 
+	          });
     	});
       </script>
 
@@ -28,7 +43,7 @@
  	?>
 <!--  llamada al menu de barra -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/barramenu.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Socio/barramenu.php";
  	?>
 <!--  llamada al menu de botones del lado izquierdo -->
 	

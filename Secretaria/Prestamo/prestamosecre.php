@@ -1,3 +1,14 @@
+<?php
+@session_start();
+  if (isset($_SESSION['ideusuario']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /Fondo_Catolica/index.php');  
+  }
+?>
  
  <!DOCTYPE html> 
  <html>
@@ -17,6 +28,10 @@
           $('#ci-rp').on('change', buscar_usuario);
           $('#ci-garante-rp').on('change', buscar_garante);
           buscar_teclado();
+          $('#cierre_sesion').on('click', function()
+          {
+            window.location="/Fondo_Catolica/index.php"; 
+          });
     	});
       function buscar_usuario(){
       var n = $('#ci-rp').val();

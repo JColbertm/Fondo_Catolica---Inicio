@@ -1,12 +1,26 @@
 <?php
   session_start();
-  if(isset($_SESSION['usuario']))
+  if (isset($_SESSION['tipousu'])) 
   {
-
+    if ($_SESSION['tipousu']==1) 
+    {
+      header('Location: /Fondo_Catolica/Socio/indexsocio.php');
+    }
+    if ($_SESSION['tipousu']==2) 
+    {
+      header('Location: /Fondo_Catolica/Secretaria/indexsecre.php');
+    }
+    if ($_SESSION['tipousu']==3)
+    {
+      header('Location: /Fondo_Catolica/Administrador/indexadmin.php');
+    }if ($_SESSION['tipousu']==4)
+    {
+      header('Location: /Fondo_Catolica/Socio/indexsocio.php');
+    }
   }
   else
   {
-
+   
   }
 ?>
  <!DOCTYPE html> 
@@ -30,6 +44,7 @@
          function inicio_sesion()
         {
           setTimeout("$('.ocultar').hide();", 3000);
+          
           var datos= $('#form_login').serialize();
           datos += "&opcion=" + encodeURIComponent('inicio_sesion');
           console.log(datos);
@@ -44,19 +59,48 @@
             console.log(resp);
             if (resp.res == 1)
             {
-              var mostrar = '<div class="card ocultar" visibly="false">'+
-                              '<div class="card-content">'+
-                                '<div  class="alert alert-success " role="alert"> Bienvenido!</div>'+
+              setTimeout("$('#modallogin').closeModal();", 4000);
+              var mostrar = '<div class="row ocultar">'+
+                              '<div class="col s12 m12 l12">'+
+                                '<div class="card #43a047 green darken-1">'+
+                                  '<div class="card-content white-text">'+                                    
+                                    '<p> Bienvenido! '+ resp.nom+' '+resp.app+' '+resp.apm+' </p>'+
+                                  '</div>'+                                  
+                                '</div>'+
                               '</div>'+
-                            '</div>';
-              
-              $('#modallogin').closeModal();
+                            '</div>'; 
+
+              if(resp.tipousu == 1)
+              {
+                window.location="/Fondo_Catolica/Socio/indexsocio.php"; 
+              }
+              if(resp.tipousu == 2)
+              {
+                window.location="/Fondo_Catolica/Secretaria/indexsecre.php"; 
+              }
+              if(resp.tipousu == 3)
+              {
+                window.location="/Fondo_Catolica/Administrador/indexadmin.php"; 
+              }
+              if(resp.tipousu == 4)
+              {
+                window.location="/Fondo_Catolica/Socio/indexsocio.php"; 
+              }
+                                     
             }
             else
             {
-              var mostrar='<div  class="alert alert-danger ocultar" role="alert"> Nombre Usuario o Password Incorrectos</div>'; 
+              var mostrar='<div class="row ocultar">'+
+                              '<div class="col s12 m12 l12">'+
+                                '<div class="card #e53935 red darken-1">'+
+                                  '<div class="card-content white-text">'+                                    
+                                    '<p> Usuario y/o Password incorrecto(s) </p>'+
+                                  '</div>'+                                  
+                                '</div>'+
+                              '</div>'+
+                            '</div>';
             }    
-            $('#muestra').html(mostrar); 
+            $('#Mensaje_welcome').html(mostrar); 
           })
           .fail(function() {
             console.log("error");
@@ -79,7 +123,7 @@
  	?>
 <!--  llamada al menu de barra -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/barramenu.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/barrasr.php";
  	?>
 <!--  llamada al menu de botones del lado izquierdo -->
 	

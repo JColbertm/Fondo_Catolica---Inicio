@@ -1,3 +1,14 @@
+<?php
+@session_start();
+  if (isset($_SESSION['ideusuario']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /Fondo_Catolica/index.php');  
+  }
+?>
  <!DOCTYPE html> 
  <html>
     <head>
@@ -12,6 +23,15 @@
       		$('.slider').slider();
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
+          var usuario ='<?php echo $_SESSION['nombre'] ?>';
+          var app ='<?php echo $_SESSION['apellidop'] ?>';
+          var apm ='<?php echo $_SESSION['apellidom'] ?>';
+          var $toastContent = $('<span><i class="fa fa-user-secret" aria-hidden="true"></i> Bienvenida(o): '+usuario+' '+app+' '+apm+'</span>');
+          Materialize.toast($toastContent, 8000);
+          $('#cierre_sesion').on('click', function()
+          {
+            window.location="/Fondo_Catolica/index.php"; 
+          });
     	});
       </script>
 
