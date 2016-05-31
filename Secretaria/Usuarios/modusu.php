@@ -29,22 +29,22 @@
                 </div> 
               </div>  
               <!-- CONTENEDOR DEL CONTROL DE AHORROS -->
-              <div class="col s8 m9">
                 <div class="card">
+              <div class="col s8 m9">
                   <div class="card-content">
                     <div align="right">
                       <a class="btn-floating btn waves-effect waves-light red"><i class="fa fa-print"></i></a>
                     </div>
                     <form method="POST" id="formAfiliacion" class="col s12 m12">
-                    <?php
-                      include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Formularios/formulario_afiliacion.php";
-                    ?>
-                    <div class="row">
-                      <div class="col offset-m5">
-                        <a class="waves-effect waves-light btn"><i class="fa fa-ban"></i> Rechazar</a>
-                        <button class="waves-effect waves-light btn" id="modAfiliado"><i class="fa fa-check"></i> Aceptar</button>
-                      </div>   
-                    </div>                      
+                      <?php
+                        include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Formularios/formulario_afiliacion.php";
+                      ?>
+                      <div class="row">
+                        <div class="col offset-m5">
+                          <a class="waves-effect waves-light btn"><i class="fa fa-ban"></i> Rechazar</a>
+                          <button class="waves-effect waves-light btn" id="modAfiliado"><i class="fa fa-check"></i> Aceptar</button>
+                        </div>   
+                      </div>                      
                     </form>
                   </div>           
                 </div> 

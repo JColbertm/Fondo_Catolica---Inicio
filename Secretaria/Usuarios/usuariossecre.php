@@ -1,4 +1,4 @@
-<?php
+ <?php
 @session_start();
   if (isset($_SESSION['ideusuario']))
   {
@@ -11,7 +11,7 @@
 ?>
  <!DOCTYPE html> 
  <html>
-    <head>
+    <head> 
       <!--Import Google Icon Font-->
       <link href="/Fondo_Catolica/materialize/font-awesome/css/font-awesome.min.css" rel="stylesheet">
       <!--Import materialize.css-->
@@ -29,10 +29,18 @@
           {
             window.location="/Fondo_Catolica/index.php"; 
           });
+          //$('#test2').find('select').material_select();
+
+          $('a[data-toggle="tab"]').on('.tab', function (e) {
+             $('label').removeClass('active');
+
+          });
+
   
 
          
           $('.crearAfiliado').on('click', crearAfiliado);
+          $('#test5').find('#registrar_historico').on('click',function(){alert('ddd');});
           $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
@@ -69,8 +77,7 @@
         {
           var m = $('#formAfiliacion').serialize();
           m += "&opcion=" + encodeURIComponent('registrarAfiliado');
-
-
+          m += "&id=0";
 
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
@@ -111,7 +118,8 @@
         {
           var m = $('#formHistorico').serialize();
           m += "&opcion=" + encodeURIComponent('registrarAfiliadoH');
-          $.ajax({
+          m += "&id=0";
+            $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: $('#formHistorico').attr('method'),
             data: m
@@ -124,7 +132,7 @@
             {
               console.log(data);
 
-               var historia =  '<div class="row">'+
+               var historia =  '<form id="formHistorico_2" method="POST"><div class="row">'+
                               '<div class="col s12 m12">'+
                                 '<div class="card">'+                                
                                   '<div class="card-content">'+
@@ -161,13 +169,13 @@
                                           '<label><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de Afiliacion:</label>'+
                                         '</div>'+
                                         '<div class="col offset-s3">'+
-                                          '<input type="date" class="datepicker" required>'+
+                                          '<input type="date" class="datepicker" id="calendario-sp-2" name="calendario-sp-2" required>'+
                                         '</div>'+                                        
                                       '</div>'+                                 
                                     '</div>'+
                                     '<div class="row">'+
                                       '<div class="col offset-s6 s3">'+
-                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Aceptar</button>'+
+                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="" id="registrar_historico" onclick="javascript:crearHistorico();">Aceptar</button>'+
                                       '</div>'+        
                                       '<div class="col s3">'+
                                          '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Finalizar</button>'+
@@ -176,7 +184,7 @@
                                   '</div>'+                            
                                 '</div>'+
                               '</div>'+
-                            '</div>'+
+                            '</div></form>'+
 
                             '<div id="modalfin" class="modal modal-fixed-footer">'+
                               '<div class="modal-content">'+
@@ -190,10 +198,7 @@
             $('#historia_afi').html(historia);
 
             $('#test5').find('#nombre').val(resp.nombre+' '+resp.apellido);
-            $('#test5').find('#totalGanado').val(resp.total);
-            $('#test5').find('#totalGanado').val(resp.aporte);
-            $('#test5').find('#liquido').val(resp.liquido);
-            $('#test5').find('#fechaAfi').val(resp.fecha);
+            $('#test5').find('#fechaAfi').val('01/05/2016');//////////////////////////////////
              /*  $('#modal1').openModal();
                $('#modal1 label').addClass('active');
                $('#usuarioModal').val(resp.usuario);
@@ -216,10 +221,52 @@
           event.preventDefault();
           
         }
+
+         function crearHistorico()
+        {
+          var m = $('#test5').find('#formHistorico_2').serialize();
+          m += "&opcion=" + encodeURIComponent('registrarHistorico');
+
+
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: $('#test5').find('#formHistorico_2').attr('method'),
+            data: m
+          })
+          .done(function(data) {
+            console.log('registrado');
+          /*  var resp = $.parseJSON(data);
+            var t= resp.resp;
+            console.log(t);
+           if(t==1)
+            {
+              console.log(data);
+               $('#modal1').openModal();
+               $('#modal1 label').addClass('active');
+               $('#usuarioModal').val(resp.usuario);
+               $('#passwordModal').val(resp.password);
+              listar(1);    listar(2);   listar(3); 
+              obtenerSolicitud();
+               $('#formAfiliacion').trigger("reset");
+            }
+             if(t==2)
+            {
+
+              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+
+            }*/
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+          
+        }
         function modificarAfiliado()
         {
           var m = $('#test2').find('#formAfiliacion').serialize();
-          m += "&opcion=" + encodeURIComponent('modificarAfiliado');
+          m += "&opcion=" + encodeURIComponent('registrarAfiliado');
           m += "&id=" + encodeURIComponent(idU);
           console.log(m);
           $.ajax({
@@ -235,6 +282,7 @@
             {
               Materialize.toast('Modificado!', 4000)
               $('#test2').find('#formAfiliacion').trigger("reset");
+
               listar(1);    listar(2);   listar(3); 
             }
              if(t==2)
@@ -364,7 +412,7 @@
               $('#test2').find('#antiguedad-sp').val(resp.antiguedad);
               $('#test2').find('#aporte-sp').val(resp.monto_aporte);
               $('#test2').find('#literal-sp').val(resp.literal);
-              $('#test2').find('.select-dropdown').val(''+resp.idMes+'');              
+              $('#test2').find('#mes-sp').val(resp.idMes);        
             }
 
               })
@@ -433,6 +481,7 @@
               $('#test4').find('#last_name').val(resp.nombre+' '+resp.apellido);
               $('#test4').find('#carnet').val(resp.ci);
               $('#test4').find('#fecha_afi').val(resp.fecha_afi);
+              $('#test4').find('#user').val(resp.user);
               $('#test4').find('#password1').val(resp.original);
               $('#test4').find('#password2').val(resp.pass);
                          

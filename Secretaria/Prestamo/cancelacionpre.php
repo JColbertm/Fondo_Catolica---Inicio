@@ -5,28 +5,9 @@
         <a>Cancelacion Prestamo</a>
       </div>
       <div class="card-content">
-        <table class="highlight centered">
-          <thead>
-            <tr>
-              <th>Nro.</th>
-              <th>Prestamo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>24214</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>43123</td> 
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>24312</td> 
-            </tr>
-          </tbody>
-        </table>
+        <div class="form-group" id="resultado2">
+                
+              </div>
       </div>           
     </div> 
   </div>  

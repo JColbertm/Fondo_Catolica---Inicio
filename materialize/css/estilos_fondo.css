@@ -1,0 +1,9 @@
+.menu-fixed {
+	right: 10%;
+	position:fixed;
+	z-index:1000;
+	top:10%;
+	width: 100px;
+	/*left:0;*/
+	/*Podemos hacer que el menu abarque el 100% al hacer scroll*/
+}

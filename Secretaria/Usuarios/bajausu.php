@@ -35,15 +35,15 @@
                       <form class="col s12" id="eliForm">
                         <div class="row">
                           <div class="input-field col s9">
-                            <input placeholder="Placeholder" id="first_name" type="text" class="validate" readonly="">
-                            <label for="first_name">Nombre y Apellido:</label>
+                            <input  id="first_name" type="text" class="validate" readonly="">
+                            <label for="first_name"><i class="fa fa-user" aria-hidden="true"></i> Nombre y Apellido:</label>
                           </div>
                           <div class="input-field col s9">
-                            <input placeholder="Carnet" id="ci" type="text" class="validate" readonly="">
-                            <label for="last_name">CI:</label>
+                            <input  id="ci" type="text" class="validate" readonly="">
+                            <label for="last_name"><i class="fa fa-user" aria-hidden="true"></i> Carnet de identidad:</label>
                           </div>
                           <div class="input-field col s9">
-                            <input placeholder="Carnet" id="depar-ucb-sp" type="text" class="validate" readonly="">
+                            <input  id="depar-ucb-sp" type="text" class="validate" readonly="">
                             <label for="last_name">Departamento:</label>
                           </div>
                         </div>

@@ -1,43 +1,57 @@
+
 <?php 
-	include("databaseA.php");
-	include("claseUsuario.php");
-?>
-<?php 
+	include("../../../clases/databaseA.php");
+	include("../../../clases/claseUsuario.php");
+	include("../../../clases/clasePrestamo.php");
+	include("../../../clases/claseHistorial.php");
+	include("../../../clases/claseSolicitud.php");
 $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 	switch ($opcion) {
 		case "buscar_garante":
 		$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
-		$uses=ClaseUsuario::encontrar_por_ci($rt);
-		 $resultados=array('ci'=> $uses->ci,'nombre'=>$uses->nombre ,'nombre2'=> $uses->nombre2,'apellido_p'=> $uses->apellido_p,'apellido_m'=>$uses->apellido_m );
+		// verificamos que el garante cumpla con la condicion de garantizar 3 veces
+		$garante=ClasePrestamo::verificar_garante($rt);
+		$datos_garante=ClaseUsuario::encontrar_por_ci($rt);
+		if($garante<3){
+			 $resultados=array(
+			 	//alerta 2 significa que el garante esta habilitado
+		 	'alerta'=>2,
+		 	'ci'=> $datos_garante->ci,
+		 	'nombre'=>$datos_garante->nombre ,
+		 	'nombre2'=> $datos_garante->nombre2,
+		 	'apellido_p'=> $datos_garante->apellido_p,
+		 	'apellido_m'=>$datos_garante->apellido_m );
+		 	
+		}else{
+			$resultados=array(
+			//alerta 1 significa que el garante esta no habilitado
+			'alerta'=>1,
+		 	'ci'=>$datos_garante->ci ,
+		 	'nombre'=> " ",
+		 	'nombre2'=> " ",
+		 	'apellido_p'=> " ",
+		 	'apellido_m'=> " ");
+		}
 			echo json_encode($resultados);
 			flush();
 		break;
 
 		case "buscar_ganancia":
-
-			$a = $_POST['a'];
-			$result= execSqlA("SELECT total_ganado, liquido_pagable, monto_aporte FROM historial_sueldo WHERE idUsuario = any (select d.idUsuario from  usuario d where d.ci  like '%$a%') ");
-			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) {
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-			{
-					$resultados[$c]=array('total_ganado'=> $data[0],'liquido_pagable'=> $data[1],'monto_aporte'=> $data[2]);
-					$c++;
-				}	
-			}
-			else {
-				$resultados=array(0);
-			}
+			$ci_solicitante = $_POST['a'];
+			$ganancias=ClaseHistorial::historial_por_ci($ci_solicitante);
+ 			$resultados=array(
+		 	'total_ganado'=> $ganancias->total_ganado,
+		 	'liquido_pagable'=>$ganancias->liquido_pagable ,
+		 	'monto_aporte'=> $ganancias->monto_aporte );
+		 				
 			echo json_encode($resultados);
 			flush();
 
 			break;
 			case "buscar_datos_socio":
-
 			$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
-		$use=ClaseUsuario::encontrar_por_ci($rt);
-		 $resultado=array(
+			$use=ClaseUsuario::encontrar_por_ci($rt);
+		 	$resultado=array(
 		 	'ci'=> $use->ci,
 		 	'nombre'=>$use->nombre ,
 		 	'nombre2'=> $use->nombre2,
@@ -53,46 +67,77 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			flush();
 
 			break;
+			case "buscar_datos_socio_id":
+			$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
+			$usuario=ClaseUsuario::encontrar_por_id($rt);
+			$ganancias=ClaseHistorial::historial_por_ci($usuario->ci);
+		 	$resultado=array(
+		 	'ci'=> $usuario->ci,
+		 	'nombre'=>$usuario->nombre ,
+		 	'nombre2'=> $usuario->nombre2,
+		 	'apellido_p'=> $usuario->apellido_p,
+		 	'apellido_m'=>$usuario->apellido_m,
+		 	'direccion'=> $usuario->direccion,
+		 	'telefono'=>$usuario->telefono,
+		 	'celular'=>$usuario->celular,
+		 	'departamento'=>$usuario->departamento,
+		 	'correos'=>$usuario->correos,
+		 	'interno'=>$usuario->interno,
+		 	'total_ganado'=> $ganancias->total_ganado,
+		 	'liquido_pagable'=>$ganancias->liquido_pagable ,
+		 	'monto_aporte'=> $ganancias->monto_aporte
+		 	);
+
+			echo json_encode($resultado);
+			flush();
+
+			break;
 			case "registrar_prestamo":
-
-			$a = $_POST['ci'];
-			$b = $_POST['cantidad'];
-			$c = $_POST['literal'];
-			$d = $_POST['meses'];
-			$e = $_POST['porcentaje'];
-			$f = $_POST['garante'];
-			$g = $_POST['registrador'];
-			$h = $_POST['numero_cheque'];
-			$result2= insertA('prestamo', array('idPrestamo', 'idUsuario', 'cantidad', 'literal', 'meses', 'porcentaje', 'idGarante', 'idRejistrador', 'numero_cheque'),array(2,2,2,2,2,2,2,2,2), array("",$a,$b,$c,$d,$e,$f,$g,$h));
-				    	if ($result2){		
-				
-								$resultados=array('resp'=> 1);
-							}
-							else
-							{
-								$resultados=array('resp'=> 0);
-							}
-
+			if($_POST['ci']!="" && $_POST['cantidad']!="" && $_POST['meses']!="" && $_POST['porcentaje']!="" && $_POST['garante']!="" && $_POST['numero_cheque']!=""){
+			$idusu_prestamo=ClaseUsuario::encontrar_por_ci($_POST['ci']);
+			$datos=new ClasePrestamo();
+			$datos->idUsuario = $idusu_prestamo->idUsuario;
+			$datos->cantidad = $_POST['cantidad'];
+			$datos->meses = $_POST['meses'];
+			$datos->porcentaje = $_POST['porcentaje'];
+			$idgarante_pres=ClaseUsuario::encontrar_por_ci($_POST['garante']);
+			$datos->idGarante = $idgarante_pres->idUsuario;
+			$datos->idRegistrador =2;//cambiar por inicio sesion
+			$datos->numero_cheque = $_POST['numero_cheque'];
+			$datos->estado=1;
+			$resultados=$datos->crear_prestamo();
+		}else{$resultados="false";}
 			echo json_encode($resultados);
 			flush();
 
 			break;
-			case "tabla_llena":
-				    
-			
-			$result= execSqlA("SELECT * FROM prestamo ");
+			case "tabla_prestamos":
 			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) {
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-			{
-					$resultados[$c]=array('idPrestamo'=> $data[0],'idUsuario'=> $data[1],'cantidad'=> $data[2],'literal'=> $data[3],'meses'=> $data[4],'porcentaje'=> $data[5],'idGarante'=> $data[6],'idRejistrador'=> $data[7],'numero_cheque'=> $data[8]);
+			$c=0;
+			$pres=ClasePrestamo::encontrar_prestamos();
+			 foreach ($pres as $pre) {
+			 	$resultados[$c]=array('idPrestamo'=>$pre->idPrestamo,'cod_form_pres'=>$pre->cod_form_pres);
 					$c++;
-				}	
-			}
-			else {
-				$resultados=array(0);
-			}
+			 }
+			echo json_encode($resultados);
+			flush();
+
+		break;
+		case "tabla_solicitudes":
+			$resultados=array();
+			$c=0;
+			$pres=ClaseSolicitud::encontrar_solicitudes();
+			 foreach ($pres as $pre) {
+			 	$resultados[$c]=array(
+			 		'idSolicitud'=>$pre->idSolicitud,
+			 		'cod_form_solpres'=>$pre->cod_form_solpres,
+			 		'idUsuario'=>$pre->idUsuario,
+			 		'cantidad_sol'=>$pre->cantidad_sol,
+			 		'meses_sol'=>$pre->meses_sol,
+			 		'porcentaje_sol'=>$pre->porcentaje_sol,
+			 		'idGarante'=>$pre->idGarante);
+					$c++;
+			 }
 			echo json_encode($resultados);
 			flush();
 

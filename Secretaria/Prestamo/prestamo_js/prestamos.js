@@ -1,9 +1,7 @@
       	
       	function salario(){
 
-      		document.getElementById("aporte-rp").disabled= true;
-      		document.getElementById("ganado-rp").disabled= true;
-      		document.getElementById("liquido-rp").disabled= true;
+      		
                 var n = $('#ci-rp').val();
             var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar_ganancia');//{a: n, opcion:'buscar'};
             console.log(o);
@@ -17,9 +15,9 @@
                 var resp = $.parseJSON(data2);//json a objeto
                 console.log(data2);
                 console.log(resp);
-                	var ganado_so=resp[0].total_ganado;
-                    var pagable_so=resp[0].liquido_pagable;
-                    var aporte_so=resp[0].monto_aporte;
+                	var ganado_so=resp.total_ganado;
+                    var pagable_so=resp.liquido_pagable;
+                    var aporte_so=resp.monto_aporte;
                   console.log(ganado_so);
                   console.log(aporte_so);
                   $('#aporte-rp').val(aporte_so);

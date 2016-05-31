@@ -4,73 +4,136 @@
 		include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/gral_php/databaseA.php";
 		include("../../clases/claseUsuario.php");
 		include("../../clases/claseAfiliacion.php");
+		include("../../clases/claseHistorial.php");
+
 	switch ($opcion) {
 		case "registrarAfiliado":
-			$fecha = filter_var($_POST['fechaactual'],FILTER_SANITIZE_STRING);
-			$carnet = filter_var($_POST['carnet'],FILTER_SANITIZE_STRING);
-			$nombres = filter_var($_POST['nombres-sp'],FILTER_SANITIZE_STRING);
-			$apellidos = filter_var($_POST['apellidos-sp'],FILTER_SANITIZE_STRING);
-			$direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
-			$telefono = filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$departamento = filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
-			$interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$correo = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
-			$totGanado = filter_var($_POST['totGanado-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+
 			$antiguedad = filter_var($_POST['antiguedad-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$mes = filter_var($_POST['mes-sp'],FILTER_SANITIZE_STRING);
-			$resultados= ClaseUsuario::registrar_afiliado($fecha,$carnet,$nombres,$apellidos,$direccion,$telefono,$celular,$departamento,$interno,$correo,$totGanado,$liquido,$antiguedad,$aporte,$mes,1);
+			$parametro = RecuperarIdItemA('parametros',array('parametro'),array('antiguedad'));
+			$usuario= new ClaseUsuario;
+			$usuario_i= new ClaseAfiliacion;
+			$usuario_h= new ClaseHistorial;
+
+
+			if($antiguedad>=$parametro['condicion'])
+			{
+				$usuario->ci= filter_var($_POST['carnet'],FILTER_SANITIZE_STRING);
+				$usuario->nombre = filter_var($_POST['nombres-sp'],FILTER_SANITIZE_STRING);
+				$usuario->apellido_p =filter_var($_POST['apellidos-sp'],FILTER_SANITIZE_STRING);
+				$usuario->direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
+				$usuario->telefono= filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->departamento= filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
+				$usuario->interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->idUsuarioCreador=1;
+				$usuario->correos = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
+
+				$usuario_i->fecha= filter_var($_POST['fechaactual'],FILTER_SANITIZE_STRING);
+				
+				$usuario_h->cantidad_sueldo = filter_var($_POST['totGanado-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->monto_aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->idMes = filter_var($_POST['mes-sp'],FILTER_SANITIZE_STRING);
+				$usuario_h->antiguedad= $antiguedad;
+				$usuario_h->fecha_mod= '';
+
+				
+				$id = filter_var($_POST['id'],FILTER_SANITIZE_NUMBER_INT);
+
+				if($id==0)
+
+				{
+					$resultados= $usuario->registrar_afiliado();
+					$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
+					while ($data = mysqli_fetch_array($row)){$id = $data[0];}
+					$usuario_i->registrar_afiliacion($id);
+					$usuario_h->registrar_historial($id);
+				}
+				else
+				{
+					$resultados= $usuario->modificar_afiliado($id);
+					
+					$usuario_h->modificar_historial($id);	
+				}
+			}
+			else{$resultados['resp']=2;}
 			echo json_encode($resultados);
 			flush();
 		break;
 
 		case "registrarAfiliadoH":
-			$fecha = filter_var($_POST['calendario-sp'],FILTER_SANITIZE_STRING);
-			$carnet = filter_var($_POST['ci-sp'],FILTER_SANITIZE_STRING);
-			$nombres = filter_var($_POST['nombre-sp'],FILTER_SANITIZE_STRING);
-			$apellidos = filter_var($_POST['apellido-sp'],FILTER_SANITIZE_STRING);
-			$direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
-			$telefono = filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$departamento = filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
-			$interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$correo = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
-			$totGanado = filter_var($_POST['total-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$antiguedad = 15;//filter_var($_POST[15],FILTER_SANITIZE_NUMBER_INT);
-			$aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$mes = 13;//filter_var($_POST['mes-sp'],FILTER_SANITIZE_STRING);
-			$resultados= ClaseUsuario::registrar_afiliado($fecha,$carnet,$nombres,$apellidos,$direccion,$telefono,$celular,$departamento,$interno,$correo,$totGanado,$liquido,$antiguedad,$aporte,$mes,1);
+
+		    $fecha = filter_var($_POST['calendario-sp'],FILTER_SANITIZE_NUMBER_INT);
+			$parametro = RecuperarIdItemA('parametros',array('parametro'),array('antiguedad'));
+			$usuario= new ClaseUsuario;
+			$usuario_i= new ClaseAfiliacion;
+			$usuario_h= new ClaseHistorial;
+
+			/*$datetime1=new DateTime($fecha);
+			# obtenemos la diferencia entre las dos fechas
+			$interval=time()->diff($datetime1);
+			# obtenemos la diferencia en meses
+			$intervalMeses=$interval->format("%m");
+			# obtenemos la diferencia en años y la multiplicamos por 12 para tener los meses
+			//$interval = $interval->format("%y")*12;*/
+			$interval = 12;
+
+			if($interval>=$parametro['condicion'])
+			{
+				$usuario_i->fecha=$fecha;
+
+				$usuario->ci= filter_var($_POST['ci-sp'],FILTER_SANITIZE_STRING);
+				$usuario->nombre = filter_var($_POST['nombre-sp'],FILTER_SANITIZE_STRING);
+				$usuario->apellido_p = filter_var($_POST['apellido-sp'],FILTER_SANITIZE_STRING);
+				$usuario->direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
+				$usuario->telefono= filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->departamento= filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
+				$usuario->interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
+				$usuario->correos = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
+
+				$usuario_h->cantidad_sueldo = filter_var($_POST['total-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->monto_aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
+				$usuario_h->idMes = 13;
+				$usuario_h->antiguedad= $interval;
+				$usuario_h->fecha_mod= '';
+
+				$resultados= $usuario->registrar_afiliado();
+				$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
+				while ($data = mysqli_fetch_array($row)){$id = $data[0];}
+
+				$usuario_i->registrar_afiliacion($id);
+				$resultados['fecha']=$fecha;
+				$usuario_h->registrar_historial($id);
+			}
+			else{$resultados['resp']=2;}
 			echo json_encode($resultados);
 			flush();
 		break;
 
-		case "modificarAfiliado":
-			$fecha = filter_var($_POST['fechaactual'],FILTER_SANITIZE_STRING);
-			$carnet = filter_var($_POST['carnet'],FILTER_SANITIZE_STRING);
-			$nombres = filter_var($_POST['nombres-sp'],FILTER_SANITIZE_STRING);
-			$apellidos = filter_var($_POST['apellidos-sp'],FILTER_SANITIZE_STRING);
-			$direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
-			$telefono = filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$departamento = filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
-			$interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$correo = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
-			$totGanado = filter_var($_POST['totGanado-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$antiguedad = filter_var($_POST['antiguedad-sp'],FILTER_SANITIZE_NUMBER_INT);
-			$aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$mes = filter_var($_POST['mes-sp'],FILTER_SANITIZE_STRING);
-			$id = filter_var($_POST['id'],FILTER_SANITIZE_NUMBER_INT);
+		case "registrarHistorico":
+			$usuario_h= new ClaseHistorial;
 
-			$resultados= ClaseUsuario::modificar_afiliado($fecha,$carnet,$nombres,$apellidos,$direccion,$telefono,$celular,$departamento,$interno,$correo,$totGanado,$liquido,$antiguedad,$aporte,$mes,1,$id);
+		    $usuario_h->cantidad_sueldo = filter_var($_POST['totalGanado'],FILTER_SANITIZE_NUMBER_FLOAT);
+			$usuario_h->liquido = filter_var($_POST['liquido'],FILTER_SANITIZE_NUMBER_FLOAT);
+			$usuario_h->monto_aporte = filter_var($_POST['aporte'],FILTER_SANITIZE_NUMBER_FLOAT);
+			$usuario_h->idMes = 13;
+			$usuario_h->fecha_mod= filter_var($_POST['calendario-sp-2'],FILTER_SANITIZE_STRING);
+			
 
+			$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
+			while ($data = mysqli_fetch_array($row)){$id = $data[0];}
+
+			$usuario_h->registrar_historial($id);
+			
+			
 			echo json_encode($resultados);
 			flush();
 		break;
 
+		
 		case "modificarPassword":
 			$id = filter_var($_POST['id'],FILTER_SANITIZE_NUMBER_INT);
 			$password = filter_var($_POST['password'],FILTER_SANITIZE_STRING);
@@ -105,13 +168,17 @@
 			$departamento=$use->departamento;
 			$correo=$use->correos;
 			$interno=$use->interno;
-			$cantidad_sueldo=$use->cantidad_sueldo;
-			$monto_aporte=$use->monto_aporte;
-			$mes=$use->idMes;
-			$liquido=$use->liquido;
-			$antiguedad=$use->antiguedad;
-			$idafi=$use->idAfiliacion;
-			$fecha=$use->fecha;
+
+			$use_h=ClaseHistorial::encontrar_por_id($idu);
+			$cantidad_sueldo=$use_h->cantidad_sueldo;
+			$monto_aporte=$use_h->monto_aporte;
+			$mes=$use_h->idMes;
+			$liquido=$use_h->liquido;
+			$antiguedad=$use_h->antiguedad;
+
+			$use_i=ClaseAfiliacion::encontrar_por_id($idu);
+			$idafi=$use_i->idAfiliacion;
+			$fecha=$use_i->fecha;
 
 
 			$resultados=array('ci'=> $ci,'nombre'=> $nomb.' '.$nomb2,'apellido'=> $ap.' '.$ap2,'direccion'=>$direccion,'telefono'=>$telefono,'celular'=>$celular,'departamento'=>$departamento,'correos'=>$correo,'interno'=>$interno,'cantidad_sueldo'=>$cantidad_sueldo,'user'=>$user,'pass'=>$pass,'monto_aporte'=>$monto_aporte,'idMes'=>$mes,'liquido'=>$liquido,'antiguedad'=>$antiguedad,'idAfiliacion'=>$idafi,'fecha'=>$fecha,'resp'=> 1);

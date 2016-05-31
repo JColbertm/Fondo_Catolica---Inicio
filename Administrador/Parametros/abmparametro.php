@@ -52,17 +52,17 @@
                     <div class="row">
                       <div class="input-field col s12">
                         <i class="fa fa-info-circle prefix"></i>
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <textarea id="info_parametro" name="info_parametro" class="materialize-textarea"></textarea>
                         <label>Informacion</label>
                       </div>                  
                     </div>
                     <div class="row">
                       <div class="input-field col s6">
-                        <input id="name_parametro" name="name_parametro" type="text" readonly>
+                        <input id="name_parametro" name="name_parametro" type="text">
                         <label><i class="fa fa-cogs" aria-hidden="true"></i> Nombre Parametro</label>
                       </div>
                       <div class="input-field col s6">
-                        <input id="fecha_creacion" name="fecha_creacion" type="text" readonly>
+                        <input id="fecha_creacion" name="fecha_creacion" type="text" value="<?php echo date('d-m-Y') ?>">
                         <label><i class="fa fa-calendar" aria-hidden="true"></i> Fecha Creacion</label>
                       </div>
                     </div>

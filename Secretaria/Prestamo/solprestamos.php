@@ -5,28 +5,7 @@
         <a>Solicitudes</a>
       </div>
       <div class="card-content">
-        <table class="highlight centered">
-          <thead>
-            <tr>
-              <th>Nro.</th>
-              <th>Solicitud</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>24214</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>43123</td> 
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>24312</td> 
-            </tr>
-          </tbody>
-        </table>
+       <div id="tabla_solicitudes"></div>
       </div>           
     </div> 
   </div>  
@@ -69,7 +48,7 @@
         <br>
         <div class="row">
           <div class="input-field col s4">
-              <input type="text" id="num-sp" readonly="" value="PRE-1">
+              <input type="text" id="num-sp" readonly="" value=" ">
                 <label >Solicitud N°:</label>
           </div>
           <div class="input-field col s4 offset-s4">
@@ -119,27 +98,23 @@
         <p>Señores del Comité de Crédito:</p>
         <p>Presento a Uds. mi solicitud de préstamo por la cantidad de Bs:</p>
           <div class="input-field col s4">
-            <input type="text" id="cantidad-sp" class="validate" required>
-            <label>Cantidad</label>
-          </div>
-          <div class="input-field col s8">
-            <input type="text" id="literal-sp" class="validate" required>
-            <label>00/100 bolivianos</label>
+            <input type="text" id="cantidad-sp" class="validate" value=" " required>
+            <label class="active">Cantidad</label>
           </div>
         </div>
         <div class="row">
         <p>Comprometiéndome a su total cancelación en un plazo de:</p>
           <div class="input-field col s2 l2">
-            <input type="text" id="plazo-mes-sp" class="validate"required>
-            <label>Meses</label>
+            <input type="text" id="plazo-mes-sp" class="validate" value=" " required>
+            <label class="active">Meses</label>
           </div>
           <div class=" col s1 l1">
           <br><br>
             <p>a</p>
           </div>
           <div class="input-field col s2 l2">
-            <input type="text" id="porcentaje-sp" class="validate" required>
-            <label>%</label>
+            <input type="text" id="porcentaje-sp" class="validate" value=" " required>
+            <label class="active">%</label>
           </div>
           <div class="col s7 l7">
             <br><br>
@@ -184,7 +159,8 @@
             <input type="text" id="apellido-garante-sp" class="validate" required>
           </div>
         </div>
-        
+                <div id="mensa_verif_garante_sol"></div>
+
         <div class="row">
           <div class="col s12 l12 ">
             <br><br>

@@ -23,6 +23,7 @@
       		$('.slider').slider();
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
+          llenar_parametros();
           $('#cierre_sesion').on('click', function()
           {
             window.location="/Fondo_Catolica/index.php"; 
@@ -31,13 +32,14 @@
             guardar_parametro();
           })
     	  });
-        function guardar_parametro()
+
+        function llenar_parametros()
         {
-          var datos= $('#form_parametro').serialize();
-          datos += "&opcion=" + encodeURIComponent('registrar_pagina');
+          setTimeout("$('.ocultar').hide();", 3000);        
+          var datos = "opcion=" + encodeURIComponent('llenar_parametros');
           console.log(datos);
           $.ajax({
-            url: '/Fondo_Catolica/Administrador/controlador/.php',
+            url: '/Fondo_Catolica/Administrador/controlador/ctrl_parametros.php',
             type: 'POST',
             data: datos
           })
@@ -48,7 +50,46 @@
             var t= resp.resp; 
             if(t==1)
             {
-              mostrar();   
+              var mostrar =   0;
+              console.log("datos recogidos");
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+        
+        }
+
+
+        function guardar_parametro()
+        {
+          setTimeout("$('.ocultar').hide();", 3000);
+          var datos= $('#form_parametro').serialize();
+          datos += "&opcion=" + encodeURIComponent('registro_parametro');
+          console.log(datos);
+          $.ajax({
+            url: '/Fondo_Catolica/Administrador/controlador/ctrl_parametros.php',
+            type: 'POST',
+            data: datos
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            console.log(resp);
+            var t= resp.resp; 
+            if(t==1)
+            {
+              var mostrar = '<div class="row ocultar">'+
+                              '<div class="col s12 m12 l12">'+
+                                '<div class="card #43a047 green darken-1">'+
+                                  '<div class="card-content white-text">'+                                    
+                                    '<p> Parametro Actualizado! </p>'+
+                                  '</div>'+                                  
+                                '</div>'+
+                              '</div>'+
+                            '</div>';   
+              console.log("hecho bd");
             }
           })
           .fail(function() {
