@@ -1,3 +1,15 @@
+ <?php
+@session_start();
+  if (isset($_SESSION['ideusuario']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /Fondo_Catolica/index.php');  
+  }
+?>
+
  <!DOCTYPE html> 
  <html>
     <head>
@@ -12,6 +24,10 @@
       		$('.slider').slider();
         $('.modal-trigger').leanModal();
     	$('select').material_select();
+    	$('#cierre_sesion').on('click', function()
+          {
+            window.location="/Fondo_Catolica/index.php"; 
+          });
     	});
 
       </script>
