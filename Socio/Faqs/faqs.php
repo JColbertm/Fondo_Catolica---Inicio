@@ -24,10 +24,32 @@
           	$('.modal-trigger').leanModal();          	
           	$(".button-collapse").sideNav();
           	$('#cierre_sesion').on('click', function()
-	          {
-	            window.location="/Fondo_Catolica/index.php"; 
-	          });
+          	{
+            	cerrar_sesion();            
+          	});
     	});
+    	function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Fondo_Catolica/gral_php/login.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(t==1)
+            {
+              window.location="/Fondo_Catolica/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
       </script>
 
       <!--Let browser know website is optimized for mobile-->
