@@ -8,6 +8,9 @@
 
 	switch ($opcion) {
 		case "registrarAfiliado":
+			$fecha = filter_var($_POST['fechaactual'],FILTER_SANITIZE_STRING);
+			$a = explode('-',$fecha);
+			$my_new_date = $a[2].'-'.$a[1].'-'.$a[0];
 
 			$antiguedad = filter_var($_POST['antiguedad-sp'],FILTER_SANITIZE_NUMBER_INT);
 			$parametro = RecuperarIdItemA('parametros',array('parametro'),array('antiguedad'));
@@ -29,7 +32,7 @@
 				$usuario->idUsuarioCreador=1;
 				$usuario->correos = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
 
-				$usuario_i->fecha= filter_var($_POST['fechaactual'],FILTER_SANITIZE_STRING);
+				$usuario_i->fecha= $my_new_date;
 				
 				$usuario_h->cantidad_sueldo = filter_var($_POST['totGanado-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
@@ -65,6 +68,8 @@
 		case "registrarAfiliadoH":
 
 		    $fecha = filter_var($_POST['calendario-sp'],FILTER_SANITIZE_NUMBER_INT);
+		    $a = explode('-',$fecha);
+			$my_new_date = $a[2].'-'.$a[1].'-'.$a[0];
 			$parametro = RecuperarIdItemA('parametros',array('parametro'),array('antiguedad'));
 			$usuario= new ClaseUsuario;
 			$usuario_i= new ClaseAfiliacion;
@@ -81,7 +86,7 @@
 
 			if($interval>=$parametro['condicion'])
 			{
-				$usuario_i->fecha=$fecha;
+				$usuario_i->fecha=$my_new_date;
 
 				$usuario->ci= filter_var($_POST['ci-sp'],FILTER_SANITIZE_STRING);
 				$usuario->nombre = filter_var($_POST['nombre-sp'],FILTER_SANITIZE_STRING);
@@ -126,7 +131,7 @@
 			$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
 			while ($data = mysqli_fetch_array($row)){$id = $data[0];}
 
-			$usuario_h->registrar_historial($id);
+			$resultados=$usuario_h->registrar_historial($id);
 			
 			
 			echo json_encode($resultados);
@@ -180,8 +185,11 @@
 			$idafi=$use_i->idAfiliacion;
 			$fecha=$use_i->fecha;
 
+			$a = explode('-',$fecha);
+			$my_new_date = $a[2].'-'.$a[1].'-'.$a[0];
 
-			$resultados=array('ci'=> $ci,'nombre'=> $nomb.' '.$nomb2,'apellido'=> $ap.' '.$ap2,'direccion'=>$direccion,'telefono'=>$telefono,'celular'=>$celular,'departamento'=>$departamento,'correos'=>$correo,'interno'=>$interno,'cantidad_sueldo'=>$cantidad_sueldo,'user'=>$user,'pass'=>$pass,'monto_aporte'=>$monto_aporte,'idMes'=>$mes,'liquido'=>$liquido,'antiguedad'=>$antiguedad,'idAfiliacion'=>$idafi,'fecha'=>$fecha,'resp'=> 1);
+
+			$resultados=array('ci'=> $ci,'nombre'=> $nomb.' '.$nomb2,'apellido'=> $ap.' '.$ap2,'direccion'=>$direccion,'telefono'=>$telefono,'celular'=>$celular,'departamento'=>$departamento,'correos'=>$correo,'interno'=>$interno,'cantidad_sueldo'=>$cantidad_sueldo,'user'=>$user,'pass'=>$pass,'monto_aporte'=>$monto_aporte,'idMes'=>$mes,'liquido'=>$liquido,'antiguedad'=>$antiguedad,'idAfiliacion'=>$idafi,'fecha'=>$my_new_date,'resp'=> 1);
 			
 			//else{
 			//	$resultados=array('resp'=> 0);

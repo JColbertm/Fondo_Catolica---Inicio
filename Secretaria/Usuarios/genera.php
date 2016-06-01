@@ -2,6 +2,7 @@
   <div class="col s4 m3">
     <div class="card">
       <div class="card-content">
+
         <!-- contenido -->
         <div class="row">
           <!-- input busqueda -->
@@ -29,6 +30,9 @@
   <div class="col s8 m9">
     <div class="card">
       <div class="card-content">
+       <div id="botones-circulares" align="right" >
+                      <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>
+        </div>
         <div class="row">
           <form class="col s12" id="formGenera">
             <div class="row">
@@ -64,9 +68,11 @@
           </form>
         </div>
         <div class="row">
-          <div class="col offset-m7">
-            <button id="guardaNP" class="waves-effect waves-light btn"><i class="fa fa-check"></i>Guardar Nueva Contraseña</button>
-          </div>   
+          <div class="col offset-m5">
+          <button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"><i class="fa fa-trash-o"></i> Limpiar</button>
+            <button id="guardaNP" class="waves-effect waves-light btn"><i class="fa fa-check"></i>Guardar</button>
+          </div>  
+           
         </div>                      
       </div>           
     </div> 

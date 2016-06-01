@@ -81,13 +81,19 @@
               </div>                            
             </div>
           </form>
-
+           
         </div>
         <div class="row">
           <div class="col offset-m9">
             <button class="waves-effect waves-light btn" type="button" id="historico">Registrar</button>
           </div>   
-        </div>                      
+        </div>
+        <div class="row">
+            <div id="resultado">
+             </div>   
+          </div> 
+
+
       </div>           
     </div> 
   </div>

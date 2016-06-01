@@ -16,32 +16,51 @@
       <link href="/Fondo_Catolica/materialize/font-awesome/css/font-awesome.min.css" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="/Fondo_Catolica/materialize/css/materialize.min.css"  media="screen,projection"/>
+      <link href="/Fondo_Catolica/materialize/css/estilos_fondo.css" rel="stylesheet">
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
       <script type="text/javascript">
       	$(document).ready(function(){
 
+          // botones redondos estaticos "estilos_fondo.css"
+          var altura = $('#test2').find('#botones-circulares').offset().top=750;
+          $(window).on('scroll', function(){
+            if ( $(window).scrollTop() > altura ){
+              $('#test2').find('#botones-circulares').addClass('menu-fixed');
+            } else {
+              $('#test2').find('#botones-circulares').removeClass('menu-fixed');
+            }
+          });
+
+
       		$('.slider').slider();
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
           $('select').material_select();
+          $('#test4').find('#limpia').on('click', function()
+          {
+            $('label').removeClass('active');
+            $('#test4').find('#formGenera').trigger("reset");
+          });
+
+           $('#limpia').on('click', function()
+          {
+            $('label').removeClass('active');
+            $('#formAfiliacion').trigger("reset");
+          });
           $('#cierre_sesion').on('click', function()
           {
             window.location="/Fondo_Catolica/index.php"; 
           });
           //$('#test2').find('select').material_select();
 
-          $('a[data-toggle="tab"]').on('.tab', function (e) {
-             $('label').removeClass('active');
-
-          });
 
   
 
          
           $('.crearAfiliado').on('click', crearAfiliado);
-          $('#test5').find('#registrar_historico').on('click',function(){alert('ddd');});
           $('.datepicker').pickadate({
+            format: 'dd-mm-yyyy',
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
           });
@@ -54,6 +73,13 @@
           listar(1);
           listar(2);
           listar(3);
+
+
+
+          $('.side-nav-inner').on('click', 'a', function(e){
+              e.preventDefault();
+             $('label').removeClass('active');
+          })
 
 
          
@@ -75,10 +101,21 @@
 
         function crearAfiliado()
         {
+           setTimeout("$('.ocultar').hide();", 5000);
           var m = $('#formAfiliacion').serialize();
           m += "&opcion=" + encodeURIComponent('registrarAfiliado');
           m += "&id=0";
 
+          if($('#carnet').val()=="" || $('#nombres-sp').val()=="" || $('#apellidos-sp').val()=="" || $('#direccion-sp').val()=="" || $('#telefono-sp').val()=="" || $('#celular-sp').val()=="" || $('#depar-ucb-sp').val()=="" || $('#interno-sp').val()=="" || $('#correo-sp').val()=="" || $('#totGanado-sp').val()=="" || $('#liquido-sp').val()=="" || $('#antiguedad-sp').val()=="" || $('#aporte-sp').val()=="")
+          {
+            var html='<div id="card-alert" class="card red lighten-5 ocultar">';
+                html=html+'<div class="card-content red-text">';
+                html=html+' <p>Datos incompletos.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+                $('#resultado').html(html);
+          }
+        else{
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: $('#formAfiliacion').attr('method'),
@@ -90,6 +127,17 @@
             console.log(t);
            if(t==1)
             {
+              
+
+                var html='<div id="card-alert" class="card green lighten-5 ocultar">';
+                html=html+'<div class="card-content green-text">';
+                html=html+' <p>EXITO : Afiliado creado.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+                $('#resultado').html(html);
+
+
+                
               console.log(data);
                $('#modal1').openModal();
                $('#modal1 label').addClass('active');
@@ -97,7 +145,9 @@
                $('#passwordModal').val(resp.password);
               listar(1);    listar(2);   listar(3); 
               obtenerSolicitud();
+
                $('#formAfiliacion').trigger("reset");
+
             }
              if(t==2)
             {
@@ -110,15 +160,35 @@
           .fail(function() {
             console.log("error");
           })
+        }
           event.preventDefault();
           
         }
 
+        function quitar_label(){
+          $('label').removeClass('active');
+          $('#test3').find('#eliForm').trigger("reset");
+          $('#test4').find('#formGenera').trigger("reset");
+
+        }
+
         function crearAfiliadoH()
         {
+          setTimeout("$('.ocultar').hide();", 5000);
           var m = $('#formHistorico').serialize();
           m += "&opcion=" + encodeURIComponent('registrarAfiliadoH');
           m += "&id=0";
+
+           if($('#test5').find('#calendario-sp').val()=="" ||  $('#test5').find('#ci-sp').val()=="" || $('#test5').find('#nombre-sp').val()=="" || $('#test5').find('#apellido-sp').val()=="" || $('#test5').find('#direccion-sp').val()=="" || $('#test5').find('#telefono-sp').val()=="" || $('#test5').find('#celular-sp').val()=="" || $('#test5').find('#depar-ucb-sp').val()=="" || $('#test5').find('#interno-sp').val()=="" || $('#test5').find('#correo-sp').val()=="" || $('#test5').find('#total-sp').val()=="" || $('#test5').find('#liquido-sp').val()=="" || $('#test5').find('#aporte-sp').val()=="")
+          {
+            var html='<div id="card-alert" class="card red lighten-5 ocultar">';
+                html=html+'<div class="card-content red-text">';
+                html=html+' <p>Datos incompletos.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+                $('#test5').find('#resultado').html(html);
+          }
+        else{
             $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: $('#formHistorico').attr('method'),
@@ -131,6 +201,12 @@
            if(t==1)
             {
               console.log(data);
+              var html='<div id="card-alert" class="card green lighten-5 ocultar">';
+                html=html+'<div class="card-content green-text">';
+                html=html+' <p>EXITO : Afiliado creado.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+                $('#test5').find('#resultado').html(html);
 
                var historia =  '<form id="formHistorico_2" method="POST"><div class="row">'+
                               '<div class="col s12 m12">'+
@@ -175,12 +251,14 @@
                                     '</div>'+
                                     '<div class="row">'+
                                       '<div class="col offset-s6 s3">'+
-                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="" id="registrar_historico" onclick="javascript:crearHistorico();">Aceptar</button>'+
+                                         '<button class="waves-effect waves-light btn" type="button" id="registrar_historico" onclick="javascript:crearHistorico();">Aceptar</button>'+
                                       '</div>'+        
                                       '<div class="col s3">'+
-                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin">Finalizar</button>'+
+                                         '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin" onclick="javascript:terminar_historico();">Finalizar</button>'+
+                                         '<button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"><i class="fa fa-trash-o"></i> Limpiar</button>'+
                                       '</div>'+                                   
                                     '</div>'+
+                                      '<div class="row"><div id="resultado2"></div></div>'+
                                   '</div>'+                            
                                 '</div>'+
                               '</div>'+
@@ -197,8 +275,8 @@
                             '</div>';
             $('#historia_afi').html(historia);
 
-            $('#test5').find('#nombre').val(resp.nombre+' '+resp.apellido);
-            $('#test5').find('#fechaAfi').val('01/05/2016');//////////////////////////////////
+            $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellido-sp').val());
+            $('#test5').find('#fechaAfi').val($('#test5').find('#calendario-sp').val());//////////////////////////////////
              /*  $('#modal1').openModal();
                $('#modal1 label').addClass('active');
                $('#usuarioModal').val(resp.usuario);
@@ -218,12 +296,15 @@
           .fail(function() {
             console.log("error");
           })
+        }
           event.preventDefault();
           
         }
 
          function crearHistorico()
         {
+          setTimeout("$('.ocultar').hide();", 5000);
+
           var m = $('#test5').find('#formHistorico_2').serialize();
           m += "&opcion=" + encodeURIComponent('registrarHistorico');
 
@@ -235,26 +316,26 @@
           })
           .done(function(data) {
             console.log('registrado');
-          /*  var resp = $.parseJSON(data);
+            var resp = $.parseJSON(data);
             var t= resp.resp;
             console.log(t);
            if(t==1)
             {
-              console.log(data);
-               $('#modal1').openModal();
-               $('#modal1 label').addClass('active');
-               $('#usuarioModal').val(resp.usuario);
-               $('#passwordModal').val(resp.password);
-              listar(1);    listar(2);   listar(3); 
-              obtenerSolicitud();
-               $('#formAfiliacion').trigger("reset");
+              
+
+                var html='<div id="card-alert" class="card green lighten-5 ocultar">';
+                html=html+'<div class="card-content green-text">';
+                html=html+' <p>EXITO : Historial agregado.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+               $('#test5').find('#resultado2').html(html);
+               $('#test5').find('#formHistorico_2').trigger("reset");
+               $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellido-sp').val());
+               $('#test5').find('#fechaAfi').val($('#test5').find('#calendario-sp').val());
+                $('#historia_afi').html('');
+                $('label').removeClass('active');
+
             }
-             if(t==2)
-            {
-
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
-
-            }*/
 
           })
           .fail(function() {
@@ -262,6 +343,15 @@
           })
           event.preventDefault();
           
+        }
+        function terminar_historico(){
+
+               $('#test5').find('#modalfin').openModal();
+               $('#test5').find('#modalfin label').addClass('active');
+               $('#test5').find('#formHistorico').trigger("reset");
+               $('#test5').find('#formHistorico_2').trigger("reset");
+
+              
         }
         function modificarAfiliado()
         {
@@ -319,6 +409,7 @@
               Materialize.toast('Eliminado!', 4000);
               $('#test3').find('#eliForm').trigger("reset");
               listar(1);    listar(2);   listar(3); 
+              $('label').removeClass('active');
 
             }
              
@@ -344,7 +435,7 @@
            if(t==1)
             {
               Materialize.toast('Modificado!', 4000)
-              $('#test4').find('#formGenera').trigger("reset");
+             // $('#test4').find('#formGenera').trigger("reset");
               listar(1);    listar(2);   listar(3); 
             }
              if(t==2)

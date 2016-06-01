@@ -39,7 +39,7 @@
 		}
 		public function registrar_historial($id){
 				$result= insertA('historial_sueldo', array('cantidad_sueldo','monto_aporte','idMes','idUsuario','liquido','antiguedad','fecha_mod'), array(2,2,2,2,2,2,2) , array($this->cantidad_sueldo,$this->monto_aporte,$this->idMes,$id,$this->liquido,$this->antiguedad,$this->fecha_mod));
-				if ($result ){		
+				if ($result){		
 					$response['resp']=1;	
 				}else{	$response['resp']=0;}
 			

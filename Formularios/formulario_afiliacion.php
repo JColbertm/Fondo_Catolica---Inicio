@@ -34,13 +34,13 @@
                     <label>Solicitud No:</label>
                   </div>
                   <div class="input-field col s4 m6 offset-s4 offset-m1">
-                    <input id="fechaactual" name="fechaactual" type="date" readonly="" value="<?php echo date('d-m-Y') ?>" class="datepicker">
+                    <input  id="fechaactual" name="fechaactual" type="date" readonly="" value="<?php echo date('d-m-Y') ?>" class="datepicker">
                     <label>Fecha:</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4 m5">
-                    <input placeholder="6048521" id="carnet" name="carnet" type="text" class="validate">
+                    <input id="carnet" name="carnet" type="text" class="validate">
                     <label>CI:</label>
                   </div>
                 </div>
@@ -152,6 +152,9 @@
 
                         </select>
                     </div>
+                </div>
+                <div class="row">
+                  <div id="resultado"></div>
                 </div>  
                         
               

@@ -4,7 +4,8 @@
         include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Formularios/formulario_afiliacion.php";
     ?>
     <div class="row">
-    	<div class="col offset-m9 col m3" id="mostrarModal">
+    	<div class="col offset-m8 col m4" id="mostrarModal">
+    	 <button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"><i class="fa fa-trash-o"></i> Limpiar</button>
         	<a class="waves-effect waves-light btn crearAfiliado" href=""><i class="fa fa-paper-plane" aria-hidden="true"></i> Afiliar</a></div> 
     </div>   
     </form>
