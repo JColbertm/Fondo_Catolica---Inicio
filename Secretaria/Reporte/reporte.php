@@ -39,7 +39,7 @@
           .done(function(data) {
             console.log(data);
             var resp = $.parseJSON(data);
-            if(t==1)
+            if(resp.res==1)
             {
               window.location="/Fondo_Catolica/index.php"; 
             }
