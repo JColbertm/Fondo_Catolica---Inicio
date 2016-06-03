@@ -52,6 +52,7 @@
           {
             window.location="/Fondo_Catolica/index.php"; 
           });
+          $('#test2').find('#busca_afi').on('keyup',buscar_teclado)
           //$('#test2').find('select').material_select();
 
 
@@ -84,6 +85,25 @@
 
          
     	});
+
+        function buscar_teclado(){
+            //setTimeout("$('.ocultar').hide();", 5000);
+            var nombre = $('#test2').find('#buscar_afi').val();
+            
+            console.log(nombre);
+            var numero=1;
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: {opcion: 'buscar_afi', numero: numero,nombre: nombre}
+          })
+          .done(function(data2) {
+                $('#listado'+numero+'').html(data2);
+              })
+          .fail(function() {
+            console.log("error");
+          })
+        }
         function obtenerSolicitud(){
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',

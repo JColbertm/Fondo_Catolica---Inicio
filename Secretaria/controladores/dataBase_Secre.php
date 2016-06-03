@@ -225,6 +225,20 @@
            	} 
            	echo $html;
 		break;
+
+		case "buscar_afi":
+			$num = filter_var($_POST['numero'],FILTER_SANITIZE_NUMBER_INT);
+			$nom = filter_var($_POST['nombre'],FILTER_SANITIZE_NUMBER_INT);
+			$resultados=array();
+
+			 $html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
+          
+           	$users=ClaseUsuario::encontrar_por_nom($nom);
+           foreach ($users as $user) { 
+           	$html = $html.'<tr onclick="mostrar_datos'.$num.'(this)"><td width=1>'.$user->idUsuario.'</td><td>'.$user->nombre.'</td><td>'.$user->apellido_p.'</td></tr> ';
+           	} 
+           	echo $html;
+		break;
 	}
 
 ?>

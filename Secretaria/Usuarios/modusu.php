@@ -10,7 +10,7 @@
                         <div class="row">
                           <div class="input-field col s12">
                             <i class="fa fa-search prefix"></i>
-                            <input id="icon_prefix" type="text" class="validate">
+                            <input id="buscar_afi" type="text" class="validate">
                             <label for="icon_prefix">Buscar</label>
                           </div>
                         </div>
