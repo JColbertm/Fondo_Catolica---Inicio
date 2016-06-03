@@ -50,7 +50,7 @@
           });
           $('#cierre_sesion').on('click', function()
           {
-            window.location="/Fondo_Catolica/index.php"; 
+            cerrar_sesion();            
           });
           $('#test2').find('#busca_afi').on('keyup',buscar_teclado)
           //$('#test2').find('select').material_select();
@@ -86,6 +86,7 @@
          
     	});
 
+<<<<<<< HEAD
         function buscar_teclado(){
             //setTimeout("$('.ocultar').hide();", 5000);
             var nombre = $('#test2').find('#buscar_afi').val();
@@ -104,6 +105,31 @@
             console.log("error");
           })
         }
+=======
+        function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Fondo_Catolica/gral_php/login.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(rep.res==1)
+            {
+              window.location="/Fondo_Catolica/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+        
+>>>>>>> origin/master
         function obtenerSolicitud(){
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',

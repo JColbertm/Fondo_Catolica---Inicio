@@ -26,12 +26,36 @@
           llenar_parametros();
           $('#cierre_sesion').on('click', function()
           {
-            window.location="/Fondo_Catolica/index.php"; 
+            cerrar_sesion();            
           });
           $('#btn_guarda_parametro').on('click',function(){
             guardar_parametro();
           })
     	  });
+
+        function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Fondo_Catolica/gral_php/login.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Fondo_Catolica/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
 
         function llenar_parametros()
         {
