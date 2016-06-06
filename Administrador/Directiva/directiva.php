@@ -83,50 +83,36 @@
               <!--  CONTENIDO DE LA OPCION PARAMETROS -->
               <div class="row">
                 <div class="col m4 s12">     
-                  <div class="card">
-                        <div class="card-content">
-                          <!--  CONTENIDO TABLA DE PARAMETROS -->
-                            <form class="col s12">
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <i class="fa fa-search prefix"></i>
-                                  <input id="icon_prefix" type="text" class="validate">
-                                  <label for="icon_prefix">Buscar</label>
-                                </div>
-                              </div>
-                            </form>
-                            <table class="highlight centered">
-                              <thead>
-                                <tr>
-                                    <th>Nro.</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                </tr>
-                              </thead>
-
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>Juan</td>
-                                  <td>Perez</td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Marco</td>
-                                  <td>Aurelio</td>
-                                </tr>
-                                <tr>
-                                  <td>3</td>
-                                  <td>Debora</td>
-                                  <td>Tejerina</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          
-                                
+                  
+  
+                <div class="card">
+                  <div class="card-content">
+                    <!-- contenido -->
+                    <div class="row">
+                      <!-- input busqueda -->
+                      <form class="col s12">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <i class="fa fa-search prefix"></i>
+                            <input id="buscar_afi" type="text" class="validate">
+                            <label for="icon_prefix">Buscar</label>
+                          </div>
                         </div>
-                  </div>      
-                </div>
+                        <div style="">
+                          <div  id="listado1" style="height: 300px;  overflow-y: scroll" >
+                          </div>
+                          
+                        </div>                      
+                      </form>
+                      <!-- tabla de resultados -->
+
+                        
+                    </div>
+
+                  </div>           
+              
+</div> 
+
               
 
 
