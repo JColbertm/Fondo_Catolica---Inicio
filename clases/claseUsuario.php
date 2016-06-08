@@ -31,7 +31,7 @@
 		}
 		
 		public static function encontrar_por_id($id){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.idUsuario=$id limit 1");
+			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.idUsuario=$id and a.estado=1 limit 1");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
@@ -40,13 +40,12 @@
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
 		public static function encontrar_por_nom($nom){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.apellido_p LIKE '%$nom%' limit 1");
+			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.estado=1 and a.idUsuario=b.idUsuario and a.apellido_p LIKE '%$nom%' ");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
 			}
-			//$encontrado=mysqli_fetch_array($objeto_array);
-			return !empty($objeto_array)? array_shift($objeto_array):false;
+			return $objeto_array;
 		}
 		public static function encontrar_por_ci($ci){
 			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.ci=$ci limit 1");

@@ -52,7 +52,7 @@
           {
             cerrar_sesion();            
           });
-          $('#test2').find('#busca_afi').on('keyup',buscar_teclado)
+        
           //$('#test2').find('select').material_select();
 
 
@@ -86,17 +86,16 @@
          
     	});
 
-<<<<<<< HEAD
-        function buscar_teclado(){
+
+        function buscar_teclado(g,numero){
             //setTimeout("$('.ocultar').hide();", 5000);
-            var nombre = $('#test2').find('#buscar_afi').val();
+            var nombre = $(g).val();
             
             console.log(nombre);
-            var numero=1;
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: 'POST',
-            data: {opcion: 'buscar_afi', numero: numero,nombre: nombre}
+            data: {opcion: 'buscar_afi', numero: numero, nombre: nombre}
           })
           .done(function(data2) {
                 $('#listado'+numero+'').html(data2);
@@ -105,7 +104,7 @@
             console.log("error");
           })
         }
-=======
+
         function cerrar_sesion()
         {          
           var id = "opcion=" + encodeURIComponent('cierra_sesion');
@@ -129,7 +128,7 @@
           event.preventDefault();          
         }
         
->>>>>>> origin/master
+
         function obtenerSolicitud(){
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
@@ -214,7 +213,13 @@
         function quitar_label(){
           $('label').removeClass('active');
           $('#test3').find('#eliForm').trigger("reset");
+           $('#test2').find('#formAfiliacion').trigger("reset");
           $('#test4').find('#formGenera').trigger("reset");
+          $('#buscar_afi').val('');
+          $('#buscar_afi2').val('');
+          $('#buscar_afi3').val('');
+
+          listar(1);listar(2);listar(3);
 
         }
 
@@ -514,13 +519,20 @@
             console.log("error");
           })
       }
+      function enviar_pdf(r){
+        var h='<a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir" href="/Fondo_Catolica/Secretaria/Usuarios/tcpdf/too/formulario_afi_pdf.php?idu='+r+'" target="_blank"><i class="fa fa-print"></i></a>';
+        $('#test2').find('#botones-circulares').html(h);
+
+      }
       var idU;
       function mostrar_datos1(f)
       {
+
         row= $(f).find('td:eq(0)').text();
         row2 = $(f).find('td:eq(1)').text();
         row3 = $(f).find('td:eq(2)').text();
         idU = row;
+        enviar_pdf(idU);
         $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: 'POST',
