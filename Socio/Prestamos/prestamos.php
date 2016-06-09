@@ -30,7 +30,7 @@
             verifica_sesion();
     	}); 
 
-        function verifica_sesion()
+        function verifica_sesion() 
         {
           var id_usu = "id_usu=" + encodeURIComponent('<?php echo $_SESSION['ideusuario']?>');
           id_usu += "&opcion=" + encodeURIComponent('verificacion');
