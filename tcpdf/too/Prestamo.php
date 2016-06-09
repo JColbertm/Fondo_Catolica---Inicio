@@ -27,11 +27,42 @@
 // Include the main TCPDF library (search for installation path).
 require_once('tcpdf_include.php');
 		include("databaseA.php");
+  //   include("../../../clases/databaseA.php");
+  // include("../../../clases/claseUsuario.php");
+  // include("../../../clases/clasePrestamo.php");
+  // include("../../../clases/claseHistorial2.php");
+  // include("../../../clases/claseSolicitud.php");
+  // include("../../../clases/claseParametros.php");
+  // include("../../../clases/claseAhorro.php");
   
 // get data from users table
-		if(isset($_POST['idprestamo_im'])){
-			$id=$_POST['idprestamo_im'];
-		}
+		// if(isset($_POST['idprestamo_im'])){
+		// 	$id=$_POST['idprestamo_im'];
+		// }
+  //   $idSol=$id;
+  //     $solicitud=ClaseSolicitud::solicitud_por_id($idSol);
+  //     $usuario=ClaseUsuario::encontrar_por_id($solicitud->idUsuario);
+  //     $usuario->ci,
+  //     $usuario->nombre ,
+  //     $usuario->nombre2,
+  //      $usuario->apellido_p,
+  //     $usuario->apellido_m,
+  //     $usuario->direccion,
+  //     $usuario->telefono,
+  //     $usuario->celular,
+  //     $usuario->departamento,
+  //     $usuario->correos,
+  //     $usuario->interno,
+  //     $solicitud->cantidad_sol,
+  //     $solicitud->meses_sol,
+  //     $solicitud->porcentaje_sol,
+  //     $solicitud->cuota_sol,
+  //     $solicitud->ciGarante,
+  //     $solicitud->nombres_ga,
+  //     $solicitud->apellidos_ga,
+  //     $solicitud->cantidad_sueldo_sol,
+  //     $solicitud->liquido_sol
+      
 // 		if(isset($_POST['idpro'])){
 // 			$id=$_POST['idpro'];
 // 		}
