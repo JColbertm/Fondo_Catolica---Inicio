@@ -9,9 +9,6 @@
 		public $apellido_m;
 		public $idTipo_usuario;
 		public $idUsuarioCreador;
-		public $password;
-		public $nombre_usuario;
-		public $estado;
 		public $idDatos;
 		public $direccion;
 		public $telefono;
@@ -19,6 +16,9 @@
 		public $departamento;
 		public $interno;
 		public $correos;
+		public $estado;
+		public $nombre_usuario;
+		public $password;
 		
 		//selecciona todos los usuarios
 		public static function encontrar_a_todos(){
@@ -36,33 +36,15 @@
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
 			}
+			//$encontrado=mysqli_fetch_array($objeto_array);
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
-
-		public static function encontrar_por_nombre($nombre){
-			$resultados= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.nombre like '%$nombre%' ");
-			$objeto_array=array();
-			while ($row = mysqli_fetch_array($resultados)) {
-				$objeto_array[]=self::instanciacion($row);
-			}
-			return $objeto_array;
-		}
-		// public static function encontrar_por_apellido($apellido){
-		// 	$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where  a.idUsuario=b.idUsuario and a.apellido_p=$apellido limit 1");
-		// 	$objeto_array=array();
-		// 	while ($row = mysqli_fetch_array($resultado)) {
-		// 		$objeto_array[]=self::instanciacion($row);
-		// 	}
-		// 	//$encontrado=mysqli_fetch_array($objeto_array);
-		// 	return !empty($objeto_array)? array_shift($objeto_array):false;
-		// }
 		public static function encontrar_por_nom($nom){
 			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.estado=1 and a.idUsuario=b.idUsuario and a.apellido_p LIKE '%$nom%' ");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
 			}
-			return !empty($objeto_array)? array_shift($objeto_array):false;
 			return $objeto_array;
 		}
 		public static function encontrar_por_ci($ci){
@@ -71,6 +53,7 @@
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
 			}
+			//$encontrado=mysqli_fetch_array($objeto_array);
 
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
