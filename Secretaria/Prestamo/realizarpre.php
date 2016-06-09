@@ -218,11 +218,9 @@
           </div>
           <div class="col s4 l4">
             <button class="btn waves-effect waves-light blue" type="button" id="boton_revision" name="action" onclick="javascript:revision_prestamo()" ><i class="fa fa-eye"></i> Revisar</button>
-          </div>   
-          <div class="col s4 l4">
-          <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:enviar_prestamo_por_terceros();" name="action"><i class="fa fa-check"></i> Enviar</button>
-          </div>
-        </div>   
+          </div>    
+        </div>
+          
       </form>                 
       </div>
       <div id="mensaje_registrado"></div>           

@@ -168,6 +168,14 @@
             <label class="active">Liquido Pagable:</label>
           </div>
         </div>
+        <div id="cheque">
+         <div class="row">
+          <div class="input-field col offset-s3 offset-l5 s5 l2" >
+            <input type="text" id="nu-cheque-rp" name="numero_cheque" placeholder="Ej. 345224" required>
+            <label class="active">Nº de Cheque</label>
+          </div>
+        </div>
+        </div>
                 <div id="alerta_revision_sol"></div>
     </div>
   </div>
@@ -181,7 +189,16 @@
           <div class="col s6 m6 l4">
           <button class="btn waves-effect waves-light" type="button" id="boton_registrar_sol" onclick="javascript:enviar_prestamo_sol();" name="action"><i class="fa fa-paper-plane-o"></i> Enviar</button>
           </div>
-        </div>
+          </div>
+          <div class="row" id="botones_envio">
+          <div class="col s6 offset-m2 m2 offset-l4 l3">
+          <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:registrar_prestamo();" name="action"><i class="fa fa-check"></i> Enviar</button>
+          </div>
+          <div class="col s6 offset-m2 m2 l3">
+                    <div id="imprimir_boton"></div>
+          </div>
+          </div>
+        
         </form>                   
       </div> 
             <div id="mensaje_registrado_sol"></div>                     

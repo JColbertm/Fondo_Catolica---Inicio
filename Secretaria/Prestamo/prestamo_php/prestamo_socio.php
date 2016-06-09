@@ -1,5 +1,7 @@
 
 <?php 
+date_default_timezone_set('America/La_Paz');
+//print $datetime=date('d/m/Y H:i:s');
 @session_start();
 //registrar_prestamo() no se esta ausando todavia
 	include("../../../clases/databaseA.php");
@@ -123,12 +125,15 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$datos->porcentaje = $_POST['porcentaje'];
 			$idgarante_pres=ClaseUsuario::encontrar_por_ci($_POST['garante']);
 			$datos->idGarante = $idgarante_pres->idUsuario;
-			$datos->idRegistrador =2;//cambiar por inicio sesion
+			$datos->idRegistrador =$_SESSION['ideusuario'];//cambiar por inicio sesion
 			$datos->numero_cheque = $_POST['numero_cheque'];
 			$datos->estado=1;
 			$resultados=$datos->crear_prestamo();
-		}else{$resultados="false";}
-			echo json_encode($resultados);
+			$idpres=$datos->idPrestamo;
+			$resultado = array('resultados' =>$resultados ,'idpres' =>$idpres );
+		}else{
+			$resultado=array('resultados'=>"false");}
+			echo json_encode($resultado);
 			flush();
 
 			break;
@@ -154,8 +159,9 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			 		'idSolicitud'=>$pre->idSolicitud,
 			 		'cod_form_solpres'=>$pre->cod_form_solpres,
 			 		'estado_sol'=>$pre->nombre_estado,
+			 		'fecha_sol'=>date("d-m-Y",strtotime($pre->fecha_sol)),
 			 		'ci'=> $usuario->ci,
-				 	'nombre'=>$usuario->nombre ,
+				 	'nombre'=>$usuario->nombre,
 				 	'nombre2'=> $usuario->nombre2,
 				 	'apellido_p'=> $usuario->apellido_p,
 				 	'apellido_m'=>$usuario->apellido_m);
@@ -217,6 +223,7 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$datos->ciGarante=$idgarante_pres->ci;
 			$datos->nombres_ga=$idgarante_pres->nombre;
 			$datos->apellidos_ga=$idgarante_pres->apellido_p;
+			$datos->fecha_sol=date('Y/m/d');
 			$datos->idRegistrador=$_SESSION['ideusuario'];
 			$datos->idTipo_estado=1;
 			$datos->estado=1;

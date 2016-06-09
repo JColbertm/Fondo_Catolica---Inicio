@@ -31,7 +31,8 @@
             interes();
             //
           $('#boton_aceptar').prop('disabled', true);//bloqueo boton del boton aceptar_simulacion modal
-          $('#boton_registrar').hide();//ocultar boton registrar
+          $('#cheque').hide();//Ocultamos input de cheque solprestamo.php
+          $('#botones_envio').hide();//ocultar boton registrar
           $('#boton_registrar_sol').hide();//ocultar boton registrar solicitud89
           // botones redondos estaticos "estilos_fondo.css"
           var altura = $('#botones-circulares').offset().top=750;
@@ -277,8 +278,9 @@
                       }
           
            function registrar_prestamo(){
+            if($('#nu-cheque-rp').val().length > 1){
             setTimeout("$('.ocultar').hide();", 5000);
-            var datos= $('#FormPrestamo_reg').serialize();
+            var datos= $('#FormPrestamo_reg_sol').serialize();
             datos +="&opcion=" + encodeURIComponent('registrar_prestamo');
             console.log(o);
             console.log(datos);
@@ -291,8 +293,10 @@
             var resp = $.parseJSON(data);
             console.log(data);
             console.log(resp);
-         $("#FormPrestamo_reg")[0].reset();
-            if(resp==true){
+            if(resp.resultados==true){
+              var boton='<a class="waves-effect waves-light btn blue" data-position="top" data-delay="50" data-tooltip="Imprimir" href="/Fondo_Catolica/tcpdf/too/Prestamo.php?idprestamo_im='+resp.idpres+'" target="_blank"><i class="fa fa-print"></i>Imprimir</a>';
+          $('#imprimir_boton').html(boton);
+          $("#FormPrestamo_reg_sol")[0].reset();
           var html='<div id="card-alert" class="card green lighten-5 ocultar"><div class="card-content green-text "><p><i class="mdi-social-notifications"></i> <div align="center"> Prestamo Registrado!</div></p></div></div>';  
           $('#mensaje_registrado').html(html);
           }else{
@@ -302,7 +306,11 @@
 
        
           });
-           }
+        }else{
+              Materialize.toast('Ingrese numero de cheque valido', 4000, 'rounded');
+          }
+           
+          }
     function buscar_prestamos(){
            o = "&opcion=" + encodeURIComponent('tabla_prestamos');
           $.ajax({
@@ -336,7 +344,7 @@
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
                 // $('#cantidad-sp').val(resp[0].cantidad_sol);
-                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombres</th><th>Apellidos</th><th>Estado</th></tr></thead><tbody>';
+                var html = '<div class="col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombres</th><th>Apellidos</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
         
                   for(i in resp){ 
                      html+='<tr onclick="mostrar_solicitud(this)"><td>'
@@ -345,7 +353,8 @@
                      +resp[i].ci+'</td><td>'
                      +resp[i].nombre+' '+resp[i].nombre2+'</td><td>'
                      +resp[i].apellido_p+' '+resp[i].apellido_m+'</td><td>'
-                     +resp[i].estado_sol+'</td></tr>';
+                     +resp[i].estado_sol+'</td><td>'
+                     +resp[i].fecha_sol+'</td></tr>';
                      console.log(resp[i].estado_sol);
                   }
                   html+= '</tbody></table></div>';
@@ -360,6 +369,12 @@
           {
               idSolicitud_p=$(f).find('td:eq(0)').text();
               cod_form_solpres_p = $(f).find('td:eq(1)').text();              
+              estado = $(f).find('td:eq(5)').text();
+              if(estado=="Evaluado"){
+                $('#boton_revision_sol').hide();
+                $('#cheque').show();
+                $('#botones_envio').show();
+              }            
               $('#num-sp').val(cod_form_solpres_p);
 
               var o = "a="+encodeURIComponent(idSolicitud_p)+"&opcion="+ encodeURIComponent('buscar_datos_solicitud_id');//{a: n, opcion:'buscar'};

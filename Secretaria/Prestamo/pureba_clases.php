@@ -132,6 +132,14 @@ $('.modal-trigger').leanModal({
 </tr> 
 </tbody> 
 </table> 
+<?php 
+    	date_default_timezone_set('America/La_Paz');
+
+    
+    
+    print $datetime=date('d/m/Y');
+    print $se=date('H:i:s');
+    ?>
     
 </body>
 </html>

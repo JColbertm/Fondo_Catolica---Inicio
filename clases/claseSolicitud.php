@@ -14,6 +14,7 @@ class ClaseSolicitud{
 	public $ciGarante;
 	public $nombres_ga;
 	public $apellidos_ga;
+	public $fecha_sol;
 	public $idRegistrador;
 	public $idTipo_estado;
 	public $nombre_estado;
@@ -48,7 +49,7 @@ class ClaseSolicitud{
 		}
 	
 	public function crear_solicitud(){
-			$result2= insertA(self::$db_tabla, array('idUsuario', 'cantidad_sol', 'meses_sol', 'porcentaje_sol', 'cuota_sol', 'cantidad_sueldo_sol', 'liquido_sol', 'ciGarante', 'nombres_ga', 'apellidos_ga', 'idRegistrador', 'idTipo_estado'),array(2,2,2,2,2,2,2,2,2,2,2,2), array($this->idUsuario,$this->cantidad_sol,$this->meses_sol,$this->porcentaje_sol,$this->cuota_sol,$this->cantidad_sueldo_sol,$this->liquido_sol,$this->ciGarante,$this->nombres_ga,$this->apellidos_ga,$this->idRegistrador,$this->idTipo_estado));
+			$result2= insertA(self::$db_tabla, array('idUsuario', 'cantidad_sol', 'meses_sol', 'porcentaje_sol', 'cuota_sol', 'cantidad_sueldo_sol', 'liquido_sol', 'ciGarante', 'nombres_ga', 'apellidos_ga','fecha_sol', 'idRegistrador', 'idTipo_estado'),array(2,2,2,2,2,2,2,2,2,2,2,2,2), array($this->idUsuario,$this->cantidad_sol,$this->meses_sol,$this->porcentaje_sol,$this->cuota_sol,$this->cantidad_sueldo_sol,$this->liquido_sol,$this->ciGarante,$this->nombres_ga,$this->apellidos_ga,$this->fecha_sol,$this->idRegistrador,$this->idTipo_estado));
 			 if($result2){
 			 	$row= execSqlA("SELECT MAX(idSolicitud) FROM solicitud");
 			 	while ($data = mysqli_fetch_array($row)){			  
