@@ -1,18 +1,27 @@
 
 <?php 
+@session_start();
+//registrar_prestamo() no se esta ausando todavia
 	include("../../../clases/databaseA.php");
 	include("../../../clases/claseUsuario.php");
 	include("../../../clases/clasePrestamo.php");
-	include("../../../clases/claseHistorial.php");
+	include("../../../clases/claseHistorial2.php");
 	include("../../../clases/claseSolicitud.php");
+	include("../../../clases/claseParametros.php");
+	include("../../../clases/claseAhorro.php");
 $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 	switch ($opcion) {
 		case "buscar_garante":
-		$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
+		$ci=filter_var($_POST['ci'],FILTER_VALIDATE_INT);
+		$aporte=$_POST['aporte_pres'];
 		// verificamos que el garante cumpla con la condicion de garantizar 3 veces
-		$garante=ClasePrestamo::verificar_garante($rt);
-		$datos_garante=ClaseUsuario::encontrar_por_ci($rt);
+		$garante=ClasePrestamo::verificar_garante($ci);
+		$datos_garante=ClaseUsuario::encontrar_por_ci($ci);
+		$liquido_pagable=ClaseHistorial::historial_por_ci($ci);			
 		if($garante<3){
+			$parametro=ClaseParametros::encontrar_parametro_prestamo(14);
+			$soporte=round($aporte*100/30,2);
+			if($soporte<=$liquido_pagable->liquido){
 			 $resultados=array(
 			 	//alerta 2 significa que el garante esta habilitado
 		 	'alerta'=>2,
@@ -21,16 +30,21 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		 	'nombre2'=> $datos_garante->nombre2,
 		 	'apellido_p'=> $datos_garante->apellido_p,
 		 	'apellido_m'=>$datos_garante->apellido_m );
+			}else{
+			$resultados=array(
+			//alerta 1 significa que el garante esta no habilitado
+			'alerta'=>1,
+			'ci'=> $datos_garante->ci,
+		 	'nombre'=>"" ,
+		 	'nombre2'=>"",
+		 	'apellido_p'=>"",
+		 	'apellido_m'=>"" );
+		}
 		 	
 		}else{
 			$resultados=array(
 			//alerta 1 significa que el garante esta no habilitado
-			'alerta'=>1,
-		 	'ci'=>$datos_garante->ci ,
-		 	'nombre'=> " ",
-		 	'nombre2'=> " ",
-		 	'apellido_p'=> " ",
-		 	'apellido_m'=> " ");
+			'alerta'=>1);
 		}
 			echo json_encode($resultados);
 			flush();
@@ -40,8 +54,8 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$ci_solicitante = $_POST['a'];
 			$ganancias=ClaseHistorial::historial_por_ci($ci_solicitante);
  			$resultados=array(
-		 	'total_ganado'=> $ganancias->total_ganado,
-		 	'liquido_pagable'=>$ganancias->liquido_pagable ,
+		 	'cantidad_sueldo'=> $ganancias->cantidad_sueldo,
+		 	'liquido'=>$ganancias->liquido,
 		 	'monto_aporte'=> $ganancias->monto_aporte );
 		 				
 			echo json_encode($resultados);
@@ -49,8 +63,9 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 
 			break;
 			case "buscar_datos_socio":
-			$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
-			$use=ClaseUsuario::encontrar_por_ci($rt);
+			if(isset($_POST['ci']) &&$_POST['ci']!=""){$use=ClaseUsuario::encontrar_por_ci($_POST['ci']);}
+			if(isset($_POST['nombre']) && !empty($_POST['nombre'])){$use=ClaseUsuario::encontrar_por_nombre($_POST['nombre']);}
+			if(isset($_POST['apellido']) && !empty($_POST['apellido'])){$use=ClaseUsuario::encontrar_por_apellido($_POST['apellido']);}
 		 	$resultado=array(
 		 	'ci'=> $use->ci,
 		 	'nombre'=>$use->nombre ,
@@ -67,10 +82,10 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			flush();
 
 			break;
-			case "buscar_datos_socio_id":
-			$rt=filter_var($_POST['a'],FILTER_VALIDATE_INT);
-			$usuario=ClaseUsuario::encontrar_por_id($rt);
-			$ganancias=ClaseHistorial::historial_por_ci($usuario->ci);
+			case "buscar_datos_solicitud_id":
+			$idSol=filter_var($_POST['a'],FILTER_VALIDATE_INT);
+			$solicitud=ClaseSolicitud::solicitud_por_id($idSol);
+			$usuario=ClaseUsuario::encontrar_por_id($solicitud->idUsuario);
 		 	$resultado=array(
 		 	'ci'=> $usuario->ci,
 		 	'nombre'=>$usuario->nombre ,
@@ -83,9 +98,15 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		 	'departamento'=>$usuario->departamento,
 		 	'correos'=>$usuario->correos,
 		 	'interno'=>$usuario->interno,
-		 	'total_ganado'=> $ganancias->total_ganado,
-		 	'liquido_pagable'=>$ganancias->liquido_pagable ,
-		 	'monto_aporte'=> $ganancias->monto_aporte
+		 	'cantidad_pres'=>$solicitud->cantidad_sol,
+		 	'meses'=>$solicitud->meses_sol,
+		 	'porcentaje'=>$solicitud->porcentaje_sol,
+		 	'monto_aporte'=> $solicitud->cuota_sol,
+		 	'ci_garante'=> $solicitud->ciGarante,
+		 	'nombres_garante'=> $solicitud->nombres_ga,
+		 	'apellidos_garante'=> $solicitud->apellidos_ga,
+		 	'total_ganado'=> $solicitud->cantidad_sueldo_sol,
+		 	'liquido_pagable'=>$solicitud->liquido_sol
 		 	);
 
 			echo json_encode($resultado);
@@ -128,19 +149,80 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$c=0;
 			$pres=ClaseSolicitud::encontrar_solicitudes();
 			 foreach ($pres as $pre) {
+			 $usuario=ClaseUsuario::encontrar_por_id($pre->idUsuario);
 			 	$resultados[$c]=array(
 			 		'idSolicitud'=>$pre->idSolicitud,
 			 		'cod_form_solpres'=>$pre->cod_form_solpres,
-			 		'idUsuario'=>$pre->idUsuario,
-			 		'cantidad_sol'=>$pre->cantidad_sol,
-			 		'meses_sol'=>$pre->meses_sol,
-			 		'porcentaje_sol'=>$pre->porcentaje_sol,
-			 		'idGarante'=>$pre->idGarante);
+			 		'estado_sol'=>$pre->nombre_estado,
+			 		'ci'=> $usuario->ci,
+				 	'nombre'=>$usuario->nombre ,
+				 	'nombre2'=> $usuario->nombre2,
+				 	'apellido_p'=> $usuario->apellido_p,
+				 	'apellido_m'=>$usuario->apellido_m);
 					$c++;
 			 }
 			echo json_encode($resultados);
 			flush();
 
+		break;
+		case "buscar_paramtros":
+			$ci=filter_var($_POST['ci'],FILTER_VALIDATE_INT);
+			$ganancias=ClaseHistorial::historial_por_ci($ci);			
+			$ahorro=ClaseAhorro::encontrar_ahorro_ci($ci);			
+			$interes=ClaseParametros::encontrar_parametro_prestamo(10);
+			$max_meses=ClaseParametros::encontrar_parametro_prestamo(8);
+			$porcentaje_prestamo=ClaseParametros::encontrar_parametro_prestamo(19);
+			$cantidad_max_prestamo=ClaseParametros::encontrar_parametro_prestamo(14);
+			//calculo de la cuota maxima del socio
+			$max_couta_prestamo=$ganancias->liquido*$porcentaje_prestamo->condicion;
+			//calculo prestamo max
+			$max_prestamo=$ahorro->cantidad_ahorro*$cantidad_max_prestamo->condicion;
+			$resultados=array('interes'=>$interes->condicion,'max_meses'=>$max_meses->condicion,'cuota_maxima'=>$max_couta_prestamo,'prestamo_max'=>$max_prestamo);
+			echo json_encode($resultados);
+			flush();
+
+		break;
+		case "garante_nombre":
+			$search = $_POST['a'];
+			$pres=ClaseUsuario::encontrar_por_nombre($search);
+			$resultados=array();
+			$c=0;
+			foreach ($pres as $pre) {
+				$resultados[$c]=array('ci'=>$pre->ci,'nombre'=>$pre->nombre." ".$pre->nombre2,'apellido'=>$pre->apellido_p." ".$pre->apellido_m);
+					$c++;
+			 }
+			 echo json_encode($resultados);
+			flush();
+		break;
+		case "estado_enviado":
+			$id = $_POST['id'];
+			$sol_es=new ClaseSolicitud;
+			$sol_es->idTipo_estado=2;
+			$res=$sol_es->modificar_solicitud($id);
+			
+			 echo json_encode($res);
+			flush();
+		break;
+		case "enviar_solicitud_prestamo":
+			$idusu_prestamo=ClaseUsuario::encontrar_por_ci($_POST['ci']);
+			$datos=new ClaseSolicitud();
+			$datos->idUsuario=$idusu_prestamo->idUsuario;
+			$datos->cantidad_sol=$_POST['cantidad'];
+			$datos->meses_sol=$_POST['meses'];
+			$datos->porcentaje_sol=$_POST['porcentaje'];
+			$datos->cuota_sol=$_POST['aporte'];
+			$datos->cantidad_sueldo_sol=$_POST['ganado'];
+			$datos->liquido_sol=$_POST['liquido'];
+			$idgarante_pres=ClaseUsuario::encontrar_por_ci($_POST['cigarante']);
+			$datos->ciGarante=$idgarante_pres->ci;
+			$datos->nombres_ga=$idgarante_pres->nombre;
+			$datos->apellidos_ga=$idgarante_pres->apellido_p;
+			$datos->idRegistrador=$_SESSION['ideusuario'];
+			$datos->idTipo_estado=1;
+			$datos->estado=1;
+			$resultados=$datos->crear_solicitud();
+			 echo json_encode($resultados);
+			flush();
 		break;
 	}
  ?>

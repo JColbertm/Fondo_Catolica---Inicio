@@ -9,8 +9,13 @@
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/Secretaria/Prestamo/prestamo_js/prestamos.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript" src="jquery-latest.js"></script> 
+<script type="text/javascript" src="jquery.tablesorter.js"></script>	
+<script type="text/javascript">
+			
 	  $(document).ready(function(){
+        $("#myTables").tablesorter(); 
+
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 $('.modal-trigger').leanModal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -20,7 +25,10 @@ $('.modal-trigger').leanModal({
       ready: function() { alert('Ready'); }, // Callback for Modal open
       complete: function() { alert('Closed'); } // Callback for Modal close
     }
-  );  });
+  );  
+
+});
+
 	</script>
 </head>
 
@@ -31,40 +39,47 @@ $('.modal-trigger').leanModal({
 	include("../../clases/claseUsuario.php");
 	include("../../clases/clasePrestamo.php");
 	include("../../clases/claseHistorial.php");
-
-	 $users=new ClaseUsuario;
-	 $users->ci="2533";
-	 $users->nombre="sergiolas";
-	 $users->nombre2="favio";
-	 $users->apellido_p="sega";
-	 $users->apellido_m="sebva";
-	 $users->idTipo_usuario="1";
-	 $users->idUsuarioCreador="1";
-	 $users->direccion="nos";
-		$users->telefono="3422";
-		$users->celular="3242";
-		$users->departamento="es";
-		$users->interno="323";
-		$users->correos="dgdf@hdf";
-	 echo $users->nombre;
-	 $users->crear_primario();
+	include("../../clases/claseParametros.php");
+	//paramrtros:
+	$pres=ClaseParametros::encontrar_parametros_prestamo(1);
+	 foreach ($pres as $pre) {
+	 	echo $pre->condicion."<br>";
+	 }
+	 	$prestamos=ClaseParametros::encontrar_parametro_prestamo(10);
+	 	echo $prestamos->condicion;
+	 // $users=new ClaseUsuario;
+	 // $users->ci="2533";
+	 // $users->nombre="sergiolas";
+	 // $users->nombre2="favio";
+	 // $users->apellido_p="sega";
+	 // $users->apellido_m="sebva";
+	 // $users->idTipo_usuario="1";
+	 // $users->idUsuarioCreador="1";
+	 // $users->direccion="nos";
+		// $users->telefono="3422";
+		// $users->celular="3242";
+		// $users->departamento="es";
+		// $users->interno="323";
+		// $users->correos="dgdf@hdf";
+	 // echo $users->nombre;
+	 // $users->crear_primario();
 	 // $users->crear_secundario();
 
 	 // $pres=ClasePrestamo::encontrar_prestamos();
 	 // foreach ($pres as $pre) {
 	 // 	echo $pre->cantidad."<br>";
 	 // }
-	$rt=6811158;
+	// $rt=6811158;
 // 	$seres= new ClaseUsuario;
 // 	$seress=$seres->nombre="asdas";
 // 	echo $seress.'<br>';
 // 	echo $seress2=$seres->nombre.'<br>';;
 
-	echo $use=ClasePrestamo::verificar_garante(123456);
-	$user=ClaseHistorial::historial_por_ci(123456);
-	foreach ($user as $pre) {
-	 	echo $pre->idHistorial_sueldo."<br>";
-	 }
+	// echo $use=ClasePrestamo::verificar_garante(123456);
+	// $user=ClaseHistorial::historial_por_ci(123456);
+	// foreach ($user as $pre) {
+	//  	echo $pre->idHistorial_sueldo."<br>";
+	//  }
 	 //$user=ClaseHistorial::historial_por_ci(123456);
 	// echo "<br>".$user->idHistorial_sueldo;
 
@@ -73,21 +88,50 @@ $('.modal-trigger').leanModal({
 		// echo $a;
 // 		 $resultados=array('ci'=> $a,'nombre'=>$use->nombre ,'nombre2'=> "123",'apellido_p'=> "1231",'apellido_m'=>"23" );
 // var_dump($resultados);
-	$rt=123456;
-	$seres= new ClaseUsuario;
-	//poner nombre
-	$seress=$seres->nombre="asdas";
-	//recupera
-	echo $seress.'<br>';
-	echo $seress2=$seres->nombre.'<br>';;
-	$use=ClaseUsuario::encontrar_por_id($rt);
-		$a=$use->ci;
-		$b=2;
-		echo $a;
-		 $resultados=array('ci'=> $a,'nombre'=>$use->nombre ,'nombre2'=> "123",'apellido_p'=> "1231",'apellido_m'=>"23" );
-var_dump($resultados);
+	
 	 ?>
 
-  
+ <table id="myTable" class="tablesorter"> 
+<thead> 
+<tr> 
+    <th>Last Name</th> 
+    <th>First Name</th> 
+    <th>Email</th> 
+    <th>Due</th> 
+    <th>Web Site</th> 
+</tr> 
+</thead> 
+<tbody> 
+<tr> 
+    <td>Smith</td> 
+    <td>John</td> 
+    <td>jsmith@gmail.com</td> 
+    <td>$50.00</td> 
+    <td>http://www.jsmith.com</td> 
+</tr> 
+<tr> 
+    <td>Bach</td> 
+    <td>Frank</td> 
+    <td>fbach@yahoo.com</td> 
+    <td>$50.00</td> 
+    <td>http://www.frank.com</td> 
+</tr> 
+<tr> 
+    <td>Doe</td> 
+    <td>Jason</td> 
+    <td>jdoe@hotmail.com</td> 
+    <td>$100.00</td> 
+    <td>http://www.jdoe.com</td> 
+</tr> 
+<tr> 
+    <td>Conway</td> 
+    <td>Tim</td> 
+    <td>tconway@earthlink.net</td> 
+    <td>$50.00</td> 
+    <td>http://www.timconway.com</td> 
+</tr> 
+</tbody> 
+</table> 
+    
 </body>
 </html>

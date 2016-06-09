@@ -8,7 +8,7 @@
 		}
 	}
 	function llamada2(){
-	return $entrada = array("localhost","fondo_catolica","root","");
+	return $entrada = array("localhost","bd_ssped","root","");
 	 
 	}
 	

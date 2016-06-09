@@ -10,7 +10,7 @@
                         <div class="row">
                           <div class="input-field col s12">
                             <i class="fa fa-search prefix"></i>
-                            <input id="buscar_afi" type="text" class="validate">
+                            <input id="buscar_afi" type="text" class="validate" onkeyup="javascript:buscar_teclado(this,1);">
                             <label for="icon_prefix">Buscar</label>
                           </div>
                         </div>
@@ -33,9 +33,13 @@
               <div class="card">
                   <div class="card-content">
                     <!-- con css hacemos que los botones sean estaticos -->
-                    <div id="botones-circulares" align="right" class="menu-fixed">
-                      <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>
-                    </div>
+                    
+                     <input type="hidden" value="" id="planifi" name="planifi">
+                      <div id="botones-circulares" align="right" class="menu-fixed">
+                        
+                      </div>
+                    
+        
                     <form method="POST" id="formAfiliacion" class="col s12 m12">
                       <?php
                         include $_SERVER["DOCUMENT_ROOT"]."/Fondo_Catolica/Formularios/formulario_afiliacion.php";

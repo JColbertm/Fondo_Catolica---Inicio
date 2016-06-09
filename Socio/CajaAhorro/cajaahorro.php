@@ -27,7 +27,40 @@
           	{
             	cerrar_sesion();            
           	});
-    	});
+    	verifica_sesion();
+      }); 
+
+        function verifica_sesion()
+        {
+          var id_usu = "id_usu=" + encodeURIComponent('<?php echo $_SESSION['ideusuario']?>');
+          id_usu += "&opcion=" + encodeURIComponent('verificacion');
+          id_usu += "&tipo_usu=" + encodeURIComponent('<?php echo $_SESSION['tipousu']?>');
+          console.log(id_usu);
+          $.ajax({
+            url: '/Fondo_Catolica/gral_php/login.php',
+            type: 'POST',
+            data: id_usu
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              if(resp.inisesion == 0)
+              {
+                window.location="/Fondo_Catolica/Socio/cambiopass.php"; 
+              }
+              else
+              {
+
+              }
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
     	function cerrar_sesion()
         {          
           var id = "opcion=" + encodeURIComponent('cierra_sesion');

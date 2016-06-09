@@ -15,8 +15,8 @@
                 var resp = $.parseJSON(data2);//json a objeto
                 console.log(data2);
                 console.log(resp);
-                	var ganado_so=resp.total_ganado;
-                    var pagable_so=resp.liquido_pagable;
+                	var ganado_so=resp.cantidad_sueldo;
+                    var pagable_so=resp.liquido;
                     var aporte_so=resp.monto_aporte;
                   console.log(ganado_so);
                   console.log(aporte_so);
