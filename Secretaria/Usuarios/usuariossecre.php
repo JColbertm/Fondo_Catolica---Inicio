@@ -86,7 +86,9 @@
          
     	});
 
+
         function buscar_teclado(g,numero){
+
             //setTimeout("$('.ocultar').hide();", 5000);
             var nombre = $(g).val();
             
@@ -128,6 +130,10 @@
         }
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 =======
 
 >>>>>>> origin/master
