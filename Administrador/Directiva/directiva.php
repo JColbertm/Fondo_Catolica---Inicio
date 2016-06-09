@@ -24,6 +24,7 @@
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
           $('select').material_select();
+          listar();
           $('#cierre_sesion').on('click', function()
           {
             cerrar_sesion();            
@@ -37,7 +38,7 @@
           $.ajax({
             url: '/Fondo_Catolica/gral_php/login.php',
             type: 'POST',
-            data: id
+            data: id        
           })
           .done(function(data) {
             console.log(data);
@@ -52,6 +53,60 @@
           })
           event.preventDefault();          
         }
+
+        function listar()
+      {
+          //setTimeout("$('.ocultar').hide();", 5000);
+          var id = "opcion=" + encodeURIComponent('listar');
+          id += "&numero="+encodeURIComponent(1);
+          console.log(id);
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: id            
+          })
+          .done(function(data) {
+                $('#listado1').html(data);
+              })
+          .fail(function() {
+            console.log("error");
+          })
+      }
+
+      function mostrar_datos1(f)
+      {
+        var row= $(f).find('td:eq(0)').text();
+        var row2 = $(f).find('td:eq(1)').text();
+        var row3 = $(f).find('td:eq(2)').text();
+        var idU = row;
+        var id = "opcion=" + encodeURIComponent('obtenerAfiliado');
+        id += "&idu="+encodeURIComponent(row);
+        $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+                 var resp = $.parseJSON(data);
+                  var t= resp.resp;
+            if(t==1)
+            {
+              console.log("success");
+              $('label').addClass('active');
+              $('#numsol').val(resp.idAfiliacion);
+              $('#fechaactual').val(resp.fecha);
+              $('#carnet').val(resp.ci);
+              $('#first_name').val(resp.nombre);
+              $('#last_name').val(resp.apellido);              
+            }
+
+              })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault(); 
+      }
+
       </script>
 
       <!--Let browser know website is optimized for mobile-->
@@ -76,112 +131,98 @@
   <div class="row">
     <div class="col offset-m1 m10 s12">     
       <div class="card">
-            <div class="card-action">
-              <a>Modificacion Directivas</a>
-            </div>
-            <div class="card-content">
-              <!--  CONTENIDO DE LA OPCION PARAMETROS -->
-              <div class="row">
-                <div class="col m4 s12">     
-                  
-  
-                <div class="card">
-                  <div class="card-content">
-                    <!-- contenido -->
-                    <div class="row">
-                      <!-- input busqueda -->
-                      <form class="col s12">
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <i class="fa fa-search prefix"></i>
-                            <input id="buscar_afi" type="text" class="validate">
-                            <label for="icon_prefix">Buscar</label>
-                          </div>
+        <div class="card-action">
+          <a>Modificacion Directivas</a>
+        </div>
+        <div class="card-content">
+          <!--  CONTENIDO DE LA OPCION PARAMETROS -->
+          <div class="row">
+            <div class="col m4 s12">     
+              <div class="card">
+                <div class="card-content">
+                  <!-- contenido -->
+                  <div class="row">
+                    <!-- input busqueda -->
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <i class="fa fa-search prefix"></i>
+                          <input id="buscar_afi" type="text" class="validate">
+                          <label for="icon_prefix">Buscar</label>
                         </div>
-                        <div style="">
-                          <div  id="listado1" style="height: 300px;  overflow-y: scroll" >
-                          </div>
-                          
-                        </div>                      
-                      </form>
-                      <!-- tabla de resultados -->
-
+                      </div>
+                      <div>
+                        <div  id="listado1" style="height: 300px;  overflow-y: scroll" >
                         
-                    </div>
-
-                  </div>           
-              
-</div> 
-
-              
-
-
-                <div class="col m8 s12">     
-                  <div class="card">
-                        <div class="card-content">
-                          <!--  CONTENIDO TABLA DE PARAMETROS -->                          
-                          <div class="row">
-                            <center><h4>Seleccion Directiva</h4></center>
-                          </div>
-
-                          <div class="row">
-                            <form class="col s12">
-                              <div class="row">
-                                <div class="input-field col s6">
-                                  <input id="first_name" type="text" readonly="">
-                                  <label>Nombre:</label>
-                                </div>
-                                <div class="input-field col s6">
-                                  <input id="last_name" type="text" readonly="">
-                                  <label>Apellido:</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s6">
-                                  <input id="date" type="text" readonly="" value="<?php echo date("d-m-Y");?>">
-                                  <label>Fecha:</label>
-                                </div>
-                                <div class="input-field col s6">
-                                  <input id="period" type="text" class="validate">
-                                  <label>Duracion:</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <select>
-                                    <option value="" disabled selected>Seleccione un Comite</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                  </select>
-                                  <label>Comite</label>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="input-field col s12">
-                                  <select>
-                                    <option value="" disabled selected>Seleccione un Cargo</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
-                                  </select>
-                                  <label>Cargo</label>
-                                </div>
-                              </div>
-                              
-                              <a class="waves-effect waves-light btn right"><i class="fa fa-wrench left"></i>Modificar</a>
-                            </form>
-                          </div>
-
                         </div>
-                  </div>      
-                </div>
-              </div>
-              
-                    
+                      </div>                      
+                    </form>
+                  </div>
+                </div>   
+              </div> 
             </div>
-      </div>      
-    </div>
+
+            <div class="col m8 s12">     
+              <div class="card">
+                <div class="card-content">
+                  <!--  CONTENIDO TABLA DE PARAMETROS -->                          
+                  <div class="row">
+                    <center><h4>Seleccion Directiva</h4></center>
+                  </div>
+                  <div class="row">
+                    <form class="col s12">
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="first_name" type="text" readonly="">
+                          <label>Nombre:</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input id="last_name" type="text" readonly="">
+                          <label>Apellido:</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s6">
+                          <input id="date" type="text" readonly="" value="<?php echo date("d-m-Y");?>">
+                          <label>Fecha:</label>
+                        </div>
+                        <div class="input-field col s6">
+                          <input id="period" type="text" class="validate" maxlength="2">
+                          <label>Duracion:</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <select>
+                            <option disabled selected>Seleccione un Comit&eacute;</option>
+                            <option value="1">Comit&eacute; Administrativo</option>
+                            <option value="2">Comit&eacute; de Cr&eacute;dito</option>
+                            <option value="3">Comit&eacute; de Vigilancia</option>
+                          </select>
+                          <label>Comit&eacute;</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <select>
+                            <option disabled selected>Seleccione un Cargo</option>
+                            <option value="1">Presidente</option>
+                            <option value="2">Secretario(a)</option>
+                            <option value="3">Vocal</option>
+                          </select>
+                          <label>Cargo</label>
+                        </div>
+                      </div>
+                      <a class="waves-effect waves-light btn right"><i class="fa fa-wrench left"></i>Modificar</a>
+                    </form>
+                  </div>
+                </div>
+              </div>      
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>      
   </div>
 
 <!--  Llamada al pie de pagina -->

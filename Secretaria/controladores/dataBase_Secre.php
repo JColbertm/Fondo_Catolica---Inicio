@@ -228,7 +228,7 @@
 
 		case "buscar_afi":
 			$num = filter_var($_POST['numero'],FILTER_SANITIZE_NUMBER_INT);
-			$nom = filter_var($_POST['nombre'],FILTER_SANITIZE_NUMBER_INT);
+			$nom = filter_var($_POST['nombre'],FILTER_SANITIZE_STRING);
 			$resultados=array();
 
 			 $html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
@@ -239,6 +239,8 @@
            	} 
            	echo $html;
 		break;
+
+
 	}
 
 ?>
