@@ -184,7 +184,7 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		break;
 		case "garante_nombre":
 			$search = $_POST['a'];
-			$pres=ClaseUsuario::encontrar_por_nombre($search);
+			$pres=ClaseUsuario::encontrar_por_nom($search);
 			$resultados=array();
 			$c=0;
 			foreach ($pres as $pre) {
@@ -222,6 +222,12 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$datos->estado=1;
 			$resultados=$datos->crear_solicitud();
 			 echo json_encode($resultados);
+			flush();
+		break;
+		case "buscar_interes":
+			$parametro=ClaseParametros::encontrar_parametro_prestamo(10);
+			$interes=100*$parametro->condicion;
+			 echo json_encode($interes);
 			flush();
 		break;
 	}

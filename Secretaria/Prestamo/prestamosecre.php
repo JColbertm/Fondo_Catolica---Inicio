@@ -24,14 +24,19 @@
       <script type="text/javascript" src="/Fondo_Catolica/Secretaria/Prestamo/prestamo_js/prestamos.js"></script>
 
       <script type="text/javascript">
-      	$(document).ready(function(){      
-
+      	$(document).ready(function(){  
+            $('.tooltipped').tooltip({delay: 50});
+    
+            //porcentaje actual
+            interes();
+            //
           $('#boton_aceptar').prop('disabled', true);//bloqueo boton del boton aceptar_simulacion modal
           $('#boton_registrar').hide();//ocultar boton registrar
           $('#boton_registrar_sol').hide();//ocultar boton registrar solicitud89
           // botones redondos estaticos "estilos_fondo.css"
           var altura = $('#botones-circulares').offset().top=750;
           $(window).on('scroll', function(){
+            
             if ( $(window).scrollTop() > altura ){
               $('#botones-circulares').addClass('menu-fixed');
             } else {
@@ -187,8 +192,8 @@
                   $("#apellido-garante-rp").val(apellido_ga);
                   $("#ci-garante-rp").val(ci_ga);
 
-            });
-                      }
+            })
+         }
 
         function buscar_garante_nombre(){
           
@@ -593,6 +598,10 @@
       }
       function revision_prestamo(){
             setTimeout("$('.ocultar_revision').hide();", 5000);
+            if($('#ci-rp').val().length > 5){
+            if($('#cantidad-rp').val().length > 1){
+            if($('#plazo-mes-rp').val().length > 0){
+            if($('#ci-garante-rp').val().length > 5){
             buscar_garante();
             var ci=$('#ci-rp').val();
             var monto=$('#cantidad-rp').val();
@@ -648,6 +657,28 @@
                               console.log(alerta);
           }
               })
+            }else{
+              Materialize.toast('Ingrese un Ci de garante valido', 4000, 'rounded');
+            }}else{
+              Materialize.toast('Ingrese plazo en meses', 4000, 'rounded');
+            }}else{
+              Materialize.toast('Ingrese cantidad de prestamo', 4000, 'rounded');
+            }}else{
+              Materialize.toast('Ingrese el Ci del socio', 4000, 'rounded');
+            }
+      }
+      function interes(){
+        var interes='opcion='+ encodeURIComponent("buscar_interes");
+        $.ajax({
+          url:'prestamo_php/prestamo_socio.php',
+          type:'POST',
+          data:interes
+
+        }).done(function(data){
+          var porcentaje=$.parseJSON(data);
+          console.log(porcentaje);
+          $('#porcentaje-rp').val(porcentaje);
+        });
       }
       </script>
 

@@ -4,7 +4,7 @@
       <div class="card-content">
       <!-- con css hacemos que los botones sean estaticos -->
         <div id="botones-circulares" align="right">
-          <a class="btn-floating btn-large waves-effect waves-light green btn modal-trigger " data-position="top" data-delay="50" data-tooltip="Simulacion" href="#modal3"><i class="fa fa-calculator"></i></a>
+          <a class="btn-floating btn-large waves-effect waves-light green tooltipped btn modal-trigger " data-position="top" data-delay="50" data-tooltip="Simulacion" href="#modal3"><i class="fa fa-calculator"></i></a>
           <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>
         </div>
         <div id="modal3" class="modal" style="display: none; opacity: 1; width:400px;">
@@ -214,10 +214,10 @@
           <!-- FIN formulario de prestamo -->
         <div class="row"> 
           <div class="col offset-s2 s4 offset-l3 l4">
-            <button class="btn waves-effect waves-light red" type="button" name="action" ><i class="fa fa-trash-o"></i> Limpiar</button>
+            <button class="btn waves-effect waves-light red" type="reset" name="action" ><i class="fa fa-trash-o"></i> Limpiar</button>
           </div>
           <div class="col s4 l4">
-            <button class="btn waves-effect waves-light blue" type="button" id="boton_revision" name="action" onclick="javascript:revision_prestamo();" ><i class="fa fa-eye"></i> Revisar</button>
+            <button class="btn waves-effect waves-light blue" type="button" id="boton_revision" name="action" onclick="javascript:revision_prestamo()" ><i class="fa fa-eye"></i> Revisar</button>
           </div>   
           <div class="col s4 l4">
           <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:enviar_prestamo_por_terceros();" name="action"><i class="fa fa-check"></i> Enviar</button>
