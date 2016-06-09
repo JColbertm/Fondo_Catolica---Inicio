@@ -96,66 +96,61 @@ $pdf->SetFont('helvetica', '', 10);
 $htmlcontent='
 
 <style>
-table, th {    
-    text-align: left;
 
-}
 
 table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  padding-top:5px;
+  padding-bottom:3px;
+  padding-right:20px;
+  padding-left:30px;
+
 }
 
-td{
-    padding: 10px 50px 10px 50px;
-    margin: 5px;
-    border-spacing: 10px;
-}
 .negrita{
   padding: 0 50px 0 50px;
   font-weight: bold;
-
 }
-</style>
-<table >
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
 
+</style>
+
+<table>
+<thead>
+
+<tr><th colspan="4"></th></tr>
+<tr><th colspan="4"></th></tr>
 <tr>
-<th rowspan="6" colspan="1"></th>
-<th rowspan="6" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"</h2></th>
+<th rowspan="2" colspan="1"></th>
+<th rowspan="2" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"</h2></th>
 </tr>
 
 <tr><th colspan="4"></th></tr>
 <tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
+
+
 <tr>
 <th colspan="4" align="center"><h1>SOLICITUD PARA AFILIACION</h1></th>
 </tr>
 
 <tr><th colspan="4"></th></tr>
 <tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
 
-
-<tr class="negrita conmargen">
+</thead>
+<tbody class="margen">
+<tr class="negrita">
 <td colspan="2">Solicitud Nro.</td>
 <td colspan="2">Fecha</td>
 </tr>
 
 <tr>
-<td colspan="2">'.$idafi.'</td>
-<td colspan="2">'.$my_new_date.'</td>
+<td colspan="2">   '.$idafi.'</td>
+<td colspan="2">   '.$my_new_date.'</td>
 </tr>
 
 <tr>
 <td colspan="4" class="negrita">Carnet</td></tr>
 <tr>
-<td colspan="4">'.$ci.'</td>
+<td colspan="4">   '.$ci.'</td>
 </tr>
 
 <tr>
@@ -163,15 +158,15 @@ td{
 <td colspan="2" class="negrita">Apellidos</td>
 </tr>
 <tr>
-<td colspan="2">'.$nomb.' '.$nomb2.'</td>
-<td colspan="2">'.$ap.' '.$ap2.'</td>
+<td colspan="2">   '.$nomb.' '.$nomb2.'</td>
+<td colspan="2">   '.$ap.' '.$ap2.'</td>
 </tr>
 
 <tr>
 <td colspan="2" class="negrita">Direccion</td>
 </tr>
 <tr>
-<td colspan="2">'.$direccion.'</td>
+<td colspan="2">   '.$direccion.'</td>
 </tr>
 
 <tr>
@@ -179,8 +174,8 @@ td{
 <td colspan="2" class="negrita">Nro. Celular</td>
 </tr>
 <tr>
-<td colspan="2">'.$telefono.'</td>
-<td colspan="2">'.$celular.'</td>
+<td colspan="2">   '.$telefono.'</td>
+<td colspan="2">   '.$celular.'</td>
 </tr>
 
 <tr>
@@ -188,17 +183,17 @@ td{
 <td colspan="2" class="negrita">Interno</td>
 </tr>
 <tr>
-<td colspan="2">'.$departamento.'</td>
-<td colspan="2">'.$interno.'</td>
+<td colspan="2">   '.$departamento.'</td>
+<td colspan="2">   '.$interno.'</td>
 </tr>
 
 <tr>
 <td colspan="2" class="negrita">Correo</td>
 </tr>
 <tr>
-<td colspan="2">'.$correo.'</td>
+<td colspan="2">   '.$correo.'</td>
 </tr>
-
+<tr><th colspan="4"></th></tr>
 <tr>
 <td colspan="4" >Señores de la Directiva:</td>
 </tr>
@@ -208,14 +203,14 @@ td{
 
 <tr>
 <td colspan="1" class="negrita">Total ganado: </td>
-<td colspan="1" >'.$cantidad_sueldo.' Bs.</td>
+<td colspan="1" >   '.$cantidad_sueldo.' Bs.</td>
 <td colspan="1" class="negrita">Liquido pagable: </td>
-<td colspan="1" >'.$liquido.' Bs.</td>
+<td colspan="1" >   '.$liquido.' Bs.</td>
 </tr>
 
 <tr>
 <td colspan="3" class="negrita">Antigüedad como personal administrativo: </td>
-<td colspan="1" >'.$antiguedad.'</td>
+<td colspan="1" >   '.$antiguedad.'</td>
 </tr>
 
 <tr>
@@ -224,7 +219,7 @@ td{
 
 <tr>
 <td colspan="3" >El monto que deseo aportar mensualmente es de Bs:</td>
-<td colspan="1" >'.$monto_aporte.'</td>
+<td colspan="1" >   '.$monto_aporte.'</td>
 </tr>
 
 <tr>
@@ -232,7 +227,7 @@ td{
 <td colspan="3" >'.$mes_nombre.'</td>
 </tr>
 
-
+</tbody>
 
 </table>
 

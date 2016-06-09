@@ -86,7 +86,7 @@
          
     	verifica_sesion();
         });
-
+        var idU;
         function verifica_sesion()
         {
           var id_usu = "id_usu=" + encodeURIComponent('<?php echo $_SESSION['ideusuario']?>');
@@ -251,6 +251,9 @@
           $('#buscar_afi').val('');
           $('#buscar_afi2').val('');
           $('#buscar_afi3').val('');
+          idU=0;
+           enviar_pdf(0);
+           enviar_pdf_pass(0,0);
 
           listar(1);listar(2);listar(3);
 
@@ -553,11 +556,21 @@
           })
       }
       function enviar_pdf(r){
+        if(r!=0){
         var h='<a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir" href="/Fondo_Catolica/Secretaria/Usuarios/tcpdf/too/formulario_afi_pdf.php?idu='+r+'" target="_blank"><i class="fa fa-print"></i></a>';
-        $('#test2').find('#botones-circulares').html(h);
+        $('#test2').find('#botones-circulares').html(h);}
+        else{$('#test2').find('#botones-circulares').html('');}
 
       }
-      var idU;
+
+      function enviar_pdf_pass(r,pass){
+       if(r!=0){
+        var h='<a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir" href="/Fondo_Catolica/Secretaria/Usuarios/tcpdf/too/formulario_password_pdf.php?idu='+r+'&pass='+pass+'" target="_blank"><i class="fa fa-print"></i></a>';
+        $('#test4').find('#botones-circulares').html(h);}
+        else{$('#test4').find('#botones-circulares').html('');}
+
+      }
+      
       function mostrar_datos1(f)
       {
 
@@ -641,7 +654,6 @@
 
        function mostrar_datos3(f)
       {
-
         row= $(f).find('td:eq(0)').text();
         row2 = $(f).find('td:eq(1)').text();
         row3 = $(f).find('td:eq(2)').text();
@@ -666,6 +678,8 @@
               $('#test4').find('#user').val(resp.user);
               $('#test4').find('#password1').val(resp.original);
               $('#test4').find('#password2').val(resp.pass);
+              var pass= resp.pass;
+        enviar_pdf_pass(idU,pass);
                          
             }
              if(t==2)

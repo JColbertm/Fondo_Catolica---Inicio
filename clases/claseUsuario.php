@@ -40,7 +40,7 @@
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
 		public static function encontrar_por_nom($nom){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.estado=1 and a.idUsuario=b.idUsuario and a.nombre LIKE '%$nom%' ");
+			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.estado=1 and a.idUsuario=b.idUsuario and a.apellido_p LIKE '%$nom%' ");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);

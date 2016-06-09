@@ -31,7 +31,7 @@
     <div class="card">
       <div class="card-content">
        <div id="botones-circulares" align="right" >
-                      <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>
+                      
         </div>
         <div class="row">
           <form class="col s12" id="formGenera">
