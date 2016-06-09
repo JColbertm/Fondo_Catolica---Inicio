@@ -87,11 +87,13 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set margins
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // add a page
+$pdf->setPrintFooter(false);
+$pdf->setPrintHeader(false);
 $pdf->AddPage();
 $image_file = K_PATH_IMAGES.'alpha.png';
 
 
-$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFont('helvetica', '', 11);
 
 $htmlcontent='
 
@@ -118,99 +120,77 @@ table {
 <thead>
 
 <tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
-<tr>
-<th rowspan="2" colspan="1"></th>
-<th rowspan="2" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"</h2></th>
-</tr>
-
-<tr><th colspan="4"></th></tr>
-<tr><th colspan="4"></th></tr>
 
 
-<tr>
-<th colspan="4" align="center"><h1>SOLICITUD PARA AFILIACION</h1></th>
-</tr>
+<tr><th rowspan="4" colspan="1"></th></tr>
+
+<tr><th colspan="3" align="right"><h2>Formulario "H"</h2></th></tr>
+<tr><th colspan="3"></th></tr>
+<tr><th rowspan="2" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"<br></h2><h1>SOLICITUD PARA AFILIACION</h1></th></tr>
+
 
 <tr><th colspan="4"></th></tr>
 <tr><th colspan="4"></th></tr>
 
 </thead>
-<tbody class="margen">
-<tr class="negrita">
-<td colspan="2">Solicitud Nro.</td>
-<td colspan="2">Fecha</td>
+
+<tbody >
+<tr>
+<td colspan="2"><b>Solicitud Nro: </b>'.$idafi.'</td>
+<td colspan="2"><b>Fecha:</b> '.$my_new_date.'</td>
+</tr>
+
+
+<tr>
+<td colspan="4" ><b>Carnet:</b> '.$ci.'</td>
+</tr>
+
+
+<tr>
+<td colspan="4" ><b>Nombres: </b>'.$nomb.' '.$nomb2.' '.$ap.' '.$ap2.'</td>
 </tr>
 
 <tr>
-<td colspan="2">   '.$idafi.'</td>
-<td colspan="2">   '.$my_new_date.'</td>
+<td colspan="4" ><b>Direccion:</b> '.$direccion.'</td>
 </tr>
 
 <tr>
-<td colspan="4" class="negrita">Carnet</td></tr>
+<td colspan="2" ><b>Nro. Telefono:</b> '.$telefono.'</td>
+<td colspan="2" ><b>Nro. Celular: </b>'.$celular.'</td>
+</tr>
+
+
 <tr>
-<td colspan="4">   '.$ci.'</td>
+<td colspan="2" ><b>Departamento: </b>'.$departamento.'</td>
+<td colspan="2" ><b>Interno: </b>'.$interno.'</td>
 </tr>
 
 <tr>
-<td colspan="2" class="negrita">Nombres</td>
-<td colspan="2" class="negrita">Apellidos</td>
-</tr>
-<tr>
-<td colspan="2">   '.$nomb.' '.$nomb2.'</td>
-<td colspan="2">   '.$ap.' '.$ap2.'</td>
+<td colspan="4" ><b>Correo:</b> '.$correo.'</td>
 </tr>
 
-<tr>
-<td colspan="2" class="negrita">Direccion</td>
-</tr>
-<tr>
-<td colspan="2">   '.$direccion.'</td>
-</tr>
 
-<tr>
-<td colspan="2" class="negrita">Nro. Telefono</td>
-<td colspan="2" class="negrita">Nro. Celular</td>
-</tr>
-<tr>
-<td colspan="2">   '.$telefono.'</td>
-<td colspan="2">   '.$celular.'</td>
-</tr>
 
-<tr>
-<td colspan="2" class="negrita">Departamento</td>
-<td colspan="2" class="negrita">Interno</td>
-</tr>
-<tr>
-<td colspan="2">   '.$departamento.'</td>
-<td colspan="2">   '.$interno.'</td>
-</tr>
+<tr><td colspan="4"></td></tr>
 
-<tr>
-<td colspan="2" class="negrita">Correo</td>
-</tr>
-<tr>
-<td colspan="2">   '.$correo.'</td>
-</tr>
-<tr><th colspan="4"></th></tr>
 <tr>
 <td colspan="4" >Señores de la Directiva:</td>
 </tr>
+
 <tr>
 <td colspan="4" >Presento a Uds. el detalle de mi boleta de pago:</td>
 </tr>
 
 <tr>
-<td colspan="1" class="negrita">Total ganado: </td>
-<td colspan="1" >   '.$cantidad_sueldo.' Bs.</td>
-<td colspan="1" class="negrita">Liquido pagable: </td>
-<td colspan="1" >   '.$liquido.' Bs.</td>
+<td colspan="4"><b>Total ganado: </b>'.$cantidad_sueldo.' Bs.</td>
 </tr>
 
 <tr>
-<td colspan="3" class="negrita">Antigüedad como personal administrativo: </td>
-<td colspan="1" >   '.$antiguedad.'</td>
+<td colspan="4"><b>Liquido pagable: </b>'.$liquido.' Bs.</td>
+</tr>
+
+<tr>
+<td colspan="4" >Antigüedad como personal administrativo: '.$antiguedad.'</td>
 </tr>
 
 <tr>
@@ -218,14 +198,19 @@ table {
 </tr>
 
 <tr>
-<td colspan="3" >El monto que deseo aportar mensualmente es de Bs:</td>
-<td colspan="1" >   '.$monto_aporte.'</td>
+<td colspan="4" >El monto que deseo aportar mensualmente es de Bs: '.$monto_aporte.'</td>
 </tr>
 
 <tr>
-<td colspan="1" class="negrita">A partir del mes de:</td>
-<td colspan="3" >'.$mes_nombre.'</td>
+<td colspan="4" >A partir del mes de: '.$mes_nombre.'</td>
 </tr>
+
+<tr><td colspan="4"></td></tr>
+<tr><td colspan="4"></td></tr>
+<tr><td colspan="4"></td></tr>
+
+<tr><td colspan="2" align="center" class="negrita">PDTE. COMITÉ ADMINISTRATIVO </td>
+<td colspan="2" align="center" class="negrita">FIRMA DEL SOLICITANTE </td></tr>
 
 </tbody>
 
@@ -234,8 +219,8 @@ table {
 ';
 
 //$htmlcontent='';
-$w = 40;
-$h = 40;
+$w = 35;
+$h = 35;
 // Example of Image from data stream ('PHP rules')
 $ser='images/logo_form.png';
 $pdf->Image($ser, 20, 11, $w, $h, 'PNG', '', '', false, 300, '', false, false, 0, 0, false, false);

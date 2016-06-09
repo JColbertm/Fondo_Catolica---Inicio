@@ -12,7 +12,12 @@
               <li class="tab col s3"><a class="active" href="#test1" onclick="javascript:quitar_label();">Afiliar Socio</a></li>
               <li class="tab col s3"><a href="#test2" onclick="javascript:quitar_label();">Modificar Socio</a></li>
               <li class="tab col s3"><a href="#test3" onclick="javascript:quitar_label();" >Eliminar Socio</a></li>
+
+
+              
               <li class="tab col s3"><a href="#test4" onclick="javascript:quitar_label();">Generar Nueva Contraseña</a></li>
+
+
               <li class="tab col s3"><a href="#test5" onclick="javascript:quitar_label();">Registro Historico</a></li>
             </ul>
           </div>
