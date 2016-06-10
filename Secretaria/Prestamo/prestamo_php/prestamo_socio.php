@@ -127,6 +127,7 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$datos->idGarante = $idgarante_pres->idUsuario;
 			$datos->idRegistrador =$_SESSION['ideusuario'];//cambiar por inicio sesion
 			$datos->numero_cheque = $_POST['numero_cheque'];
+			$datos->fecha=date('Y/m/d');
 			$datos->estado=1;
 			$resultados=$datos->crear_prestamo();
 			$idpres=$datos->idPrestamo;

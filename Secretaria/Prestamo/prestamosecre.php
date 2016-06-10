@@ -279,6 +279,7 @@
           
            function registrar_prestamo(){
             if($('#nu-cheque-rp').val().length > 1){
+            $('#imprimir_boton').show();
             setTimeout("$('.ocultar').hide();", 5000);
             var datos= $('#FormPrestamo_reg_sol').serialize();
             datos +="&opcion=" + encodeURIComponent('registrar_prestamo');
@@ -335,6 +336,7 @@
          event.preventDefault();
      }
      function buscar_solicitudes(){
+
            o = "&opcion=" + encodeURIComponent('tabla_solicitudes');
           $.ajax({
                 url: 'prestamo_php/prestamo_socio.php',
@@ -342,20 +344,32 @@
                 data: o
               })
               .done(function(data2) {
+
                 var resp = $.parseJSON(data2);//json a objeto
                 // $('#cantidad-sp').val(resp[0].cantidad_sol);
                 var html = '<div class="col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombres</th><th>Apellidos</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
-        
+            
                   for(i in resp){ 
+                    if(resp[i].estado_sol=="Verificar"){
                      html+='<tr onclick="mostrar_solicitud(this)"><td>'
                      +resp[i].idSolicitud+'</td><td>'
                      +resp[i].cod_form_solpres+'</td><td>'
                      +resp[i].ci+'</td><td>'
                      +resp[i].nombre+' '+resp[i].nombre2+'</td><td>'
-                     +resp[i].apellido_p+' '+resp[i].apellido_m+'</td><td>'
+                     +resp[i].apellido_p+' '+resp[i].apellido_m+'</td><td class="chip #4db6ac teal lighten-2">'
                      +resp[i].estado_sol+'</td><td>'
                      +resp[i].fecha_sol+'</td></tr>';
-                     console.log(resp[i].estado_sol);
+                   }
+                   if(resp[i].estado_sol=="Evaluado"){
+                     html+='<tr onclick="mostrar_solicitud(this)"><td>'
+                     +resp[i].idSolicitud+'</td><td>'
+                     +resp[i].cod_form_solpres+'</td><td>'
+                     +resp[i].ci+'</td><td>'
+                     +resp[i].nombre+' '+resp[i].nombre2+'</td><td>'
+                     +resp[i].apellido_p+' '+resp[i].apellido_m+'</td><td class="chip #9ccc65 light-green lighten-1">'
+                     +resp[i].estado_sol+'</td><td>'
+                     +resp[i].fecha_sol+'</td></tr>';
+                   }
                   }
                   html+= '</tbody></table></div>';
                   $('#tabla_solicitudes').html(html);
@@ -367,13 +381,20 @@
      }
      function mostrar_solicitud(f)
           {
+                
               idSolicitud_p=$(f).find('td:eq(0)').text();
               cod_form_solpres_p = $(f).find('td:eq(1)').text();              
               estado = $(f).find('td:eq(5)').text();
               if(estado=="Evaluado"){
+                $('#imprimir_boton').hide();
                 $('#boton_revision_sol').hide();
                 $('#cheque').show();
                 $('#botones_envio').show();
+              }else{
+                $('#botones_envio').hide();//ocultar boton registrar
+                $('#boton_revision_sol').show();
+                $('#imprimir_boton').hide();
+                $('#cheque').hide();
               }            
               $('#num-sp').val(cod_form_solpres_p);
 

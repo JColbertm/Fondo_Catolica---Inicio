@@ -192,7 +192,7 @@
           </div>
           <div class="row" id="botones_envio">
           <div class="col s6 offset-m2 m2 offset-l4 l3">
-          <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:registrar_prestamo();" name="action"><i class="fa fa-check"></i> Enviar</button>
+          <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:registrar_prestamo();" name="action"><i class="fa fa-check"></i> Registrar</button>
           </div>
           <div class="col s6 offset-m2 m2 l3">
                     <div id="imprimir_boton"></div>
