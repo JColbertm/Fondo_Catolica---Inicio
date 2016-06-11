@@ -18,6 +18,7 @@
       <link type="text/css" rel="stylesheet" href="/Fondo_Catolica/materialize/css/materialize.min.css"  media="screen,projection"/>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
+      <script type="text/javascript" src="/Fondo_Catolica/gral_php/validadores.js"></script>
       <script type="text/javascript">
       	$(document).ready(function(){
       		$('.slider').slider();

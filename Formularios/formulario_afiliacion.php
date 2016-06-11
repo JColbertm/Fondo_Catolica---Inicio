@@ -35,24 +35,24 @@
                   </div>
                   <div class="input-field col s4 m6 offset-s4 offset-m1">
                     <input  id="fechaactual" name="fechaactual" type="date" readonly="" value="<?php echo date('d-m-Y') ?>" class="datepicker">
-                    <label>Fecha:</label>
+                    <label>Fecha: (dia/mes/año)</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4 m5">
-                    <input id="carnet" name="carnet" type="text" class="validate">
+                    <input id="carnet" name="carnet" type="text" class="validate" onkeypress="return soloNumeros(event);" maxlength="10">
                     <label>CI:</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s6 m7">
                     <i class="fa fa-user prefix "></i>
-                    <input type="text" id="nombres-sp" name="nombres-sp" class="validate">
+                    <input type="text" id="nombres-sp" name="nombres-sp" class="validate" onkeypress="return soloLetras(event)">
                     <label>Nombres:</label>
 
                   </div>
                   <div class="input-field col s6 m5">
-                    <input type="text" id="apellidos-sp" name="apellidos-sp" class="validate">
+                    <input type="text" id="apellidos-sp" name="apellidos-sp" class="validate" onkeypress="return soloLetras(event)">
                     <label>Apellidos:</label>
                   </div>
                 </div>
@@ -62,11 +62,11 @@
                     <label>Direccion:</label>
                   </div>
                   <div class="input-field col s3 m6">
-                    <input type="text" id="telefono-sp" name="telefono-sp" class="validate">
+                    <input type="text" id="telefono-sp" name="telefono-sp" class="validate" onkeypress="return soloNumeros(event);" maxlength="7">
                     <label>N° Telefono:</label>
                   </div>
                   <div class="input-field col s3 m6">
-                    <input type="text" id="celular-sp" name="celular-sp" class="validate">
+                    <input type="text" id="celular-sp" name="celular-sp" class="validate" onkeypress="return soloNumeros(event);" maxlength="8">
                     <label>N° Celular:</label>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
                     <label>Departamento UCB:</label>
                   </div>
                   <div class="input-field col s6 m4">
-                    <input type="text" id="interno-sp" name="interno-sp" class="validate">
+                    <input type="text" id="interno-sp" name="interno-sp" class="validate" onkeypress="return soloNumeros(event);" maxlength="4">
                     <label>Interno:</label>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
                       <p>Total Ganado:</p>
                     </div>
                     <div class="input-field col s5 m5 l2">
-                      <input type="text" id="totGanado-sp" name="totGanado-sp" class="validate">
+                      <input type="text" id="totGanado-sp" name="totGanado-sp" class="validate" onkeypress="return soloNumeros(event);">
                       <label>Bs:</label>
                     </div>
                     <div class="col s7 m7 l3">
@@ -102,7 +102,7 @@
                       <p>Liquido Pagable:</p>
                     </div>
                     <div class="input-field col s5 m5 l2">
-                      <input type="text" id="liquido-sp" name="liquido-sp" class="validate">
+                      <input type="text" id="liquido-sp" name="liquido-sp" class="validate" onkeypress="return soloNumeros(event);">
                       <label>Bs:</label>
                     </div>
                     
@@ -113,7 +113,7 @@
                       <p>Antigüedad como personal administrativo:</p>
                     </div>
                     <div class="input-field col s5 m5 l2">
-                      <input type="text" id="antiguedad-sp" name="antiguedad-sp" class="validate">
+                      <input type="text" id="antiguedad-sp" name="antiguedad-sp" class="validate" onkeypress="return soloNumeros(event);" maxlength="3">
                       <label>Meses:</label>
                     </div>
                 </div>
@@ -125,14 +125,14 @@
                     </div>
                     <div class="input-field col s5 m5 l2">
                       <input type="text" id="aporte-sp" name="aporte-sp" class="validate">
-                      <label>bs:</label>
+                      <label>Bs:</label>
                     </div>
                 </div>
                 
                 <div class="row">
-                  <div class="col s7 m7 l5">
+                  <div class="col s5 m5 l5">
                       <br><br> 
-                      <p>A partir del mes de:</p>
+                      <p>A partir del año <label id="year" style="color:black"></label> y mes:</p>
                     </div>
                     <div class="input-field col s5 m4 l5" id="select_mes">
                         <select name="mes-sp" id="mes_val">

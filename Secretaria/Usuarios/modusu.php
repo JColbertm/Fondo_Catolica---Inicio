@@ -1,6 +1,6 @@
 
   <div class="row">
-              <div class="col s4 m3">
+              <div class="col s12 m12">
                 <div class="card">
                   <div class="card-content">
                     <!-- contenido -->
@@ -15,7 +15,7 @@
                           </div>
                         </div>
                         <div style="">
-                          <div  id="listado1" style="height: 300px;  overflow-y: scroll" >
+                          <div  id="listado1" style="height: 150px;  overflow-y: scroll" >
                           </div>
                           
                         </div>                      
@@ -28,8 +28,10 @@
                   </div>           
                 </div> 
               </div>  
+          </div> 
+        <div class="row">
               <!-- CONTENEDOR DEL CONTROL DE AHORROS -->
-              <div class="col s8 m9">
+              <div class="col s12 m12">
               <div class="card">
                   <div class="card-content">
                     <!-- con css hacemos que los botones sean estaticos -->

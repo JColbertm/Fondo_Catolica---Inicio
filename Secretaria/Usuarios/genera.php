@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col s4 m3">
+  <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
 
@@ -16,7 +16,7 @@
             </div>
 
             <div style="">
-              <div  id="listado3" style="height: 300px;  overflow-y: scroll" >
+              <div  id="listado3" style="height: 150px;  overflow-y: scroll" >
               </div>
             </div> 
           </form>
@@ -25,9 +25,12 @@
         </div>
       </div>           
     </div> 
-  </div>  
+  </div> 
+    </div> 
+
+  <div class="row"> 
   <!-- CONTENEDOR DEL CONTROL DE AHORROS -->
-  <div class="col s8 m9">
+  <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
        <div id="botones-circulares" align="right" >
@@ -35,6 +38,9 @@
         </div>
         <div class="row">
           <form class="col s12" id="formGenera">
+          <div class="col s12 m12 center">
+            <h4>GENERAR NUEVO PASSWORD</h4>
+          </div>
             <div class="row">
               <div class="input-field col s9">
                 <input id="last_name" type="text" class="validate" readonly="">

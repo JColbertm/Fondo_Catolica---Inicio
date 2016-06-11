@@ -1,5 +1,5 @@
 <div class="row">
-              <div class="col s4 m3">
+              <div class="col s12 m12">
                 <div class="card">
                   <div class="card-content">
                     <!-- contenido -->
@@ -15,7 +15,7 @@
                         </div>
 
                         <div style="">
-                          <div  id="listado2" style="height: 300px;  overflow-y: scroll" >
+                          <div  id="listado2" style="height: 150px;  overflow-y: scroll" >
                           </div>
                           
                         </div>   
@@ -26,13 +26,19 @@
 
                   </div>           
                 </div> 
-              </div>  
+              </div>
+          </div>  
+
+        <div class="row">
               <!-- CONTENEDOR DEL CONTROL DE AHORROS -->
-              <div class="col s8 m9">
+              <div class="col s12 m12">
                 <div class="card">
                   <div class="card-content">
                     <div class="row">
                       <form class="col s12" id="eliForm">
+                      <div class="col s12 m12 center">
+                        <h4>ELIMINAR AFILIADO</h4>
+                      </div>
                         <div class="row">
                           <div class="input-field col s9">
                             <input  id="first_name" type="text" class="validate" readonly="">

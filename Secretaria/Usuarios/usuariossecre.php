@@ -19,6 +19,7 @@
       <link href="/Fondo_Catolica/materialize/css/estilos_fondo.css" rel="stylesheet">
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
+      <script type="text/javascript" src="/Fondo_Catolica/gral_php/validadores.js"></script>
       <script type="text/javascript">
       	$(document).ready(function(){
 
@@ -93,22 +94,29 @@
         function cargar_select(){
 
           var mes;
-
+          var y;
           mes = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
           var f = new Date();
           var m =f.getMonth() +1;
+          var y=f.getFullYear();
           var html;
           html='<select name="mes-sp">';
-          for(var i=m; i<=12; i++ )
+          
+          if(m==12)
           {
-            html=html+'                <option value="'+i+'">'+mes[i]+'</option>';
-            
+            m=1;
+            y=y+1;
+          } 
+          else{
+            m=m+1;
           }
+            for(var i=m; i<=12; i++ )
+            {
+              html=html+'                <option value="'+i+'">'+mes[i]+'</option>';
+            }
           html=html+'                </select>';
-
-                        
+          $('#test1').find('#year').text(y);              
           $('#test1').find('#select_mes').html(html);
-
           $('select').material_select();
         }
         function verifica_sesion()
@@ -194,7 +202,7 @@
           })
           .done(function(data) {
             console.log("success");
-            $('#numsol').val(data);
+            $('#numsol').val('SA-'+data);
           })
      
           
@@ -598,7 +606,6 @@
       
       function mostrar_datos1(f)
       {
-
         row= $(f).find('td:eq(0)').text();
         row2 = $(f).find('td:eq(1)').text();
         row3 = $(f).find('td:eq(2)').text();
@@ -616,7 +623,7 @@
             {
               console.log("success");
               $('label').addClass('active');
-              $('#test2').find('#numsol').val(resp.idAfiliacion);
+              $('#test2').find('#numsol').val('SA-'+resp.idAfiliacion);
               $('#test2').find('#fechaactual').val(resp.fecha);
               $('#test2').find('#carnet').val(resp.ci);
               $('#test2').find('#nombres-sp').val(resp.nombre);
