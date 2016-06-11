@@ -388,6 +388,7 @@
               if(estado=="Evaluado"){
                 $('#imprimir_boton').hide();
                 $('#boton_revision_sol').hide();
+                $('#boton_registrar_sol').hide();
                 $('#cheque').show();
                 $('#botones_envio').show();
               }else{
