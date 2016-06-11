@@ -3,7 +3,7 @@
  <nav class="#009688 teal">
     <ul id="perfil_usuario" class="dropdown-content">
       <li><a href="#!">one</a></li>
-      <li><a href="#!">Cambiar Password</a></li>
+      <li><a href="/Fondo_Catolica/Administrador/cambiopassa.php">Cambiar Password</a></li>
       <li class="divider"></li>
       <li><a class="modal-trigger" href="#cierre_sesion"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>
     </ul>
@@ -18,7 +18,7 @@
       <ul id="nav" class="right hide-on-med-and-down">
         <ul id="perfil_usuario" class="dropdown-content">
           <li><a href="#!">one</a></li>
-          <li><a href="#!">Cambiar Password</a></li>
+          <li><a href="/Fondo_Catolica/Administrador/cambiopassa.php">Cambiar Password</a></li>
           <li class="divider"></li>
           <li><a class="modal-trigger" href="#cierre_sesion"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesi&oacute;n</a></li>
         </ul>

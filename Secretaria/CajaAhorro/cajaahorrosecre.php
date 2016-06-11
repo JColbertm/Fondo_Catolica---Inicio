@@ -24,6 +24,7 @@
           $('.slider').slider();
           $('.modal-trigger').leanModal();
           $(".button-collapse").sideNav();
+          listar();
           $('#cierre_sesion').on('click', function()
           {
             cerrar_sesion();            
@@ -84,6 +85,56 @@
           })
           event.preventDefault();          
         }
+
+        function listar()
+      {
+          //setTimeout("$('.ocultar').hide();", 5000);
+          var id = "opcion=" + encodeURIComponent('listar');
+          id += "&numero="+encodeURIComponent(1);
+          console.log(id);
+          $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: id            
+          })
+          .done(function(data) {
+                $('#listado1').html(data);
+              })
+          .fail(function() {
+            console.log("error");
+          })
+      }
+
+      function mostrar_datos1(f)
+      {
+        var row= $(f).find('td:eq(0)').text();
+        var row2 = $(f).find('td:eq(1)').text();
+        var row3 = $(f).find('td:eq(2)').text();
+        var idU = row;
+        var id = "opcion=" + encodeURIComponent('obtenerAfiliado');
+        id += "&idu="+encodeURIComponent(row);
+        $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+                 var resp = $.parseJSON(data);
+                  var t= resp.resp;
+            if(t==1)
+            {
+              console.log("success");
+              $('label').addClass('active');              
+              $('#nombre').val(resp.nombre +' ' +resp.apellido);
+              $('#ci').val(resp.ci)          
+            }
+
+              })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault(); 
+      }
 
       </script>
 
