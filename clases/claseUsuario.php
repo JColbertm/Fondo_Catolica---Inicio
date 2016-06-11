@@ -86,7 +86,7 @@
 					$response['resp']=1;
 					$response['password']=1234;
 					$response['usuario']=$user;
-					$response['nombre']=$nn;
+					$response['nombre_ap']=$nn.' '.$mm;
 					$response['apellido']=$mm;
 				}else{	$response['resp']=0;}
 			

@@ -134,9 +134,9 @@
                       <br><br> 
                       <p>A partir del mes de:</p>
                     </div>
-                    <div class="input-field col s5 m4 l5">
-                        <select name="mes-sp">
-                          <option value="0" disabled selected>Elija un mes</option>
+                    <div class="input-field col s5 m4 l5" id="select_mes">
+                        <select name="mes-sp" id="mes_val">
+                          <option value="0" >Elija un mes</option>
                           <option value="1">Enero</option>
                           <option value="2">Febrero</option>
                           <option value="3">Marzo</option>

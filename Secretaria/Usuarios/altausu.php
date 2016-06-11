@@ -16,17 +16,30 @@
     <div class="modal-content">
     	<h4>Usuario Afiliado</h4>
     	<div class="row">
-		    <form class="col s12">
+		    <form class="col s12" method="POST" action="/Fondo_Catolica/Secretaria/Usuarios/tcpdf/too/formulario_nuevo_pdf.php" target="_blank">
+		    <div id="botones-circulares" align="right">
+		    <button class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir" type="submit"><i class="fa fa-print"></i></button>
+        </div>
+
+        <div class="row">
+		        <div class="input-field col s10">
+		          <input id="nombreModal" name="nombre" type="text" readonly>
+		          <label><i class="fa fa-user" aria-hidden="true"></i> Afiliado:</label>
+		        </div>
+		        
+		      </div>
+
+
 		      <div class="row">
 		        <div class="input-field col s10">
-		          <input id="usuarioModal" type="text" readonly>
+		          <input id="usuarioModal" type="text" name="usuario" readonly>
 		          <label><i class="fa fa-user" aria-hidden="true"></i> Nombre de usuario:</label>
 		        </div>
 		        
 		      </div>
 		      <div class="row">
 		        <div class="input-field col s10">
-		          <input id="passwordModal" type="text" readonly="">
+		          <input id="passwordModal" type="text" name="pass" readonly="">
 		          <label><i class="fa fa-key" aria-hidden="true"></i> Contraseña:</label>
 		        </div>
 		      </div>
@@ -43,6 +56,7 @@
 		          </div>
 		        </div>
 		      </div>
+	          
 		    </form>
 		  </div>
      	
