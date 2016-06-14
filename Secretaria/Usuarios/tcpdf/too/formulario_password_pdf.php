@@ -61,7 +61,7 @@ $pdf->AddPage();
 $image_file = K_PATH_IMAGES.'alpha.png';
 
 
-$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFont('helvetica', '', 11);
 
 $htmlcontent='
 
@@ -102,20 +102,20 @@ table {
 </thead>
 <tbody >
 <tr >
-<td colspan="4"><b>Fecha:   </b>'.$fecha.'</td>
+<td colspan="4"><b>Fecha:   </b>'.date('Y-m-d').'</td>
 </tr>
 
 <tr>
-<td colspan="3"><b>Nombre y Apellido:   </b>'.$nom.' '.$ap.'</td>
-<td colspan="1"><b>CI:   </b>'.$ci.'</td>
+<td colspan="3"><b>Nombre(s) y Apellido(s):   </b>'.$nom.' '.$ap.'</td>
+</tr><tr>
+<td colspan="3"><b>Carnet de identidad: </b>'.$ci.'</td>
 </tr>
 
 
 
 
 <tr>
-<td colspan="2" ><b>Usuario:  </b> '.$user.'</td></tr>
-<tr>
+<td colspan="2" ><b>Usuario:  </b> '.$user.'</td>
 <td colspan="2"><b>Nuevo Password:  </b> '.$pass.'</td>
 </tr>
 
@@ -126,7 +126,7 @@ table {
 </tr>
 
 <tr>
-<td colspan="4" >    Es recomendable cambiar su contraseña al momento de ingresar por primera vez a su cuenta en el sistema por motivos de seguridad.</td>
+<td colspan="4" style="background-color:#dedede;">    Es recomendable cambiar su contraseña al momento de ingresar por primera vez a su cuenta<br>    en el sistema por motivos de seguridad.</td>
 </tr>
 
 

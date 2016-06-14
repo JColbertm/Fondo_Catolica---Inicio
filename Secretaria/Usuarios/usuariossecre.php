@@ -56,6 +56,16 @@
             $('label').removeClass('active');
             $('#formAfiliacion').trigger("reset");
           });
+
+           $('#test5').find('#limpiaM').on('click', function()
+          {
+             $('#test5').find('#aporte').val('');
+             $('#test5').find('#liquido').val('');
+             $('#test5').find('#totalGanado').val('');
+             $('#test5').find('#calendario-sp-2').val('');
+          });
+
+
           $('#cierre_sesion').on('click', function()
           {
             cerrar_sesion();            
@@ -63,8 +73,9 @@
 
           cargar_select();
 
-          $('#institucion').on('change',cargar_epc);
-          $('#test5').find('#institucion').on('change',cargar_epc_H);
+          $('#test1').find('#institucion').on('change',function(){cargar_epc_H(1)});
+          $('#test5').find('#institucion').on('change',function(){cargar_epc_H(5)});
+          $('#test2').find('#institucion').on('change',function(){cargar_epc_H(2)});
         
           
 
@@ -102,10 +113,10 @@
         var idU;
         var epc=['Elija un departamento','epc 1','epc 2','epc 3','epc 4'];
         var depa=['Elija un departamento','derecho','pastoral','contabilidad','administracion','personal'];
-        function cargar_epc(){
-          console.log($('#institucion-sp').val())
+        
+        function cargar_epc_H(num){
           var html;
-          if($('#institucion-sp').val()=='EPC')
+          if($('#test'+num+'').find('#institucion-sp').val()=='EPC')
           {
             html='<select name="depar-ucb-sp">';
             for(i=0; i<=4;i++)
@@ -116,7 +127,7 @@
             }
 
 
-            if($('#institucion-sp').val()=='UCB')
+            if($('#test'+num+'').find('#institucion-sp').val()=='UCB')
           {
             html='<select name="depar-ucb-sp">';
             for(j=0; j<=5;j++)
@@ -126,33 +137,7 @@
          
             html=html+'</select>';
             }
-            $('#departamento').html(html);
-            $('select').material_select();
-        }
-        function cargar_epc_H(){
-          var html;
-          if($('#test5').find('#institucion-sp').val()=='EPC')
-          {
-            html='<select name="depar-ucb-sp">';
-            for(i=0; i<=4;i++)
-            {
-              html=html+'<option value="'+epc[i]+'" >'+epc[i]+'</option>';
-            }
-            html=html+'</select>';
-            }
-
-
-            if($('#test5').find('#institucion-sp').val()=='UCB')
-          {
-            html='<select name="depar-ucb-sp">';
-            for(j=0; j<=5;j++)
-            {
-              html=html+'<option value="'+depa[j]+'" >'+depa[j]+'</option>';
-            }
-         
-            html=html+'</select>';
-            }
-            $('#test5').find('#departamento').html(html);
+            $('#test'+num+'').find('#departamento').html(html);
             $('select').material_select();
         }
         function abrir_eliminar(){
@@ -464,12 +449,16 @@
                                       '</div>'+                                 
                                     '</div>'+
                                     '<div class="row">'+
-                                      '<div class="col offset-s6 s3">'+
+                                    '<div class="col s3">'+
+                                      
+                                         '<button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpiaM"><i class="fa fa-trash-o"></i> Limpiar</button>'+
+                                      '</div>'+  
+                                      '<div class="col s3">'+
                                          '<button class="waves-effect waves-light btn" type="button" id="registrar_historico" onclick="javascript:crearHistorico();">Aceptar</button>'+
                                       '</div>'+        
                                       '<div class="col s3">'+
                                          '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin" onclick="javascript:terminar_historico();">Finalizar</button>'+
-                                         '<button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"><i class="fa fa-trash-o"></i> Limpiar</button>'+
+                                         
                                       '</div>'+                                   
                                     '</div>'+
                                       '<div class="row"><div id="resultado2"></div></div>'+
@@ -480,11 +469,27 @@
 
                             '<div id="modalfin" class="modal modal-fixed-footer">'+
                               '<div class="modal-content">'+
-                                '<h4>Modal Header</h4>'+
-                                '<p>A bunch of text</p>'+
+                                '<h4><i class="fa fa-money" aria-hidden="true"></i>  REGISTRAR AHORRO</h4>'+
+                                '<br><p>Registrar el ahorro total</p><br>'+
+                                 '<div class="row">'+
+                                      '<div class="input-field col s9">'+
+                                        '<input type="text" id="nombreF" name="nombreF" class="validate" required>'+
+                                        '<label><i class="fa fa-user" aria-hidden="true"></i> Usuario:</label>'+
+                                      '</div>'+ 
+                                    '</div>'+ 
+                                    '<div class="row">'+
+                                      '<div class="input-field col s6">'+
+                                        '<input type="text" id="aporteF" name="aporteF" class="validate" onkeypress="return soloNumeros(event);" required>'+
+                                        '<label> Total aporte:</label>'+
+                                      '</div>'+ 
+                                    '</div>'+ 
+
+                                    '<div class="resultados"></div>'+
+
                               '</div>'+
                               '<div class="modal-footer">'+
-                                '<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>'
+                              '<button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"> Cancelar</button>'+
+                                '<button class="waves-effect waves-light btn modal-trigger" type="button" data-target="modalfin" onclick="javascript:finalizar_historico();">Finalizar</button>'+
                               '</div>'+
                             '</div>';
             $('#historia_afi').html(historia);
@@ -524,13 +529,10 @@
          function crearHistorico()
         {
           setTimeout("$('.ocultar').hide();", 5000);
-
-
-
           var m = $('#test5').find('#formHistorico_2').serialize();
           m += "&opcion=" + encodeURIComponent('registrarHistorico');
 
-
+          if($('#test5').find('#calendario-sp-2').val()!="" || $('#test5').find('#aporte').val()!="" || $('#test5').find('#liquido').val()!="" || $('#test5').find('#totalGanado').val()!="" ){
           $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: $('#test5').find('#formHistorico_2').attr('method'),
@@ -560,18 +562,71 @@
           .fail(function() {
             console.log("error");
           })
+        }
+        else
+        {
+          var html='<div id="card-alert" class="card red lighten-5 ocultar">';
+                html=html+'<div class="card-content red-text">';
+                html=html+' <p>EXITO : Datos incompletos.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+               $('#test5').find('#resultado2').html(html);
+        }
           event.preventDefault();
+        
           
         }
         function terminar_historico(){
 
                $('#test5').find('#modalfin').openModal();
                $('#test5').find('#modalfin label').addClass('active');
-               $('#test5').find('#formHistorico').trigger("reset");
-               $('#test5').find('#formHistorico_2').trigger("reset");
-
-              
+               $('#test5').find('#nombreF').val($('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellidoP-sp').val() +' '+$('#test5').find('#apellidoM-sp').val());
+     
         }
+        function finalizar_historico(){
+           
+           var carnet= $('#test5').find('#ci-sp').val();
+           var ap = $('#test5').find('#aporteF').val();
+
+
+           if($('#test5').find('#aporteF').val()!=""){
+            $.ajax({
+            url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+            type: 'POST',
+            data: {ci: carnet, opcion:'registrarAhorro', aporte:ap }
+          })
+          .done(function(data) {
+            var resp = $.parseJSON(data);
+            var t= resp.resp;
+            console.log(t);
+           if(t==1)
+            {
+              Materialize.toast('<i class="fa fa-user-secret" aria-hidden="true"></i>Registrado!', 4000, 'rounded');
+              $('#test5').find('#formHistorico').trigger("reset");
+              $('#test5').find('#formHistorico_2').trigger("reset");
+            }
+             if(t==2)
+            {
+              Materialize.toast('Error', 4000, 'rounded')
+            }
+
+          })
+          .fail(function() {
+            console.log("error");
+          })
+        }
+        else{
+           var html='<div id="card-alert" class="card red lighten-5 ocultar">';
+                html=html+'<div class="card-content red-text">';
+                html=html+' <p>Datos incompletos.</p>';
+                html=html+'</div>';
+                html=html+      '    </div>';
+                $('#test5').find('#resultados').html(html);
+        }
+          event.preventDefault();
+        
+        }
+
         function modificarAfiliado()
         {
           var m = $('#test2').find('#formAfiliacion').serialize();
@@ -589,7 +644,7 @@
             console.log(t);
            if(t==1)
             {
-              Materialize.toast('Modificado!', 4000, 'rounded')
+              Materialize.toast('<i class="fa fa-user-secret" aria-hidden="true"></i>Modificado!', 4000, 'rounded')
               $('#test2').find('#formAfiliacion').trigger("reset");
 
 
@@ -791,20 +846,18 @@
 
 
               var mes;
-          var y;
+
           mes = ['Elija un mes', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-          var f = new Date();
-          var m =f.getMonth() +1;
-          var y=f.getFullYear();
           var html;
           html='<select name="mes-sp">';
-            for(var i=resp.idMes; i<=12; i++ )
-            { if(resp.idMes == i)
-              {  html=html+'<option value="'+i+'" selected>'+mes[i]+'</option>';              }
-              else{              html=html+'                <option value="'+i+'">'+mes[i]+'</option>';              }
+            for(k=resp.idMes; k<=12; k++ )
+            { 
+              if(resp.idMes == k)
+              {  html=html+'<option value="'+k+'" selected>'+mes[k]+'</option>';              }
+              else{ html=html+'                <option value="'+k+'">'+mes[k]+'</option>';              }
             }
           html=html+'   </select>';
-          $('#test2').find('#year').val(y);              
+      
           $('#test2').find('#select_mes').html(html);
           $('select').material_select();
 
@@ -889,7 +942,7 @@
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
+              Materialize.toast('<i class="fa fa-user-secret" aria-hidden="true"></i>No cumple con la antiguedad requerida', 4000, 'rounded')
 
             }
 

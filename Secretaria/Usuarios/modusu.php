@@ -11,7 +11,7 @@
                           <div class="input-field col s12">
                             <i class="fa fa-search prefix"></i>
                             <input id="buscar_afi" type="text" class="validate" onkeyup="javascript:buscar_teclado(this,1);">
-                            <label for="icon_prefix">Buscar</label>
+                            <label for="icon_prefix">Buscar (apellido, carnet, formulario)</label>
                           </div>
                         </div>
                         <div style="">

@@ -97,7 +97,7 @@ table {
 
 
 <tr>
-<td colspan="3"><b>Nombre y Apellido:   </b>'.$nombre.'</td>
+<td colspan="3"><b>Nombre(s) y Apellido(s):   </b>'.$nombre.'</td>
 </tr>
 
 
@@ -116,7 +116,7 @@ table {
 </tr>
 
 <tr>
-<td colspan="4" >    Es recomendable cambiar su contraseña al momento de ingresar por primera vez a su cuenta en el sistema por motivos de seguridad.</td>
+<td colspan="4" style="background-color:#dedede;">    Es recomendable cambiar su contraseña al momento de ingresar por primera vez a su cuenta<br>    en el sistema por motivos de seguridad.</td>
 </tr>
 
 

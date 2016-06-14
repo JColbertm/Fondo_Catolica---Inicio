@@ -5,6 +5,7 @@
 		include("../../clases/claseUsuario.php");
 		include("../../clases/claseAfiliacion.php");
 		include("../../clases/claseHistorial.php");
+		include("../../clases/claseAhorro.php");
 
 	switch ($opcion) {
 		case "registrarAfiliado":
@@ -138,7 +139,7 @@
 			$usuario_h->monto_aporte = filter_var($_POST['aporte'],FILTER_SANITIZE_NUMBER_FLOAT);
 			$usuario_h->idMes = $a[1];
 			$usuario_h->fecha_mod= $my_new_date;
-			$usuario_h->desde_year= $a[2];
+			$usuario_h->desde_year= $a[0];
 			
 
 			$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
@@ -148,6 +149,23 @@
 			
 			
 			echo json_encode($resultados);
+			flush();
+		break;
+
+		case "registrarAhorro":
+			$ci=filter_var($_POST['ci'],FILTER_VALIDATE_INT);
+			$datos_usuario =ClaseUsuario::encontrar_por_ci($ci);
+			$id=$datos_usuario->idUsuario;
+			
+			$a= new ClaseAhorro;
+			$a ->cantidad_ahorro=filter_var($_POST['aporte'],FILTER_SANITIZE_NUMBER_FLOAT);
+
+			$ahorro= $a->registrar_ahorro($id);
+
+
+
+			
+			echo json_encode($ahorro);
 			flush();
 		break;
 

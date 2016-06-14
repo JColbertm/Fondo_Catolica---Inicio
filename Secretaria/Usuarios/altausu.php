@@ -62,6 +62,6 @@
      	
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Aceptar</a>
+    <button class="waves-effect waves-light btn" ><i class="fa fa-check"></i> Aceptar</button>
     </div>
   </div>

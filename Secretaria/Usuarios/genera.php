@@ -11,7 +11,7 @@
               <div class="input-field col s12">
                 <i class="fa fa-search prefix"></i>
                 <input id="buscar_afi3" type="text" class="validate" onkeyup="javascript:buscar_teclado(this,3);">
-                <label for="icon_prefix">Buscar</label>
+                <label for="icon_prefix">Buscar (apellido, carnet, formulario)</label>
               </div>
             </div>
 
@@ -42,11 +42,16 @@
             <h4>GENERAR NUEVO PASSWORD</h4>
           </div>
             <div class="row">
-              <div class="input-field col s9">
+            <div class="input-field col s8">
+                <input   id="fecha_afi" type="text" class="validate" readonly="">
+                <label for="disabled"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha Afiliacion</label>
+              </div>
+
+              <div class="input-field col s8">
                 <input id="last_name" type="text" class="validate" readonly="">
                 <label for="last_name"><i class="fa fa-user" aria-hidden="true"></i> Nombre y Apellido</label>
               </div>
-              <div class="input-field col s9">
+              <div class="input-field col s4">
                 <input  id="carnet" type="text" class="validate" readonly="">
                 <label for="last_name"><i class="fa fa-user" aria-hidden="true"></i> Carnet de identidad</label>
               </div>
@@ -54,17 +59,10 @@
 
             </div>
             <div class="row">
-              <div class="input-field col s8">
-                <input   id="fecha_afi" type="text" class="validate" readonly="">
-                <label for="disabled"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha Afiliacion</label>
-              </div>
-              <div class="input-field col s9">
+              
+              <div class="input-field col s6">
                 <input id="user" type="text" class="validate" readonly="">
                 <label for="last_name"><i class="fa fa-user" aria-hidden="true"></i> Usuario</label>
-              </div>
-               <div class="input-field col s6">
-                <input id="password1" type="password" class="validate" readonly="">
-                <label for="password">Anterior Contraseña</label>
               </div>
               <div class="input-field col s6">
                 <input id="password2" type="text" class="validate" readonly="">

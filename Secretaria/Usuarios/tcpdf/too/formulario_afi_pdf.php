@@ -49,6 +49,7 @@ require_once('tcpdf_include.php');
       $departamento=$use->departamento;
       $correo=$use->correos;
       $interno=$use->interno;
+      $institucion=$use->institucion;
 
       $use_h=ClaseHistorial::encontrar_por_id($idu);
       $cantidad_sueldo=$use_h->cantidad_sueldo;
@@ -126,7 +127,7 @@ table {
 
 <tr><th colspan="3" align="right"><h2>Formulario "H"</h2></th></tr>
 <tr><th colspan="3"></th></tr>
-<tr><th rowspan="2" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"<br></h2><h1>SOLICITUD PARA AFILIACION</h1></th></tr>
+<tr><th rowspan="2" colspan="3" align="center"><h2>FONDO DE AHORRO Y CREDITO "SAN PABLO"</h2><h1>SOLICITUD PARA AFILIACION</h1></th></tr>
 
 
 <tr><th colspan="4"></th></tr>
@@ -136,37 +137,40 @@ table {
 
 <tbody >
 <tr>
-<td colspan="2"><b>Solicitud Nro: </b>'.$idafi.'</td>
-<td colspan="2"><b>Fecha:</b> '.$my_new_date.'</td>
+<td colspan="2"><b>Solicitud Nro:   </b>SA-'.$idafi.'</td>
+<td colspan="2"><b>Fecha:    </b> '.$my_new_date.'</td>
 </tr>
 
 
 <tr>
-<td colspan="4" ><b>Carnet:</b> '.$ci.'</td>
+<td colspan="4" ><b>Carnet de identidad:</b>   '.$ci.'</td>
 </tr>
 
 
 <tr>
-<td colspan="4" ><b>Nombres: </b>'.$nomb.' '.$nomb2.' '.$ap.' '.$ap2.'</td>
+<td colspan="4" ><b>Nombre(s) y apellido(s): </b>   '.$nomb.' '.$nomb2.' '.$ap.' '.$ap2.'</td>
 </tr>
 
 <tr>
-<td colspan="4" ><b>Direccion:</b> '.$direccion.'</td>
+<td colspan="4" ><b>Direccion:</b>   '.$direccion.'</td>
 </tr>
 
 <tr>
-<td colspan="2" ><b>Nro. Telefono:</b> '.$telefono.'</td>
-<td colspan="2" ><b>Nro. Celular: </b>'.$celular.'</td>
-</tr>
-
-
-<tr>
-<td colspan="2" ><b>Departamento: </b>'.$departamento.'</td>
-<td colspan="2" ><b>Interno: </b>'.$interno.'</td>
+<td colspan="2" ><b>Nro. Telefono:</b>   '.$telefono.'</td>
+<td colspan="2" ><b>Nro. Celular: </b>   '.$celular.'</td>
 </tr>
 
 <tr>
-<td colspan="4" ><b>Correo:</b> '.$correo.'</td>
+<td colspan="4" ><b>Institucion: </b>   '.$institucion.'</td>
+</tr>
+
+<tr>
+<td colspan="2" ><b>Departamento: </b>   '.$departamento.'</td>
+<td colspan="2" ><b>Interno: </b>   '.$interno.'</td>
+</tr>
+
+<tr>
+<td colspan="4" ><b>Correo:</b>  '.$correo.'</td>
 </tr>
 
 
@@ -182,15 +186,15 @@ table {
 </tr>
 
 <tr>
-<td colspan="4"><b>Total ganado: </b>'.$cantidad_sueldo.' Bs.</td>
+<td colspan="4"><b>Total ganado: </b>   '.$cantidad_sueldo.' Bs.</td>
 </tr>
 
 <tr>
-<td colspan="4"><b>Liquido pagable: </b>'.$liquido.' Bs.</td>
+<td colspan="4"><b>Liquido pagable: </b>    '.$liquido.' Bs.</td>
 </tr>
 
 <tr>
-<td colspan="4" >Antigüedad como personal administrativo: '.$antiguedad.'</td>
+<td colspan="4" >Antigüedad como personal administrativo:    '.$antiguedad.'</td>
 </tr>
 
 <tr>
@@ -198,19 +202,20 @@ table {
 </tr>
 
 <tr>
-<td colspan="4" >El monto que deseo aportar mensualmente es de Bs: '.$monto_aporte.'</td>
+<td colspan="4" >El monto que deseo aportar mensualmente es de Bs:  '.$monto_aporte.'</td>
 </tr>
 
 <tr>
-<td colspan="4" >A partir del mes de: '.$mes_nombre.'</td>
+<td colspan="4" >A partir del mes de:  '.$mes_nombre.'</td>
 </tr>
 
 <tr><td colspan="4"></td></tr>
 <tr><td colspan="4"></td></tr>
 <tr><td colspan="4"></td></tr>
+<tr><td colspan="4"></td></tr>
 
-<tr><td colspan="2" align="center" class="negrita">PDTE. COMITÉ ADMINISTRATIVO </td>
-<td colspan="2" align="center" class="negrita">FIRMA DEL SOLICITANTE </td></tr>
+<tr><td colspan="2" align="center" class="negrita">   PDTE. COMITÉ ADMINISTRATIVO </td>
+<td colspan="2" align="center" class="negrita">   FIRMA DEL SOLICITANTE </td></tr>
 
 </tbody>
 
