@@ -9,6 +9,7 @@
 		public $antiguedad;
 		public $cantidad_sueldo;
 		public $fecha_mod;
+		public $desde_year;
 		//selecciona todos los usuarios
 		public static function encontrar_a_todos(){
 			$resultados= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.idUsuario=b.idUsuario and a.estado=1");
@@ -38,7 +39,6 @@
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
 		public function registrar_historial($id){
-				$result= insertA('historial_sueldo', array('cantidad_sueldo','monto_aporte','idMes','idUsuario','liquido','antiguedad','fecha_mod'), array(2,2,2,2,2,2,2) , array($this->cantidad_sueldo,$this->monto_aporte,$this->idMes,$id,$this->liquido,$this->antiguedad,$this->fecha_mod));
 				if ($result){		
 					$response['resp']=1;	
 				}else{	$response['resp']=0;}
@@ -47,7 +47,7 @@
 		}
 		public function modificar_historial($id){
 			
-				$result = updateA('historial_sueldo',array('cantidad_sueldo','monto_aporte','idMes','idUsuario','liquido','antiguedad','fecha_mod'),array(2,2,2,2,2,2,2),array($this->cantidad_sueldo,$this->monto_aporte,$this->idMes,$id,$this->liquido,$this->antiguedad,''),'idUsuario',$id,$this->fecha_mod);
+				$result = updateA('historial_sueldo',array('cantidad_sueldo','monto_aporte','idMes','idUsuario','liquido','antiguedad','fecha_mod'),array(2,2,2,2,2,2,2),array($this->cantidad_sueldo,$this->monto_aporte,$this->idMes,$id,$this->liquido,$this->antiguedad,date("Y-m-d")),'idUsuario',$id);
 				if ($result){		
 					$response['resp']=1;
 				}

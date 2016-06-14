@@ -23,22 +23,28 @@
 			{
 				$usuario->ci= filter_var($_POST['carnet'],FILTER_SANITIZE_STRING);
 				$usuario->nombre = filter_var($_POST['nombres-sp'],FILTER_SANITIZE_STRING);
-				$usuario->apellido_p =filter_var($_POST['apellidos-sp'],FILTER_SANITIZE_STRING);
+				$apellidoss= filter_var($_POST['apellidoP-sp'],FILTER_SANITIZE_STRING).' '.filter_var($_POST['apellidoM-sp'],FILTER_SANITIZE_STRING);
+				$usuario->apellido_p =$apellidoss;
 				$usuario->direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
 				$usuario->telefono= filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
 				$usuario->celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
 				$usuario->departamento= filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
 				$usuario->interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
-				$usuario->idUsuarioCreador=1;
+				$usuario->idUsuarioCreador=$_SESSION['ideusuario'];
 				$usuario->correos = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
+				$usuario->institucion = filter_var($_POST['institucion-sp'],FILTER_SANITIZE_STRING);
 
 				$usuario_i->fecha= $my_new_date;
+				$usuario_i->idUsuarioCreador=$_SESSION['ideusuario'];
 				
 				$usuario_h->cantidad_sueldo = filter_var($_POST['totGanado-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->monto_aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->idMes = filter_var($_POST['mes-sp'],FILTER_SANITIZE_STRING);
 				$usuario_h->antiguedad= $antiguedad;
+				$usuario_h->desde_year=filter_var($_POST['year'],FILTER_SANITIZE_NUMBER_INT);
+
+				
 				$usuario_h->fecha_mod= '';
 
 				
@@ -56,7 +62,6 @@
 				else
 				{
 					$resultados= $usuario->modificar_afiliado($id);
-					
 					$usuario_h->modificar_historial($id);	
 				}
 			}
@@ -87,22 +92,26 @@
 			if($interval>=$parametro['condicion'])
 			{
 				$usuario_i->fecha=$my_new_date;
+				$usuario_i->idUsuarioCreador=$_SESSION['ideusuario'];
 
 				$usuario->ci= filter_var($_POST['ci-sp'],FILTER_SANITIZE_STRING);
 				$usuario->nombre = filter_var($_POST['nombre-sp'],FILTER_SANITIZE_STRING);
-				$usuario->apellido_p = filter_var($_POST['apellido-sp'],FILTER_SANITIZE_STRING);
+				$apellidoss= filter_var($_POST['apellidoP-sp'],FILTER_SANITIZE_STRING).' '.filter_var($_POST['apellidoM-sp'],FILTER_SANITIZE_STRING);
+				$usuario->apellido_p = $apellidoss;
 				$usuario->direccion = filter_var($_POST['direccion-sp'],FILTER_SANITIZE_STRING);
 				$usuario->telefono= filter_var($_POST['telefono-sp'],FILTER_SANITIZE_NUMBER_INT);
 				$usuario->celular = filter_var($_POST['celular-sp'],FILTER_SANITIZE_NUMBER_INT);
 				$usuario->departamento= filter_var($_POST['depar-ucb-sp'],FILTER_SANITIZE_STRING);
 				$usuario->interno = filter_var($_POST['interno-sp'],FILTER_SANITIZE_NUMBER_INT);
 				$usuario->correos = filter_var($_POST['correo-sp'],FILTER_SANITIZE_STRING);
+				$usuario->institucion = filter_var($_POST['institucion-sp'],FILTER_SANITIZE_STRING);
 
 				$usuario_h->cantidad_sueldo = filter_var($_POST['total-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->liquido = filter_var($_POST['liquido-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
 				$usuario_h->monto_aporte = filter_var($_POST['aporte-sp'],FILTER_SANITIZE_NUMBER_FLOAT);
-				$usuario_h->idMes = 13;
+				$usuario_h->idMes = 1;
 				$usuario_h->antiguedad= $interval;
+				$usuario_h->desde_year=2016;
 				$usuario_h->fecha_mod= '';
 
 				$resultados= $usuario->registrar_afiliado();
@@ -120,12 +129,16 @@
 
 		case "registrarHistorico":
 			$usuario_h= new ClaseHistorial;
+			$fecha=filter_var($_POST['calendario-sp-2'],FILTER_SANITIZE_STRING);
+			$a = explode('-',$fecha);
+			$my_new_date = $a[2].'-'.$a[1].'-'.$a[0];
 
 		    $usuario_h->cantidad_sueldo = filter_var($_POST['totalGanado'],FILTER_SANITIZE_NUMBER_FLOAT);
 			$usuario_h->liquido = filter_var($_POST['liquido'],FILTER_SANITIZE_NUMBER_FLOAT);
 			$usuario_h->monto_aporte = filter_var($_POST['aporte'],FILTER_SANITIZE_NUMBER_FLOAT);
-			$usuario_h->idMes = 13;
-			$usuario_h->fecha_mod= filter_var($_POST['calendario-sp-2'],FILTER_SANITIZE_STRING);
+			$usuario_h->idMes = $a[1];
+			$usuario_h->fecha_mod= $my_new_date;
+			$usuario_h->desde_year= $a[2];
 			
 
 			$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
@@ -173,6 +186,7 @@
 			$departamento=$use->departamento;
 			$correo=$use->correos;
 			$interno=$use->interno;
+			$institucion=$use->institucion;
 
 			$use_h=ClaseHistorial::encontrar_por_id($idu);
 			$cantidad_sueldo=$use_h->cantidad_sueldo;
@@ -180,6 +194,7 @@
 			$mes=$use_h->idMes;
 			$liquido=$use_h->liquido;
 			$antiguedad=$use_h->antiguedad;
+			$year=$use_h->desde_year;
 
 			$use_i=ClaseAfiliacion::encontrar_por_id($idu);
 			$idafi=$use_i->idAfiliacion;
@@ -189,7 +204,7 @@
 			$my_new_date = $a[2].'-'.$a[1].'-'.$a[0];
 
 
-			$resultados=array('ci'=> $ci,'nombre'=> $nomb.' '.$nomb2,'apellido'=> $ap.' '.$ap2,'direccion'=>$direccion,'telefono'=>$telefono,'celular'=>$celular,'departamento'=>$departamento,'correos'=>$correo,'interno'=>$interno,'cantidad_sueldo'=>$cantidad_sueldo,'user'=>$user,'pass'=>$pass,'monto_aporte'=>$monto_aporte,'idMes'=>$mes,'liquido'=>$liquido,'antiguedad'=>$antiguedad,'idAfiliacion'=>$idafi,'fecha'=>$my_new_date,'resp'=> 1);
+			$resultados=array('ci'=> $ci,'nombre'=> $nomb.' '.$nomb2,'apellidoP'=> $ap,'apellidoM'=>$ap2,'direccion'=>$direccion,'telefono'=>$telefono,'celular'=>$celular,'departamento'=>$departamento,'institucion'=>$institucion,'correos'=>$correo,'interno'=>$interno,'cantidad_sueldo'=>$cantidad_sueldo,'user'=>$user,'pass'=>$pass,'monto_aporte'=>$monto_aporte,'idMes'=>$mes,'liquido'=>$liquido,'antiguedad'=>$antiguedad,'idAfiliacion'=>$idafi,'fecha'=>$my_new_date,'year'=>$year,'resp'=> 1);
 			
 			//else{
 			//	$resultados=array('resp'=> 0);
@@ -217,11 +232,12 @@
 			$num = filter_var($_POST['numero'],FILTER_SANITIZE_NUMBER_INT);
 			$resultados=array();
 
-			 $html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
+			 $html = '<table class="highlight centered"  ><thead><tr><th width=1 style="display:none">Nro. Afi</th><th>Nro. Afi</th><th>CI</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
           
            	$users=ClaseUsuario::encontrar_a_todos();
            foreach ($users as $user) { 
-           	$html = $html.'<tr onclick="mostrar_datos'.$num.'(this)"><td width=1>'.$user->idUsuario.'</td><td>'.$user->nombre.'</td><td>'.$user->apellido_p.'</td></tr> ';
+           	$usersA=ClaseAfiliacion::encontrar_por_id($user->idUsuario);
+           	$html = $html.'<tr onclick="mostrar_datos'.$num.'(this)"><td width=1 style="display:none">'.$user->idUsuario.'</td><td>SA-'.$usersA->idAfiliacion.'</td><td>'.$user->ci.'</td><td>'.$user->nombre.'</td><td>'.$user->apellido_p.'</td></tr> ';
            	} 
            	echo $html;
 		break;
@@ -231,11 +247,12 @@
 			$nom = filter_var($_POST['nombre'],FILTER_SANITIZE_STRING);
 			$resultados=array();
 
-			 $html = '<table class="highlight centered"  ><thead><tr><th width=1>N</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
+			 $html = '<table class="highlight centered"  ><thead><tr><th width=1 style="display:none">Nro. Afi</th><th>Nro. Afi</th><th>CI</th><th>Nombre</th><th>Apellido</th></tr></thead><tbody>';
           
            	$users=ClaseUsuario::encontrar_por_nom($nom);
            foreach ($users as $user) { 
-           	$html = $html.'<tr onclick="mostrar_datos'.$num.'(this)"><td width=1>'.$user->idUsuario.'</td><td>'.$user->nombre.'</td><td>'.$user->apellido_p.'</td></tr> ';
+           	$usersA=ClaseAfiliacion::encontrar_por_id($user->idUsuario);
+           	$html = $html.'<tr onclick="mostrar_datos'.$num.'(this)"><td width=1 style="display:none">'.$user->idUsuario.'</td><td>SA-'.$usersA->idAfiliacion.'</td><td>'.$user->ci.'</td><td>'.$user->nombre.'</td><td>'.$user->apellido_p.'</td></tr> ';
            	} 
            	echo $html;
 		break;

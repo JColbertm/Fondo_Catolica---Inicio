@@ -49,7 +49,7 @@
                     </form>
                       <div class="row">
                         <div class="col offset-m5">
-                          <a class="waves-effect waves-light btn"><i class="fa fa-ban"></i> Rechazar</a>
+                          <button class="btn waves-effect waves-light red" type="button" name="limpia" id="limpia"><i class="fa fa-trash-o"></i> Limpiar</button>
                           <button class="waves-effect waves-light btn" id="modAfiliado"><i class="fa fa-check"></i> Aceptar</button>
                         </div>   
                       </div>                      

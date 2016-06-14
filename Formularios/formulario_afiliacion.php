@@ -41,19 +41,24 @@
                 <div class="row">
                   <div class="input-field col s4 m5">
                     <input id="carnet" name="carnet" type="text" class="validate" onkeypress="return soloNumeros(event);" maxlength="10">
-                    <label>CI:</label>
+                    <label>Carnet de identidad:</label>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-field col s6 m7">
+                  <div class="input-field col s4 m4">
                     <i class="fa fa-user prefix "></i>
                     <input type="text" id="nombres-sp" name="nombres-sp" class="validate" onkeypress="return soloLetras(event)">
                     <label>Nombres:</label>
 
                   </div>
-                  <div class="input-field col s6 m5">
-                    <input type="text" id="apellidos-sp" name="apellidos-sp" class="validate" onkeypress="return soloLetras(event)">
-                    <label>Apellidos:</label>
+                  <div class="input-field col s4 m4">
+                    <input type="text" id="apellidoP-sp" name="apellidoP-sp" class="validate" onkeypress="return soloLetras(event)">
+                    <label>Apellido paterno:</label>
+                  </div>
+
+                  <div class="input-field col s4 m4">
+                    <input type="text" id="apellidoM-sp" name="apellidoM-sp" class="validate" onkeypress="return soloLetras(event)">
+                    <label>Apellido materno:</label>
                   </div>
                 </div>
                 <div class="row">
@@ -71,8 +76,26 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-field col s6 m8">
-                    <input type="text" id="depar-ucb-sp" name="depar-ucb-sp" class="validate">
+                  <div class="input-field col s6 m8" id="institucion">
+                    <select name="institucion-sp" id="institucion-sp">
+                          <option value="UCB" >UCB</option>
+                          <option value="EPC" >EPC</option>
+                        </select>
+                    <label>Institucion:</label>
+                    </div>
+                    </div>
+                <div class="row">
+                  <div class="input-field col s6 m8" id="departamento">
+                    <select name="depar-ucb-sp" id="depar-ucb-sp">
+                          <option value="Elija un departamento" >Elija un departamento</option>
+                          <option value="derecho" >Derecho</option>
+                          <option value="pastoral" >Pastoral</option>
+                          <option value="contabilidad">Contabilidad</option>
+                          <option value="administracion">Administracion</option>
+                          <option value="personal">Personal</option>
+                        
+
+                        </select>
                     <label>Departamento UCB:</label>
                   </div>
                   <div class="input-field col s6 m4">
@@ -130,10 +153,21 @@
                 </div>
                 
                 <div class="row">
-                  <div class="col s5 m5 l5">
-                      <br><br> 
-                      <p>A partir del año <label id="year" style="color:black"></label> y mes:</p>
+                  <div class="col s12 m12 l12">                       
+                      <div class="col s3 m3 l3">
+                        <br><br>
+                        A partir del año:
+                      </div>
+                     <div class="input-field col s2 m2 l2">
+                      <input  type="text" id="year" name="year" style="color:black" readonly="">
                     </div>
+                    <div class="col s2 m2 l2">
+                      <br><br>
+                      <p>y mes:</p>
+                    </div>
+
+                        
+                    
                     <div class="input-field col s5 m4 l5" id="select_mes">
                         <select name="mes-sp" id="mes_val">
                           <option value="0" >Elija un mes</option>
@@ -152,6 +186,7 @@
 
                         </select>
                     </div>
+                </div>
                 </div>
                 <div class="row">
                   <div id="resultado"></div>

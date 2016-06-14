@@ -19,6 +19,7 @@
 		public $estado;
 		public $nombre_usuario;
 		public $password;
+		public $institucion;
 		
 		//selecciona todos los usuarios
 		public static function encontrar_a_todos(){
@@ -40,7 +41,7 @@
 			return !empty($objeto_array)? array_shift($objeto_array):false;
 		}
 		public static function encontrar_por_nom($nom){
-			$resultado= execSqlA("SELECT a.*,b.* FROM usuario a, datos_secundario b where a.estado=1 and a.idUsuario=b.idUsuario and a.apellido_p LIKE '%$nom%' ");
+			$resultado= execSqlA("SELECT a.*,b.*,c.* FROM usuario a, datos_secundario b,form_afiliacion c where a.estado=1 and a.idUsuario=b.idUsuario and c.idUsuario=a.idUsuario and (c.idAfiliacion LIKE '%$nom%' xor (a.apellido_p LIKE '%$nom%' xor a.ci LIKE '%$nom%')) GROUP BY a.idUsuario");
 			$objeto_array=array();
 			while ($row = mysqli_fetch_array($resultado)) {
 				$objeto_array[]=self::instanciacion($row);
@@ -78,7 +79,7 @@
 				//obtenemos el ultimo id de usuarios
 				$row= execSqlA("select idUsuario FROM usuario WHERE idUsuario=(SELECT MAX(idUsuario) FROM usuario)");
 				while ($data = mysqli_fetch_array($row)){$var = $data[0];}
-				$result2= insertA('datos_secundario', array('idUsuario','direccion','telefono','celular','departamento','correos','interno'), array(2,2,2,2,2,2,2) , array($var,$this->direccion,$this->telefono,$this->celular,$this->departamento,$this->correos,$this->interno));
+				$result2= insertA('datos_secundario', array('idUsuario','direccion','telefono','celular','departamento','correos','interno','institucion'), array(2,2,2,2,2,2,2,2) , array($var,$this->direccion,$this->telefono,$this->celular,$this->departamento,$this->correos,$this->interno,$this->institucion));
 
 				$nn=$nom1.' '.$nom2;
 				$mm=$ap1.' '.$ap2;

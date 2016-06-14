@@ -4,6 +4,7 @@
 		public $idUsuario;
 		public $idAfiliacion;
 		public $fecha;
+		public $idUsuarioCreador;
 		
 
 		public static function ultima_afiliacion(){
@@ -18,7 +19,7 @@
 		}
 		public function registrar_afiliacion($id){
 			ini_set('date.timezone','America/Manaus'); 
-				$result= insertA('form_afiliacion', array('idUsuario','fecha','hora','idUsuarioCreador'), array(2,2,2,2) , array($id,$this->fecha,date("g:i A"),1));//$_SESSION['id_en']
+				$result= insertA('form_afiliacion', array('idUsuario','fecha','hora','idUsuarioCreador'), array(2,2,2,2) , array($id,$this->fecha,date("g:i A"),$this->idUsuarioCreador));//$_SESSION['id_en']
 				if ($result){		
 					$response['resp']=1;	
 					$response['fecha']=$this->fecha;	

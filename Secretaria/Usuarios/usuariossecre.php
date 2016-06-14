@@ -44,6 +44,13 @@
             $('#test4').find('#formGenera').trigger("reset");
           });
 
+           $('#test2').find('#limpia').on('click', function()
+          {
+            inicia_mes();
+            $('label').removeClass('active');
+            $('#test2').find('#formAfiliacion').trigger("reset");
+          });
+
            $('#limpia').on('click', function()
           {
             $('label').removeClass('active');
@@ -55,6 +62,9 @@
           });
 
           cargar_select();
+
+          $('#institucion').on('change',cargar_epc);
+          $('#test5').find('#institucion').on('change',cargar_epc_H);
         
           
 
@@ -70,7 +80,7 @@
           });
 
           $('#test2').find('#modAfiliado').on('click',modificarAfiliado); 
-          $('#test3').find('#elim_afiliado').on('click',eliminarAfiliado);
+          $('#test3').find('#elim_afiliado').on('click',abrir_eliminar);
           $('#test4').find('#guardaNP').on('click',guardaPassword);
           $('#test5').find('#historico').on('click',crearAfiliadoH);
           obtenerSolicitud();
@@ -90,8 +100,92 @@
     	verifica_sesion();
         });
         var idU;
+        var epc=['Elija un departamento','epc 1','epc 2','epc 3','epc 4'];
+        var depa=['Elija un departamento','derecho','pastoral','contabilidad','administracion','personal'];
+        function cargar_epc(){
+          console.log($('#institucion-sp').val())
+          var html;
+          if($('#institucion-sp').val()=='EPC')
+          {
+            html='<select name="depar-ucb-sp">';
+            for(i=0; i<=4;i++)
+            {
+              html=html+'<option value="'+epc[i]+'" >'+epc[i]+'</option>';
+            }
+            html=html+'</select>';
+            }
 
-        function cargar_select(){
+
+            if($('#institucion-sp').val()=='UCB')
+          {
+            html='<select name="depar-ucb-sp">';
+            for(j=0; j<=5;j++)
+            {
+              html=html+'<option value="'+depa[j]+'" >'+depa[j]+'</option>';
+            }
+         
+            html=html+'</select>';
+            }
+            $('#departamento').html(html);
+            $('select').material_select();
+        }
+        function cargar_epc_H(){
+          var html;
+          if($('#test5').find('#institucion-sp').val()=='EPC')
+          {
+            html='<select name="depar-ucb-sp">';
+            for(i=0; i<=4;i++)
+            {
+              html=html+'<option value="'+epc[i]+'" >'+epc[i]+'</option>';
+            }
+            html=html+'</select>';
+            }
+
+
+            if($('#test5').find('#institucion-sp').val()=='UCB')
+          {
+            html='<select name="depar-ucb-sp">';
+            for(j=0; j<=5;j++)
+            {
+              html=html+'<option value="'+depa[j]+'" >'+depa[j]+'</option>';
+            }
+         
+            html=html+'</select>';
+            }
+            $('#test5').find('#departamento').html(html);
+            $('select').material_select();
+        }
+        function abrir_eliminar(){
+          $('#test3').find('#modal1').openModal();
+
+         
+
+          $('#test3').find('#nombreModal').val($('#test3').find('#first_name').val());
+          $('#test3').find('#carnetModal').val($('#test3').find('#ci').val());
+          $('#test3').find('#institucionModal').val($('#test3').find('#institucion').val());
+          $('#test3').find('#departamentoModal').val($('#test3').find('#depar-ucb-sp').val());
+
+          $('#test3').find('#eliminar_afi').on('click',eliminarAfiliado);
+
+
+        }
+        function inicia_mes(){
+          var mes;
+            mes = ['Elija un mes', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            var html;
+            html='<select name="mes-sp">';
+              for(var i=0; i<=12; i++ )
+              {
+       
+                html=html+'<option value="'+i+'">'+mes[i]+'</option>';
+
+              }
+            html=html+'</select>';
+            $('#test2').find('#year').val('  ');              
+            $('#test2').find('#select_mes').html(html);
+            $('select').material_select();
+        }
+      function cargar_select(){
 
           var mes;
           var y;
@@ -115,7 +209,7 @@
               html=html+'                <option value="'+i+'">'+mes[i]+'</option>';
             }
           html=html+'                </select>';
-          $('#test1').find('#year').text(y);              
+          $('#test1').find('#year').val(y);              
           $('#test1').find('#select_mes').html(html);
           $('select').material_select();
         }
@@ -263,7 +357,7 @@
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
 
             }
 
@@ -395,8 +489,9 @@
                             '</div>';
             $('#historia_afi').html(historia);
 
-            $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellido-sp').val());
+            $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellidoP-sp').val()+' '+$('#test5').find('#apellidoM-sp').val());
             $('#test5').find('#fechaAfi').val($('#test5').find('#calendario-sp').val());//////////////////////////////////
+             
              /*  $('#modal1').openModal();
                $('#modal1 label').addClass('active');
                $('#usuarioModal').val(resp.usuario);
@@ -404,11 +499,16 @@
               listar(1);    listar(2);   listar(3); 
               obtenerSolicitud();*/
               // $('#formHistorico').trigger("reset");
+              $('#test5').find('.histo').prop("readonly",true);
+              $('label').addClass('active');
+
+              $('#test5').find('#boton_histo').html('<button class="waves-effect waves-light btn disabled" type="button" id="">Registrar</button>');
+
             }
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
 
             }
 
@@ -424,6 +524,8 @@
          function crearHistorico()
         {
           setTimeout("$('.ocultar').hide();", 5000);
+
+
 
           var m = $('#test5').find('#formHistorico_2').serialize();
           m += "&opcion=" + encodeURIComponent('registrarHistorico');
@@ -441,8 +543,6 @@
             console.log(t);
            if(t==1)
             {
-              
-
                 var html='<div id="card-alert" class="card green lighten-5 ocultar">';
                 html=html+'<div class="card-content green-text">';
                 html=html+' <p>EXITO : Historial agregado.</p>';
@@ -450,10 +550,9 @@
                 html=html+      '    </div>';
                $('#test5').find('#resultado2').html(html);
                $('#test5').find('#formHistorico_2').trigger("reset");
-               $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellido-sp').val());
+               $('#test5').find('#nombre').val( $('#test5').find('#nombre-sp').val()+' '+$('#test5').find('#apellidoP-sp').val() +' '+$('#test5').find('#apellidoM-sp').val());
                $('#test5').find('#fechaAfi').val($('#test5').find('#calendario-sp').val());
-                $('#historia_afi').html('');
-                $('label').removeClass('active');
+               $('label').addClass('active');
 
             }
 
@@ -490,15 +589,20 @@
             console.log(t);
            if(t==1)
             {
-              Materialize.toast('Modificado!', 4000)
+              Materialize.toast('Modificado!', 4000, 'rounded')
               $('#test2').find('#formAfiliacion').trigger("reset");
+
+
+
+              inicia_mes();
+          $('select').material_select();
 
               listar(1);    listar(2);   listar(3); 
             }
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
             }
 
           })
@@ -525,8 +629,7 @@
             console.log(t);
            if(t==1)
             {
-              console.log("success");
-              Materialize.toast('Eliminado!', 4000);
+              Materialize.toast('Eliminado!', 4000, 'rounded');
               $('#test3').find('#eliForm').trigger("reset");
               listar(1);    listar(2);   listar(3); 
               $('label').removeClass('active');
@@ -554,14 +657,14 @@
             console.log(t);
            if(t==1)
             {
-              Materialize.toast('Modificado!', 4000)
+              Materialize.toast('Modificado!', 4000, 'rounded')
              // $('#test4').find('#formGenera').trigger("reset");
               listar(1);    listar(2);   listar(3); 
             }
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
             }
 
           })
@@ -627,21 +730,87 @@
               $('#test2').find('#fechaactual').val(resp.fecha);
               $('#test2').find('#carnet').val(resp.ci);
               $('#test2').find('#nombres-sp').val(resp.nombre);
-              $('#test2').find('#apellidos-sp').val(resp.apellido);
+              $('#test2').find('#apellidoP-sp').val(resp.apellidoP);
+              $('#test2').find('#apellidoM-sp').val(resp.apellidoM);
               $('#test2').find('#direccion-sp').val(resp.direccion);
               $('#test2').find('#telefono-sp').val(resp.telefono);
               $('#test2').find('#celular-sp').val(resp.celular);
-              $('#test2').find('#depar-ucb-sp').val(resp.departamento);
+              
               $('#test2').find('#interno-sp').val(resp.interno);
               $('#test2').find('#correo-sp').val(resp.correos);
               $('#test2').find('#totGanado-sp').val(resp.cantidad_sueldo);
               $('#test2').find('#liquido-sp').val(resp.liquido);
               $('#test2').find('#antiguedad-sp').val(resp.antiguedad);
               $('#test2').find('#aporte-sp').val(resp.monto_aporte);
+              $('#test2').find('#year').val(resp.year);
 
-               $('#test2').find('#mes_val option[value="'+resp.idMes+'"]').attr('selected', 'selected');
+              var h,d,l;
+              h='<select name="institucion-sp" id="institucion-sp">';
+              if(resp.institucion=='UCB'){
+                h=h+'           <option value="UCB" selected>UCB</option>';
+                h=h+'            <option value="EPC" >EPC</option>';
+                h=h+'          </select>';
+                d='<select name="depar-ucb-sp" id="depar-ucb-sp">';
+                for(i=0; i<=4; i++){
+                  if(depa[i]==resp.departamento)
+                  {
+                    l='selected'
+                  }
+                  else{l='';}
+                  d=d+'<option value="'+depa[i]+'" '+l+'>'+depa[i]+'</option>';
+                }
+              $('#test2').find('#departamento').html(d);
 
-              /*$('#test2').find('#mes_val').val(''+resp.idMes+''); */      
+
+              }
+              if(resp.institucion=='EPC'){
+                h=h+'           <option value="UCB" >UCB</option>';
+                h=h+'            <option value="EPC" selected>EPC</option>';
+                h=h+'          </select>';
+                
+                d='<select name="depar-ucb-sp" id="depar-ucb-sp">';
+                for(i=0; i<=4; i++){
+                  if(epc[i]==resp.departamento)
+                  {
+                    l='selected'
+                  }
+                  else{l='';}
+                  d=d+'<option value="'+epc[i]+'" '+l+'>'+epc[i]+'</option>';
+                }
+              $('#test2').find('#departamento').html(d);
+
+
+              }
+              
+              $('#test2').find('#institucion').html(h);
+
+
+              
+             
+
+
+
+              var mes;
+          var y;
+          mes = ['Elija un mes', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+          var f = new Date();
+          var m =f.getMonth() +1;
+          var y=f.getFullYear();
+          var html;
+          html='<select name="mes-sp">';
+            for(var i=resp.idMes; i<=12; i++ )
+            { if(resp.idMes == i)
+              {  html=html+'<option value="'+i+'" selected>'+mes[i]+'</option>';              }
+              else{              html=html+'                <option value="'+i+'">'+mes[i]+'</option>';              }
+            }
+          html=html+'   </select>';
+          $('#test2').find('#year').val(y);              
+          $('#test2').find('#select_mes').html(html);
+          $('select').material_select();
+
+
+
+               
             }
 
               })
@@ -672,9 +841,10 @@
             {
               console.log("success");
               $('label').addClass('active');
-              $('#test3').find('#first_name').val(resp.nombre+' '+resp.apellido);
+              $('#test3').find('#first_name').val(resp.nombre+' '+resp.apellidoP+' '+resp.apellidoM);
               $('#test3').find('#ci').val(resp.ci);
-              $('#test3').find('#depar-ucb-sp').val(resp.departamento);                  
+              $('#test3').find('#depar-ucb-sp').val(resp.departamento);
+              $('#test3').find('#institucion').val(resp.institucion);                  
             }
           })
           .fail(function() {
@@ -719,7 +889,7 @@
              if(t==2)
             {
 
-              Materialize.toast('No cumple con la antiguedad requerida', 4000)
+              Materialize.toast('No cumple con la antiguedad requerida', 4000, 'rounded')
 
             }
 
