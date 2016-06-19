@@ -116,7 +116,7 @@
         $.ajax({
             url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
             type: 'POST',
-            data: id
+            data: id 
           })
           .done(function(data) {
                  var resp = $.parseJSON(data);
@@ -126,7 +126,31 @@
               console.log("success");
               $('label').addClass('active');              
               $('#nombre').val(resp.nombre +' ' +resp.apellido);
-              $('#ci').val(resp.ci)          
+              $('#ci').val(resp.ci)                                           
+              var aho = "opcion=" + encodeURIComponent("obtenerAhorro");
+              aho += "&idu="+encodeURIComponent(row);
+              console.log(aho);
+              $.ajax({
+                  url: '/Fondo_Catolica/Secretaria/controladores/dataBase_Secre.php',
+                  type: 'POST',
+                  data: aho
+                })
+                .done(function(data) {
+                       var respuesta = $.parseJSON(data);
+                       console.log(respuesta);
+                        var t= respuesta.resp;
+                  if(t==1)
+                  {
+                    console.log("si entro");
+                    $('#ahorro').val(respuesta.ahorro);
+                    $('#tiempo').val(respuesta.meses);              
+                  }
+
+                    })
+                .fail(function() {
+                  console.log("error");
+                })
+                event.preventDefault();        
             }
 
               })

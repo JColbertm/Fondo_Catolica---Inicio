@@ -275,6 +275,30 @@
            	echo $html;
 		break;
 
+		case "obtenerAhorro":
+
+			$idu = filter_var($_POST['idu'],FILTER_SANITIZE_NUMBER_INT);
+
+
+			$sql = execSqlA("select idAhorro, cantidad_ahorro WHERE idUsuario = $idu from ahorro");
+			
+			while ($data = mysqli_fetch_array($sql))
+				{
+					$id = $data[0];
+					$ahorro = $data[1];
+					$fecha=$data[2];					
+					$date = date("Y-m-d");
+					$segundos=  strtotime($date) - strtotime($fecha);
+					$diferencia = intval($segundos/60/60/24/30);
+				}							
+
+			$resultados=array('ahorro'=>$ahorro,'meses'=>$diferencia,'resp'=> 1);
+
+			echo json_encode($resultados);
+			flush();
+		break;
+
+
 
 	}
 

@@ -27,7 +27,7 @@
           var app ='<?php echo $_SESSION['apellidop'] ?>';
           var apm ='<?php echo $_SESSION['apellidom'] ?>';
           var $toastContent = $('<span><i class="fa fa-user-secret" aria-hidden="true"></i> Bienvenida(o): '+usuario+' '+app+' '+apm+'</span>');
-          Materialize.toast($toastContent, 8000);
+          Materialize.toast($toastContent, 8000, 'rounded');
           $('#cierre_sesion').on('click', function()
           {
             cerrar_sesion();            
