@@ -9,9 +9,10 @@
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/Secretaria/Prestamo/prestamo_js/prestamos.js"></script>
-<script type="text/javascript" src="jquery-latest.js"></script> 
-<script type="text/javascript" src="jquery.tablesorter.js"></script>	
-<script type="text/javascript">
+      <script type="text/javascript" src="/Fondo_Catolica/gral_php/validadores.js"></script>
+	  <script type="text/javascript" src="jquery-latest.js"></script> 
+	  <script type="text/javascript" src="jquery.tablesorter.js"></script>	
+	  <script type="text/javascript">
 			
 	  $(document).ready(function(){
         $("#myTables").tablesorter(); 
@@ -140,6 +141,43 @@ $('.modal-trigger').leanModal({
     print $datetime=date('d/m/Y');
     print $se=date('H:i:s');
     ?>
-    
+    <?php
+// Imprime ejemplo 'Versión actual de PHP: 5.3.8'
+echo 'Versión actual de PHP: ' . phpversion();
+
+// Imprime ejemplo '2.0' o nada si la extensión no está habilitada
+echo phpversion('tidy');
+?>
+<?php 
+foreach (get_loaded_extensions() as $i => $ext) 
+{ 
+   echo $ext .' => '. phpversion($ext). '<br/>'; 
+} 
+?>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<?php
+if (version_compare(PHP_VERSION, '6.0.0') >= 0) {
+    echo 'Soy al menos la versión 6.0.0 de PHP, mi versión: ' . PHP_VERSION . "\n";
+}
+
+if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+    echo 'Soy al menos la versión 5.3.0 de PHP, mi versión: ' . PHP_VERSION . "\n";
+}
+
+if (version_compare(PHP_VERSION, '5.0.0', '>=')) {
+    echo 'Estoy usando la versión 5 de PHP, mi versión: ' . PHP_VERSION . "\n";
+}
+
+if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+    echo 'Estoy usando la versión 4 de PHP, mi versión: ' . PHP_VERSION . "\n";
+}
+?>
 </body>
 </html>

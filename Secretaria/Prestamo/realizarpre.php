@@ -1,4 +1,36 @@
 <div class="row">
+<!-- Datos primordiales saldo y liquido pagable -->
+<div class="col s12 m12">
+    <div class="card">
+      <div class="card-action">
+        <a>Datos Requeridos</a>
+      </div>
+      <div class="card-content">
+      <div class="row">
+      <form id="FormDatosSueldo" method="POST" enctype="multipart/form-data">
+            <div class="input-field col offset-l2 l2">
+              <input type="text" id="carnet-actual-rp" onkeypress="return soloNumeros(event)" name="carnet_actual-rp" class="validate"  required>
+              <label class="active">Carnet:</label>
+            </div>      
+            <div class="input-field col l2">
+              <input type="text" id="sueldo-actual-rp" onkeypress="return soloNumeros(event)" name="sueldo-actual-rp" class="validate"  required>
+              <label class="active">Total Ganado:</label>
+            </div>
+            <div class="input-field col l2">
+              <input type="text" id="liquido-actual-rp" onkeypress="return soloNumeros(event)" name="liquido-actual-rp" class="validate"  required>
+              <label class="active">Sueldo Liquido:</label>
+            </div>
+            <div class="col l3">
+              <button class="btn waves-effect waves-light greed" id="boton_actualizar" onclick="javascript:actualizar_saldo();" type="button" name="action" ><i class="fa fa-check"></i>Actualizar</button>
+          </div>
+          <div id="mensaje_enviado"></div>
+      </form>
+      </div>           
+
+      </div>           
+    </div> 
+  </div> <!-- fin Datos primordiales -->
+<div id="formRealizarPrestamo">
 	 <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
@@ -12,25 +44,17 @@
                 <div class="modal-content center">
                     <h4>Simulacion</h4>
                         <div class="row">
-                        <div class="col offset-m3 m7 offset-l2 l2">
-                          <p><br> CI: </p>
-                        </div>
-                        <div class="input-field col l5">
-                        <input type="text" id="simu_ci" class="validate center">
-                        </div>
-                        </div>
-                        <div class="row">
                         <div class="col m7 l3">
                           <p><br> Monto: </p>
                         </div>
                         <div class="input-field col l3">
-                        <input type="text" id="simu_pres_monto" class="validate center">
+                        <input type="text" id="simu_pres_monto" class="validate center" onkeypress="return soloNumeros(event)">
                         </div>
                         <div class="col m7 l3">
                           <p><br> Meses: </p>
                         </div>
                         <div class="input-field col l3">
-                        <input type="text" id="simu_pres_mes" class="validate center">
+                        <input type="text" id="simu_pres_mes" class="validate center" onkeypress="return soloNumeros(event)">
                         </div>
                         </div>
                         <div id="alerta_simulacion"></div>
@@ -95,7 +119,7 @@
         </div>
         <div class="row">
           <div class="input-field col s3">
-            <input type="text" name="ci" id="ci-rp" class="validate" placeholder="Carnet" required>
+            <input type="text" name="ci" id="ci-rp" class="validate" placeholder="Carnet" readonly required>
             <label class="active">CI:</label>
           </div>
           <div class="input-field col s4">
@@ -136,14 +160,14 @@
         <div class="row">
         <p>Señores del Comité de Crédito: Presento a Uds. mi solicitud de préstamo por la cantidad de Bs:</p>
           <div class="input-field col s2">
-            <input type="text" id="cantidad-rp" name="cantidad" class="validate" placeholder="" required>
+            <input type="text" id="cantidad-rp" name="cantidad" class="validate" placeholder="" required onkeypress="return soloNumeros(event)" >
             <label class="active" >Cantidad Prestamo:</label>
           </div>
           <p><br><br>. Comprometiéndome a su total cancelación en un plazo de:</p>
         </div>
         <div class="row">
           <div class="input-field col s2 l2">
-            <input placeholder="Ej. 12" type="text" id="plazo-mes-rp" name="meses" class="validate" required >
+            <input placeholder="Ej. 12" type="text" id="plazo-mes-rp" name="meses" class="validate" required onkeypress="return soloNumeros(event)" >
             <label class="active">Meses</label>
           </div>
           <div class=" col s1 l1">
@@ -173,15 +197,15 @@
         <div class="row " >
           <p>Ofrezco como garantía personal:</p>
           <div class="input-field col s4 l2">
-            <input type="text" id="ci-garante-rp" name="cigarante" class="validate center" placeholder required>
+            <input type="text" id="ci-garante-rp" name="cigarante" class="validate center" placeholder required onkeypress="return soloNumeros(event)" >
             <label class="active">Ci</label>
           </div>
             <div class="input-field col s4 l4">
-            <input type="text" name="nomgarante" id="nombre-garante-rp" class="validate" placeholder required >
+            <input type="text" name="nomgarante" id="nombre-garante-rp" class="validate" placeholder required onkeypress="return soloLetras(event)" >
             <label class="active">Nombres:</label>
           </div>
           <div class="input-field col s4 l4">
-            <input type="text" name="apegarante" id="apellido-garante-rp" class="validate" placeholder required>
+            <input type="text" name="apegarante" id="apellido-garante-rp" class="validate" placeholder required onkeypress="return soloLetras(event)" >
             <label class="active">Apellidos:</label>
           </div>
         </div>
@@ -213,17 +237,21 @@
   </div>
           <!-- FIN formulario de prestamo -->
         <div class="row"> 
-          <div class="col offset-s2 s4 offset-l3 l4">
-            <button class="btn waves-effect waves-light red" type="reset" name="action" ><i class="fa fa-trash-o"></i> Limpiar</button>
+          <div class="col s6 m4 l3 left">
+            <button class="btn waves-effect waves-light red" type="reset" onclick="javascript:cancelar_solicitud();" name="action" ><i class="fa fa-ban"></i> Cancelar</button>
           </div>
-          <div class="col s4 l4">
+          <div class="col s6 m4 l3 right">
             <button class="btn waves-effect waves-light blue" type="button" id="boton_revision" name="action" onclick="javascript:revision_prestamo()" ><i class="fa fa-eye"></i> Revisar</button>
+          </div>
+          <div class="col s6 m4 l3 right">
+            <button class="btn waves-effect waves-light blue" type="button" id="boton_enviar_rp" name="action" onclick="javascript:enviar_prestamo_por_terceros()" ><i class="fa fa-paper-plane-o"></i>Enviar</button>
           </div>    
         </div>
           
       </form>                 
       </div>
       <div id="mensaje_registrado"></div>           
+    </div> 
     </div> 
   </div>
 </div>

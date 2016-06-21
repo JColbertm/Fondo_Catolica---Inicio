@@ -123,6 +123,10 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$datos->cantidad = $_POST['cantidad'];
 			$datos->meses = $_POST['meses'];
 			$datos->porcentaje = $_POST['porcentaje'];
+			$datos->cuota_aporte = $_POST['cuota_aporte'];
+			$datos->cant_sueldo = $_POST['cant_sueldo'];
+			$datos->liquido = $_POST['liquido'];
+			$datos->cuota_pres = $_POST['cuota_pres'];
 			$idgarante_pres=ClaseUsuario::encontrar_por_ci($_POST['garante']);
 			$datos->idGarante = $idgarante_pres->idUsuario;
 			$datos->idRegistrador =$_SESSION['ideusuario'];//cambiar por inicio sesion
@@ -236,6 +240,16 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$parametro=ClaseParametros::encontrar_parametro_prestamo(10);
 			$interes=100*$parametro->condicion;
 			 echo json_encode($interes);
+			flush();
+		break;
+		case "actualizar_saldo":
+			$carnet=$_POST['carnet'];
+			$sueldo=$_POST['sueldo'];
+			$liquido=$_POST['liquido'];
+			$fecha=date('Y/m/d');
+			$modificar=ClaseHistorial::registrar_saldo($carnet,$sueldo,$liquido,$fecha);
+
+			 echo json_encode($modificar);
 			flush();
 		break;
 	}

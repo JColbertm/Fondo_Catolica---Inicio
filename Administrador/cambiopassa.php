@@ -1,10 +1,7 @@
  <?php
 @session_start();
-  if (isset($_SESSION['ideusuario']))
-  {
+  if (!isset($_SESSION['ideusuario']))
   
-  }
-  else
   {
     header('Location: /Fondo_Catolica/index.php');  
   }

@@ -8,10 +8,15 @@ class ClasePrestamo{
 	public $cantidad;
 	public $meses;
 	public $porcentaje;
+	public $cuota_aporte;
+	public $cant_sueldo;
+	public $liquido;
+	public $cuota_pres;
 	public $idGarante;
 	public $idRegistrador;
 	public $numero_cheque;
 	public $fecha;
+	public $estado;
 
 	public static function encontrar_prestamos(){
 			$resultados= execSqlA("SELECT * FROM prestamo");
@@ -49,7 +54,7 @@ class ClasePrestamo{
 			return $objeto;
 		}
 	public function crear_prestamo(){
-			$result2= insertA(self::$db_tabla, array('idUsuario', 'cantidad', 'meses', 'porcentaje', 'idGarante', 'idRegistrador', 'numero_cheque', 'fecha', 'estado'),array(2,2,2,2,2,2,2,2,2), array($this->idUsuario,$this->cantidad,$this->meses,$this->porcentaje,$this->idGarante,$this->idRegistrador,$this->numero_cheque,$this->fecha,$this->estado));
+			$result2= insertA(self::$db_tabla, array('idUsuario', 'cantidad', 'meses', 'porcentaje', 'cuota_aporte', 'cant_sueldo', 'liquido', 'cuota_pres', 'idGarante', 'idRegistrador', 'numero_cheque', 'fecha', 'estado'),array(2,2,2,2,2,2,2,2,2,2,2,2,2), array($this->idUsuario,$this->cantidad,$this->meses,$this->porcentaje,$this->cuota_aporte,$this->cant_sueldo,$this->liquido,$this->cuota_pres,$this->idGarante,$this->idRegistrador,$this->numero_cheque,$this->fecha,$this->estado));
 			 if($result2){
 			 	$row= execSqlA("SELECT MAX(idPrestamo) FROM prestamo");
 			 	while ($data = mysqli_fetch_array($row)){			  

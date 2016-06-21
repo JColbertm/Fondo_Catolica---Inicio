@@ -2,7 +2,7 @@
   <div class="col s12 m12">
     <div class="card">
       <div class="card-action">
-        <a>Solicitudes</a>
+        <a>Solicitudes Enviadas</a>
       </div>
       <div class="card-content">
        <div id="tabla_solicitudes"></div>
@@ -123,7 +123,7 @@
         <div class="row ">
         <p>También me comprometo a seguir aportando la cantidad de:</p>
           <div class="input-field col s2 l2">
-            <input type="text" id="aporte-sp" class="validate center" placeholder readonly required>
+            <input type="text" id="aporte-sp" name="cuota_aporte" class="validate center" placeholder readonly required>
             <label class="active">Cuota:</label>
           </div>
           <div class="col s10 l10">
@@ -160,18 +160,18 @@
         </div>
         <div class="row">
           <div class="input-field col offset-s1 offset-l4 s5 l2">
-            <input type="text" id="ganado-sp" class="validate center" placeholder readonly required >
+            <input type="text" id="ganado-sp" name="cant_sueldo" class="validate center" placeholder readonly required >
             <label class="active">Total Ganado:</label>
           </div>
           <div class="input-field col s5 l2">
-            <input type="text" id="liquido-sp" class="validate center" placeholder readonly required>
+            <input type="text" id="liquido-sp" name="liquido" class="validate center" placeholder readonly required>
             <label class="active">Liquido Pagable:</label>
           </div>
         </div>
         <div id="cheque">
          <div class="row">
           <div class="input-field col offset-s3 offset-l5 s5 l2" >
-            <input type="text" id="nu-cheque-rp" name="numero_cheque" placeholder="Ej. 345224" required>
+            <input type="text" id="nu-cheque-sp" name="numero_cheque" placeholder="Ej. 345224" required onkeypress="return soloNumeros(event)" >
             <label class="active">Nº de Cheque</label>
           </div>
         </div>
@@ -183,18 +183,18 @@
           <!-- Fin formulario de prestamo -->
 
         <div class="row"> 
-          <div class="col s6 offset-m2 m4 offset-l4 l3">
+          <div class="col s6 m4 l3">
             <button class="btn waves-effect waves-light blue" type="button" id="boton_revision_sol" name="action" onclick="javascript:revision_prestamo_solicitud();" ><i class="fa fa-eye"></i> Revisar</button>
           </div>   
-          <div class="col s6 m6 l4">
+          <div class="col s6 m6 offset-l6 l3">
           <button class="btn waves-effect waves-light" type="button" id="boton_registrar_sol" onclick="javascript:enviar_prestamo_sol();" name="action"><i class="fa fa-paper-plane-o"></i> Enviar</button>
           </div>
           </div>
           <div class="row" id="botones_envio">
-          <div class="col s6 offset-m2 m2 offset-l4 l3">
+          <div class="col s6 offset-m2 m2 l3">
           <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:registrar_prestamo();" name="action"><i class="fa fa-check"></i> Registrar</button>
           </div>
-          <div class="col s6 offset-m2 m2 l3">
+          <div class="col s6 offset-l6 l3">
                     <div id="imprimir_boton"></div>
           </div>
           </div>

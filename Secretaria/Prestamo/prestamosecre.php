@@ -2,7 +2,8 @@
 @session_start();
   if (isset($_SESSION['ideusuario']))
   {
-  
+  date_default_timezone_set('America/La_Paz');
+
   }
   else
   {
@@ -22,9 +23,11 @@
       <script type="text/javascript" src="/Fondo_Catolica/materialize/jquery.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/Fondo_Catolica/Secretaria/Prestamo/prestamo_js/prestamos.js"></script>
+      <script type="text/javascript" src="/Fondo_Catolica/gral_php/validadores.js"></script>
 
       <script type="text/javascript">
-      	$(document).ready(function(){  
+      	$(document).ready(function(){ 
+        $('#formRealizarPrestamo').hide(); 
             $('.tooltipped').tooltip({delay: 50});
     
             //porcentaje actual
@@ -34,8 +37,7 @@
           $('#cheque').hide();//Ocultamos input de cheque solprestamo.php
           $('#botones_envio').hide();//ocultar boton registrar
           $('#boton_registrar_sol').hide();//ocultar boton registrar solicitud89
-          // botones redondos estaticos "estilos_fondo.css"
-          var altura = $('#botones-circulares').offset().top=750;
+          var altura = $('#botones-circulares').offset().top=950;
           $(window).on('scroll', function(){
             
             if ( $(window).scrollTop() > altura ){
@@ -278,11 +280,16 @@
                       }
           
            function registrar_prestamo(){
-            if($('#nu-cheque-rp').val().length > 1){
+            if($('#nu-cheque-sp').val().length > 1){
             $('#imprimir_boton').show();
+            var monto=$('#cantidad-sp').val();
+            var meses=$('#plazo-mes-sp').val();
+            var porc=$('#porcentaje-sp').val();
+            var j=(porc/100)/12;
+          var cuota_prestamo=(monto*(j/(1-Math.pow(1+j,-meses)))).toFixed(2);
             setTimeout("$('.ocultar').hide();", 5000);
             var datos= $('#FormPrestamo_reg_sol').serialize();
-            datos +="&opcion=" + encodeURIComponent('registrar_prestamo');
+            datos +="&opcion=" + encodeURIComponent('registrar_prestamo')+"&cuota_pres=" + encodeURIComponent(cuota_prestamo);
             console.log(o);
             console.log(datos);
 
@@ -347,7 +354,7 @@
 
                 var resp = $.parseJSON(data2);//json a objeto
                 // $('#cantidad-sp').val(resp[0].cantidad_sol);
-                var html = '<div class="col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombres</th><th>Apellidos</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
+                var html = '<div class="col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombre(s)</th><th>Apellido(s)</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
             
                   for(i in resp){ 
                     if(resp[i].estado_sol=="Verificar"){
@@ -361,7 +368,7 @@
                      +resp[i].fecha_sol+'</td></tr>';
                    }
                    if(resp[i].estado_sol=="Evaluado"){
-                     html+='<tr onclick="mostrar_solicitud(this)"><td>'
+                     html+='<tr onclick="mostrar_solicitud(this)" ><td>'
                      +resp[i].idSolicitud+'</td><td>'
                      +resp[i].cod_form_solpres+'</td><td>'
                      +resp[i].ci+'</td><td>'
@@ -553,7 +560,15 @@
             if(resp==true){
             $("#FormPrestamo_reg")[0].reset();
           var html='<div id="card-alert" class="card green lighten-5 ocultar"><div class="card-content green-text "><p><i class="mdi-social-notifications"></i> <div align="center"> Prestamo Enviado a Revision!</div></p></div></div>';  
-          $('#mensaje_registrado').html(html);
+          $('#mensaje_enviado').html(html);
+
+         
+          $('#carnet-actual-rp').prop('readonly', false);
+            $('#sueldo-actual-rp').prop('readonly', false);
+            $('#liquido-actual-rp').prop('readonly', false);
+            $('#boton_actualizar').prop('disabled', false);
+            $('#formRealizarPrestamo').hide(); 
+            $('#FormDatosSueldo')[0].reset(); 
           }else{
             var html='<div id="card-alert" class="card red lighten-5 ocultar"><div class="card-content red-text "><p><i class="mdi-social-notifications"></i> <div align="center"> Por favor llene los espacios requeridos</div></p></div></div>';  
           $('#mensaje_registrado').html(html);
@@ -563,8 +578,8 @@
            });
            }
      function simular_pres(){
-            setTimeout("$('.ocultar_alerta').hide();", 5000);
-            var ci=$('#simu_ci').val();
+            setTimeout("$('.ocultar_alerta').hide();", 10000);
+            var ci=$('#carnet-actual-rp').val();
             var monto=$('#simu_pres_monto').val();
             var meses=$('#simu_pres_mes').val();
             var o = "opcion="+ encodeURIComponent('buscar_paramtros')+"&ci="+encodeURIComponent(ci);
@@ -585,11 +600,11 @@
           console.log(cuota_prestamo);
           console.log(meses);
           console.log(resp.max_meses);
-          var mes=+'0'+meses;
-          console.log(mes);
+          var mes_max=resp.max_meses;
+          if(meses==4 || meses==5 || meses==6 || meses==7 || meses==8 || meses==9){meses=+'0'+meses;}
           if(monto<=resp.prestamo_max)
           {
-                if(mes<=resp.max_meses)
+                if(meses<=mes_max)
                 {
                     if(cuota_prestamo<=resp.cuota_maxima)
                     {    
@@ -599,7 +614,7 @@
                         $("#boton_aceptar").removeAttr("disabled");
                         $("#mostrar_cal").show();
                     }else{
-                        var alerta='<div class="ocultar_alerta">* Se supero el maximo de couta permitido '+resp.cuota_maxima+' bs</div>';
+                        var alerta='<div class="ocultar_alerta">* La cuota es mas del 30% del sueldo, cuota permitida '+resp.cuota_maxima+' bs</div>';
                         $('#alerta_simulacion').show();
                         $('#alerta_simulacion').html(alerta);
                       }
@@ -619,8 +634,6 @@
               })
             }
       function datos_simulacion(){
-        $('#ci-rp').val($('#simu_ci').val());
-        buscar_usuario();
         $('#cantidad-rp').val($('#simu_pres_monto').val());
         $('#plazo-mes-rp').val($('#simu_pres_mes').val());
         $('#porcentaje-rp').val($('#simu_pres_interes').val());
@@ -633,9 +646,18 @@
         $('#simu_pres_cuota').val("");
 
       }
+      function cancelar_solicitud(){
+        $('#FormPrestamo_reg')[0].reset();
+        $('#formRealizarPrestamo').hide(); 
+        $('#FormDatosSueldo')[0].reset(); 
+        $('#carnet-actual-rp').prop('readonly', false);
+            $('#sueldo-actual-rp').prop('readonly', false);
+            $('#liquido-actual-rp').prop('readonly', false);
+            $('#boton_actualizar').prop('disabled', false);
+      }
       function revision_prestamo(){
             setTimeout("$('.ocultar_revision').hide();", 5000);
-            if($('#ci-rp').val().length > 5){
+            if($('#ci-rp').val().length >= 5){
             if($('#cantidad-rp').val().length > 1){
             if($('#plazo-mes-rp').val().length > 0){
             if($('#ci-garante-rp').val().length > 5){
@@ -660,11 +682,11 @@
           var j=resp.interes/12;
           var cuota_prestamo=(monto*(j/(1-Math.pow(1+j,-meses)))).toFixed(2);
           console.log(cuota_prestamo);
+          if(meses==4 || meses==5 || meses==6 || meses==7 || meses==8 || meses==9){meses=+'0'+meses;}
 
           if(monto<=resp.prestamo_max){
-            if('0'+meses<=resp.max_meses){
+            if(meses<=resp.max_meses){
                 if(cuota_prestamo<=resp.cuota_maxima){
-                  $('#ci-rp').prop('readonly', true);
                   $('#cantidad-rp').prop('readonly', true);
                   $('#plazo-mes-rp').prop('readonly', true);
                   $('#ci-garante-rp').prop('readonly', true);
@@ -674,7 +696,7 @@
                     $('#sugerencias').hide();
                     $('#alerta_revision').hide();
                     $('#boton_revision').hide();
-                    $("#boton_registrar").show();
+                    $("#boton_enviar_rp").show();
                   }else{
                     var alerta='<div id="card-alert" class="card red lighten-5 ocultar_revision"><div class="card-content red-text "><p><i class="mdi-social-notifications"></i> <div align="center"> * Se supero el maximo de couta permitido '+resp.cuota_maxima+' bs</div></p></div></div>';
                 $('#alerta_revision').html(alerta);
@@ -717,6 +739,53 @@
           $('#porcentaje-rp').val(porcentaje);
         });
       }
+      function actualizar_saldo(){
+        if($('#carnet-actual-rp').val()!=""){
+          if($('#sueldo-actual-rp').val()!=""){
+          if($('#liquido-actual-rp').val()!=""){
+        if($('#sueldo-actual-rp').val()>$('#liquido-actual-rp').val())
+        {
+        var datos='opcion='+ encodeURIComponent("actualizar_saldo")+'&carnet='+ encodeURIComponent($('#carnet-actual-rp').val())+'&sueldo='+ encodeURIComponent($('#sueldo-actual-rp').val())+'&liquido='+ encodeURIComponent($('#liquido-actual-rp').val());
+        console.log(datos);
+        $.ajax({
+          url:'prestamo_php/prestamo_socio.php',
+          type:'POST',
+          data:datos
+
+        }).done(function(data){
+          var resp=$.parseJSON(data);
+          console.log(resp);
+          if(resp=1)
+          {
+          $('#boton_enviar_rp').hide();
+          $('#boton_revision').show();
+          $('#cantidad-rp').prop('readonly', false);
+          $('#plazo-mes-rp').prop('readonly', false);
+          $('#ci-garante-rp').prop('readonly', false);
+          $('#nombre-garante-rp').prop('readonly', false);
+          $('#apellido-garante-rp').prop('readonly', false);
+
+            $('#ci-rp').val($('#carnet-actual-rp').val());
+            $('#carnet-actual-rp').prop('readonly', true);
+            $('#sueldo-actual-rp').prop('readonly', true);
+            $('#liquido-actual-rp').prop('readonly', true);
+            $('#boton_actualizar').prop('disabled', true);
+              buscar_usuario();
+            $('#formRealizarPrestamo').show(); 
+            $('#simu_ci').val($('#carnet-actual-rp').val());
+            $('#ci-rp').val($('#carnet-actual-rp').val());
+          }
+        });
+      }else{
+            Materialize.toast('Sueldo Liquido mayor a Total Ganado', 4000, 'rounded');
+      }}else{
+            Materialize.toast('Ingrese Liquido Pagable', 4000, 'rounded');
+      }}else{
+            Materialize.toast('Ingrese Total Ganado', 4000, 'rounded');
+      }}else{
+            Materialize.toast('Ingrese numero de Carnet', 4000, 'rounded');
+      }
+    }
       </script>
 
       <!--Let browser know website is optimized for mobile-->

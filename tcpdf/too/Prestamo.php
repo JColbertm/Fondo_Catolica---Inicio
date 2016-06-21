@@ -153,11 +153,7 @@ table, tr, td {
   <tr>
     <td colspan="4"><strong>Nº de Cheque: '.$cheque.'</strong></td>
   </tr>
-  <br><br><br><br><br>
-  <tr>
-    <td style="width:200px; text-decoration: overline;"><p style="text-align: center;"><strong>FIRMA DEL SOLICITANTE</strong></p></td>
-    <td style="width:200px; text-decoration: overline;"><p style="text-align: center;"><strong>FIRMA DEL SOLICITANTE</strong></p></td>
-  </tr>
+  
   <tr>
     <td colspan="2"><p style="text-align: center;"><strong>DATOS ECONÓMICOS DEL SOLICITANTE</strong></p></td>
   </tr>
@@ -166,6 +162,11 @@ table, tr, td {
   </tr>
   <tr>
     <td colspan="2">Liquido pagable: '.$liquido.'</td>
+  </tr>
+  <br><br><br><br><br>
+  <tr>
+    <td style="width:200px;"><div style="text-align: center;"><strong style="text-decoration: overline;">FIRMA DEL SOLICITANTE</strong><br>'.$nombre_ga.' '.$nombre2_ga.' '.$apellido_p_ga.' '.$apellido_m_ga.'<br>CI:'.$ci.'</div></td>
+    <td style="width:200px;"><div style="text-align: center;"><strong style="text-decoration: overline;">FIRMA DEL SOLICITANTE</strong><br>'.$nombre_ga.' '.$nombre2_ga.' '.$apellido_p_ga.' '.$apellido_m_ga.'<br>CI: '.$ci_ga.'</div></td>
   </tr>
   <br><br><br><br><br>
   <tr>
