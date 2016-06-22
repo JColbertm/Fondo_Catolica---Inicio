@@ -148,6 +148,7 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$prestamo=ClasePrestamo::encontrar_prestamos();
 			 foreach ($prestamo as $pre) {
 			 $usuario=ClaseUsuario::encontrar_por_id($pre->idUsuario);
+			 $garante=ClaseUsuario::encontrar_por_id($pre->idGarante);
 			 	$resultados[$c]=array(
 			 		'idPrestamo'=>$pre->idPrestamo,
 			 		'cod_form_pres'=>$pre->cod_form_pres,
@@ -161,7 +162,13 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 				 	'nombre'=>$usuario->nombre,
 				 	'nombre2'=> $usuario->nombre2,
 				 	'apellido_p'=> $usuario->apellido_p,
-				 	'apellido_m'=>$usuario->apellido_m);
+				 	'apellido_m'=>$usuario->apellido_m,
+				 	'ci_ga'=> $garante->ci,
+				 	'nombre_ga'=>$garante->nombre,
+				 	'nombre2_ga'=> $garante->nombre2,
+				 	'apellido_p_ga'=> $garante->apellido_p,
+				 	'apellido_m_ga'=>$garante->apellido_m
+				 	);
 					$c++;
 			 }
 			echo json_encode($resultados);
