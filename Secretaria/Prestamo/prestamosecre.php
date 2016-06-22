@@ -369,18 +369,26 @@
               cantidad = $(f).find('td:eq(8)').text();
               meses = $(f).find('td:eq(9)').text();
               fecha = $(f).find('td:eq(10)').text();
-              var html='<div class="row"><h4 align="center" style="background:gray;color:white;">PRÉSTAMO NUEVO</h4><h5 align="center">SOCIO: '+nombre+' '+apellido+'</h5><h5 align="center">CI:'+ci+'</h5><div align="center"><p>Prestamo realizado el '+fecha+'</p></div></div> <div class="row"> <table><tr><th>Monto Capital Bs <br> '+cantidad+'</div></th><th></th><th>Tasa de interés <br> '+porcentaje+' %</th><th>Periodo de la cuota en meses <br> 12</th><th>N° de cuotas <br> '+meses+'</th></tr>'  
+              var html='<div class="row"><h4 align="center" style="background:gray;color:white;">PRÉSTAMO NUEVO</h4><h5 align="center">SOCIO: '+nombre+' '+apellido+'</h5><h5 align="center">CI:'+ci+'</h5><div align="center"><p>Prestamo realizado el '+fecha+'</p></div></div> <div class="row"> <table><tr><th>Monto Capital Bs <br> '+cantidad+'</div></th><th></th><th>Tasa de interés <br> '+porcentaje+' %</th><th>Periodo de la<br>cuota en<br>meses <br> 12</th><th>Tasa<br>periodica<br>1,00%</th><th>N° de cuotas <br> '+meses+'</th></tr>'  
                 html+='<tr><th>N° de Cuotas</th><th>Mes</th><th>Capital al<br>inicio del<br> periodo</th><th>Amortizacion</th><th>Intereses de<br>periodo</th><th>Cuota</th></tr>';
                 var cuotas=1;
                 var amorti=0;
-             for(var i=0;i<=meses;i++){
-              var monto=(cantidad-amorti).toFixed(2);
+                var cant=cantidad;
+                var capital=0;
+                var to_inte=0;
+                var to_cuota=0;
+             for(var i=0;i<meses;i++){
+              var monto=(cant-amorti).toFixed(2);
               var inter=(monto*0.01).toFixed(2);
-              amorti=cuotas_pre-inter;
+              amorti=(cuotas_pre-inter).toFixed(2);
               html+='<tr><td>'+cuotas+'</td><td>'+fecha+'</td><td>'+monto+'</td><td>'+amorti+'</td><td>'+inter+'</td><td>'+cuotas_pre+'</td></tr>';
               cuotas++;
-              cantidad=monto;
+              cant=monto;
+              to_inte=eval(to_inte+'+'+inter);
+              to_cuota=eval(to_cuota+'+'+cuotas_pre);
               }
+              console.log(capital);
+                html+='<tr><td></td><td></td><td>Totales:</td><td>'+cantidad+'</td><td>'+(to_inte).toFixed(2)+'</td><td>'+(to_cuota).toFixed(2)+'</td></tr>';
               html+='</table></div>';
               $('#tabla_cuotas').html(html);           
              
