@@ -11,7 +11,7 @@
                   </div>           
                 </div> 
               </div>  
-              <div class="col s12 m12">
+              <div class="col s12 m12 offset-l1 l10">
                 <div class="card">
                   <div class="card-content">
                     <div align="right">

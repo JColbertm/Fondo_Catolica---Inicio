@@ -7,3 +7,8 @@
 	/*left:0;*/
 	/*Podemos hacer que el menu abarque el 100% al hacer scroll*/
 }
+.pres_nuevo tr td {
+margin: 0px;
+border: 0px;
+padding: 0px;
+}

@@ -369,7 +369,16 @@
               cantidad = $(f).find('td:eq(8)').text();
               meses = $(f).find('td:eq(9)').text();
               fecha = $(f).find('td:eq(10)').text();
-              var html='<div class="row"><h4 align="center" style="background:gray;color:white;">PRÉSTAMO NUEVO</h4><h5 align="center">SOCIO: '+nombre+' '+apellido+'</h5><h5 align="center">CI:'+ci+'</h5><div align="center"><p>Prestamo realizado el '+fecha+'</p></div></div> <div class="row"> <table><tr><th>Monto Capital Bs <br> '+cantidad+'</div></th><th></th><th>Tasa de interés <br> '+porcentaje+' %</th><th>Periodo de la<br>cuota en<br>meses <br> 12</th><th>Tasa<br>periodica<br>1,00%</th><th>N° de cuotas <br> '+meses+'</th></tr>'  
+              console.log(fecha);
+                              var d = new Date(fecha);
+                               var curr_date = d.getDate()+1;
+                               var curr_month = d.getMonth();
+    var curr_year = d.getFullYear();
+        console.log(curr_date + "-" + curr_month + "-" + curr_year);
+
+    var days = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiempre","Octubre","Noviembre","Diciembre"];
+
+              var html='<div class="row"><h4 align="center" style="background:gray;color:white;">PRÉSTAMO NUEVO</h4><h5 align="center">SOCIO: '+nombre+' '+apellido+'</h5><h5 align="center">CI:'+ci+'</h5><div align="center"><p>Prestamo realizado el '+curr_date+' de '+days[d.getMonth()]+' de '+curr_year+'</p></div></div> <div class="row"> <table class="responsive-table highlight pres_nuevo"><tr><th>Monto Capital Bs <br> '+cantidad+'</div></th><th></th><th>Tasa de interés <br> '+porcentaje+' %</th><th>Periodo de la<br>cuota en<br>meses <br> 12</th><th>Tasa<br>periodica<br>1,00%</th><th>N° de cuotas <br> '+meses+'</th></tr>'  
                 html+='<tr><th>N° de Cuotas</th><th>Mes</th><th>Capital al<br>inicio del<br> periodo</th><th>Amortizacion</th><th>Intereses de<br>periodo</th><th>Cuota</th></tr>';
                 var cuotas=1;
                 var amorti=0;
@@ -377,18 +386,35 @@
                 var capital=0;
                 var to_inte=0;
                 var to_cuota=0;
+                var pago_to=meses;
+                 var jj=curr_month;
+                var sumar_years=curr_year;
              for(var i=0;i<meses;i++){
+              if(jj==12){jj=0;}
+              var mes=days[jj];
               var monto=(cant-amorti).toFixed(2);
               var inter=(monto*0.01).toFixed(2);
               amorti=(cuotas_pre-inter).toFixed(2);
-              html+='<tr><td>'+cuotas+'</td><td>'+fecha+'</td><td>'+monto+'</td><td>'+amorti+'</td><td>'+inter+'</td><td>'+cuotas_pre+'</td></tr>';
+              if(i<5){
+                if(jj==11){mes=mes+" "+sumar_years;}
+                if(jj==0){mes=mes+" "+eval(sumar_years+'+'+1);
+                sumar_years=eval(sumar_years+'+'+1);}
+              html+='<tr><td>'+cuotas+'</td><td>'+mes+'</td><td>'+monto+'</td><td>'+amorti+'</td><td>'+inter+'</td><td>'+cuotas_pre+'</td></tr>';
+              }else{
+                if(jj==11){mes=mes+" "+sumar_years;}
+                if(jj==0){mes=mes+" "+eval(sumar_years+'+'+1);
+                sumar_years=eval(sumar_years+'+'+1);}
+                var mul=pago_to-i;
+                html+='<tr><td>'+cuotas+'</td><td>'+mes+'</td><td>'+monto+'</td><td>'+amorti+'</td><td>'+inter+'</td><td>'+cuotas_pre+'</td><td>'+(mul*cuotas_pre).toFixed(2)+'</td></tr>';
+              }
               cuotas++;
               cant=monto;
               to_inte=eval(to_inte+'+'+inter);
               to_cuota=eval(to_cuota+'+'+cuotas_pre);
+              jj++;
               }
               console.log(capital);
-                html+='<tr><td></td><td></td><td>Totales:</td><td>'+cantidad+'</td><td>'+(to_inte).toFixed(2)+'</td><td>'+(to_cuota).toFixed(2)+'</td></tr>';
+                html+='<tr><td></td><td></td><td></td><td><strong>Totales:</strong></td><td>'+cantidad+'</td><td>'+(to_inte).toFixed(2)+'</td><td>'+(to_cuota).toFixed(2)+'</td></tr>';
               html+='</table></div>';
               $('#tabla_cuotas').html(html);           
              
