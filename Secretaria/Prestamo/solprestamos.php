@@ -6,11 +6,15 @@
       </div>
       <div class="card-content">
        <div id="tabla_solicitudes"></div>
-      </div>           
+      </div> 
+
     </div> 
   </div>  
   <div class="col s12 m12">
     <div class="card">
+        <div id="botones-circulares" align="right">
+              <div id="imprimir_boton"></div> 
+        </div>
       <div class="card-content">
         
 
@@ -193,9 +197,6 @@
           <div class="row" id="botones_envio">
           <div class="col s6 offset-m2 m2 l3">
           <button class="btn waves-effect waves-light" type="button" id="boton_registrar" onclick="javascript:registrar_prestamo();" name="action"><i class="fa fa-check"></i> Registrar</button>
-          </div>
-          <div class="col s6 offset-l6 l3">
-                    <div id="imprimir_boton"></div>
           </div>
           </div>
         

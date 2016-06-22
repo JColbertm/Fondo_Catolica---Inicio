@@ -145,9 +145,23 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			case "tabla_prestamos":
 			$resultados=array();
 			$c=0;
-			$pres=ClasePrestamo::encontrar_prestamos();
-			 foreach ($pres as $pre) {
-			 	$resultados[$c]=array('idPrestamo'=>$pre->idPrestamo,'cod_form_pres'=>$pre->cod_form_pres);
+			$prestamo=ClasePrestamo::encontrar_prestamos();
+			 foreach ($prestamo as $pre) {
+			 $usuario=ClaseUsuario::encontrar_por_id($pre->idUsuario);
+			 	$resultados[$c]=array(
+			 		'idPrestamo'=>$pre->idPrestamo,
+			 		'cod_form_pres'=>$pre->cod_form_pres,
+			 		'estado'=>$pre->estado,
+			 		'cuota_pres'=>$pre->cuota_pres,
+			 		'porcentaje'=>$pre->porcentaje,
+			 		'cantidad'=>$pre->cantidad,
+			 		'meses'=>$pre->meses,
+			 		'fecha'=>$pre->fecha,
+			 		'ci'=> $usuario->ci,
+				 	'nombre'=>$usuario->nombre,
+				 	'nombre2'=> $usuario->nombre2,
+				 	'apellido_p'=> $usuario->apellido_p,
+				 	'apellido_m'=>$usuario->apellido_m);
 					$c++;
 			 }
 			echo json_encode($resultados);

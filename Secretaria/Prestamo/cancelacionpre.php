@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col s4 m3">
+  <div class="col s12 m12 l12">
     <div class="card">
       <div class="card-action">
         <a>Cancelacion Prestamo</a>
@@ -10,8 +10,10 @@
               </div>
       </div>           
     </div> 
-  </div>  
-  <div class="col s8 m9">
+  </div> 
+</div>
+<div class="row"> 
+  <div class="col offset-l1 s8 m9 l10">
     <div class="card">
       <div class="card-content">
         <div class="row">

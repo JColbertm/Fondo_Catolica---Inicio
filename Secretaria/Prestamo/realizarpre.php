@@ -35,9 +35,8 @@
     <div class="card">
       <div class="card-content">
       <!-- con css hacemos que los botones sean estaticos -->
-        <div id="botones-circulares" align="right">
+        <div id="boton-circular" align="right">
           <a class="btn-floating btn-large waves-effect waves-light green tooltipped btn modal-trigger " data-position="top" data-delay="50" data-tooltip="Simulacion" href="#modal3"><i class="fa fa-calculator"></i></a>
-          <a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>
         </div>
         <div id="modal3" class="modal" style="display: none; opacity: 1; width:400px;">
                   <div class="modal-content teal white-text">

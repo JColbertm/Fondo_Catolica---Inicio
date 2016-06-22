@@ -17,7 +17,8 @@
                     <div align="right">
                       <a class="btn-floating btn waves-effect waves-light red"><i class="fa fa-print"></i></a>
                     </div>
-
+                    
+                    <div id="tabla_cuotas"></div>
                     
                   </div>           
                 </div> 

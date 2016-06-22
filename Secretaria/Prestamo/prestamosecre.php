@@ -42,8 +42,10 @@
             
             if ( $(window).scrollTop() > altura ){
               $('#botones-circulares').addClass('menu-fixed');
+              $('#boton-circular').addClass('menu-fixed');
             } else {
               $('#botones-circulares').removeClass('menu-fixed');
+              $('#boton-circular').removeClass('menu-fixed');
             }
           });
           //fin estaticos
@@ -302,7 +304,11 @@
             console.log(data);
             console.log(resp);
             if(resp.resultados==true){
-              var boton='<a class="waves-effect waves-light btn blue" data-position="top" data-delay="50" data-tooltip="Imprimir" href="/Fondo_Catolica/tcpdf/too/Prestamo.php?idprestamo_im='+resp.idpres+'" target="_blank"><i class="fa fa-print"></i>Imprimir</a>';
+              
+                $('#boton_registrar').prop('disabled', true);
+
+
+              var boton='<a class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="top" target="_blank" href="/Fondo_Catolica/tcpdf/too/Prestamo.php?idprestamo_im='+resp.idpres+'" data-delay="50" data-tooltip="Imprimir"><i class="fa fa-print"></i></a>';
           $('#imprimir_boton').html(boton);
           $("#FormPrestamo_reg_sol")[0].reset();
           var html='<div id="card-alert" class="card green lighten-5 ocultar"><div class="card-content green-text "><p><i class="mdi-social-notifications"></i> <div align="center"> Prestamo Registrado!</div></p></div></div>';  
@@ -328,13 +334,24 @@
               })
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
-                var html = '<div class="table-responsive col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>N°</th><th>Solicitud</th></tr></thead><tbody>';
+                var html = '<div style="height: 200px; overflow-y:scroll;" ><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombre(s)</th><th>Apellido(s)</th><th>Estado</th></tr></thead><tbody>';
         
                   for(i in resp){ 
-                   html+='<tr onclick="mostrar_datos(this)"><td>'+resp[i].idPrestamo+'</td><td>'+resp[i].cod_form_pres+'</td></tr>';
+                   html+='<tr onclick="mostrar_datos_cuotas(this)"><td>'
+                   +resp[i].idPrestamo+'</td><td>'
+                   +resp[i].cod_form_pres+'</td><td>'
+                   +resp[i].ci+'</td><td>'
+                   +resp[i].nombre+' '+resp[i].nombre2+'</td><td>'
+                   +resp[i].apellido_p+' '+resp[i].apellido_m+'</td><td>'
+                   +resp[i].estado+'</td><td style="display:none">'
+                   +resp[i].cuota_pres+'</td><td style="display:none">'
+                   +resp[i].porcentaje+'</td><td style="display:none">'
+                   +resp[i].cantidad+'</td><td style="display:none">'
+                   +resp[i].meses+'</td><td style="display:none">'
+                   +resp[i].fecha+'</td></tr>';
                   }
                   html+= '</tbody></table></div>';
-                  $('#resultado2').html(html);
+                  // $('#resultado2').html(html);
                   $('#resultado3').html(html);
               })
               .fail(function() {
@@ -342,6 +359,34 @@
               })
          event.preventDefault();
      }
+     function mostrar_datos_cuotas(f)
+          {
+              ci = $(f).find('td:eq(2)').text();
+              nombre = $(f).find('td:eq(3)').text();
+              apellido = $(f).find('td:eq(4)').text();
+              cuotas_pre = $(f).find('td:eq(6)').text();
+              porcentaje = $(f).find('td:eq(7)').text();
+              cantidad = $(f).find('td:eq(8)').text();
+              meses = $(f).find('td:eq(9)').text();
+              fecha = $(f).find('td:eq(10)').text();
+              var html='<div class="row"><h4 align="center" style="background:gray;color:white;">PRÉSTAMO NUEVO</h4><h5 align="center">SOCIO: '+nombre+' '+apellido+'</h5><h5 align="center">CI:'+ci+'</h5><div align="center"><p>Prestamo realizado el '+fecha+'</p></div></div> <div class="row"> <table><tr><th>Monto Capital Bs <br> '+cantidad+'</div></th><th></th><th>Tasa de interés <br> '+porcentaje+' %</th><th>Periodo de la cuota en meses <br> 12</th><th>N° de cuotas <br> '+meses+'</th></tr>'  
+                html+='<tr><th>N° de Cuotas</th><th>Mes</th><th>Capital al<br>inicio del<br> periodo</th><th>Amortizacion</th><th>Intereses de<br>periodo</th><th>Cuota</th></tr>';
+                var cuotas=1;
+                var amorti=0;
+             for(var i=0;i<=meses;i++){
+              var monto=(cantidad-amorti).toFixed(2);
+              var inter=(monto*0.01).toFixed(2);
+              amorti=cuotas_pre-inter;
+              html+='<tr><td>'+cuotas+'</td><td>'+fecha+'</td><td>'+monto+'</td><td>'+amorti+'</td><td>'+inter+'</td><td>'+cuotas_pre+'</td></tr>';
+              cuotas++;
+              cantidad=monto;
+              }
+              html+='</table></div>';
+              $('#tabla_cuotas').html(html);           
+             
+          
+
+          }
      function buscar_solicitudes(){
 
            o = "&opcion=" + encodeURIComponent('tabla_solicitudes');
@@ -354,7 +399,7 @@
 
                 var resp = $.parseJSON(data2);//json a objeto
                 // $('#cantidad-sp').val(resp[0].cantidad_sol);
-                var html = '<div class="col-sm-offset-2 col-sm-8" style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Prestamo</th><th>Ci</th><th>Nombre(s)</th><th>Apellido(s)</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
+                var html = '<div style="height: 200px; overflow-y:scroll;"><table class="responsive-table highlight"><thead><tr><th>N°</th><th>Solicitud</th><th>Ci</th><th>Nombre(s)</th><th>Apellido(s)</th><th>Estado</th><th>Fecha Envio</th></tr></thead><tbody>';
             
                   for(i in resp){ 
                     if(resp[i].estado_sol=="Verificar"){
