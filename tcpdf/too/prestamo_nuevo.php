@@ -36,6 +36,32 @@ require_once('tcpdf_include.php');
 		if(isset($_GET['idprestamo_im'])){
 			$id=$_GET['idprestamo_im'];
 		}
+		$resultados=array();
+			$c=0;
+			$prestamo=ClasePrestamo::encontrar_prestamos($id);
+			 $usuario=ClaseUsuario::encontrar_por_id($prestamo->idUsuario);
+			 $garante=ClaseUsuario::encontrar_por_id($prestamo->idGarante);
+			 		'idPrestamo'=>$prestamo->idPrestamo,
+			 		'cod_form_pres'=>$prestamo->cod_form_pres,
+			 		'estado'=>$prestamo->estado,
+			 		'cuota_pres'=>$prestamo->cuota_pres,
+			 		'porcentaje'=>$prestamo->porcentaje,
+			 		'cantidad'=>$prestamo->cantidad,
+			 		'meses'=>$prestamo->meses,
+			 		'fecha'=>$prestamo->fecha,
+			 		'ci'=> $usuario->ci,
+				 	'nombre'=>$usuario->nombre,
+				 	'nombre2'=> $usuario->nombre2,
+				 	'apellido_p'=> $usuario->apellido_p,
+				 	'apellido_m'=>$usuario->apellido_m,
+				 	'ci_ga'=> $garante->ci,
+				 	'nombre_ga'=>$garante->nombre,
+				 	'nombre2_ga'=> $garante->nombre2,
+				 	'apellido_p_ga'=> $garante->apellido_p,
+				 	'apellido_m_ga'=>$garante->apellido_m
+				 
+			 
+
       $idSol=$_GET['idprestamo_im'];
       $solicitud=ClasePrestamo::solicitud_por_id($id);
       $usuario=ClaseUsuario::encontrar_por_id($solicitud->idUsuario);
