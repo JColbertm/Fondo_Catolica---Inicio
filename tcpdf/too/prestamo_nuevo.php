@@ -36,70 +36,38 @@ require_once('tcpdf_include.php');
 		if(isset($_GET['idprestamo_im'])){
 			$id=$_GET['idprestamo_im'];
 		}
-		$resultados=array();
 			$c=0;
-			$prestamo=ClasePrestamo::encontrar_prestamos($id);
+			$prestamo=ClasePrestamo::solicitud_por_id($id);
 			 $usuario=ClaseUsuario::encontrar_por_id($prestamo->idUsuario);
 			 $garante=ClaseUsuario::encontrar_por_id($prestamo->idGarante);
-			 		'idPrestamo'=>$prestamo->idPrestamo,
-			 		'cod_form_pres'=>$prestamo->cod_form_pres,
-			 		'estado'=>$prestamo->estado,
-			 		'cuota_pres'=>$prestamo->cuota_pres,
-			 		'porcentaje'=>$prestamo->porcentaje,
-			 		'cantidad'=>$prestamo->cantidad,
-			 		'meses'=>$prestamo->meses,
-			 		'fecha'=>$prestamo->fecha,
-			 		'ci'=> $usuario->ci,
-				 	'nombre'=>$usuario->nombre,
-				 	'nombre2'=> $usuario->nombre2,
-				 	'apellido_p'=> $usuario->apellido_p,
-				 	'apellido_m'=>$usuario->apellido_m,
-				 	'ci_ga'=> $garante->ci,
-				 	'nombre_ga'=>$garante->nombre,
-				 	'nombre2_ga'=> $garante->nombre2,
-				 	'apellido_p_ga'=> $garante->apellido_p,
-				 	'apellido_m_ga'=>$garante->apellido_m
+			 		$idPrestamo=$prestamo->idPrestamo;
+			 		$cod_form_pres=$prestamo->cod_form_pres;
+			 		$estado=$prestamo->estado;
+			 		$cuota_pres=$prestamo->cuota_pres;
+			 		$porcentaje=$prestamo->porcentaje;
+			 		$cantidad=$prestamo->cantidad;
+			 		$meses_pre=$prestamo->meses;
+			 		$fecha=$prestamo->fecha;
+			 		$ci= $usuario->ci;
+				 	$nombre=$usuario->nombre;
+				 	$nombre2= $usuario->nombre2;
+				 	$apellido_p= $usuario->apellido_p;
+				 	$apellido_m=$usuario->apellido_m;
+				 	$ci_ga= $garante->ci;
+				 	$nombre_ga=$garante->nombre;
+				 	$nombre2_ga= $garante->nombre2;
+				 	$apellido_p_ga= $garante->apellido_p;
+				 	$apellido_m_ga=$garante->apellido_m;
 				 
-			 
-
-      $idSol=$_GET['idprestamo_im'];
-      $solicitud=ClasePrestamo::solicitud_por_id($id);
-      $usuario=ClaseUsuario::encontrar_por_id($solicitud->idUsuario);
-      $ci=$usuario->ci;
-      $nombre=$usuario->nombre;
-      $nombre2= $usuario->nombre2;
-      $apellido_p= $usuario->apellido_p;
-      $apellido_m=$usuario->apellido_m;
-      $direccion= $usuario->direccion;
-      $telefono=$usuario->telefono;
-      $celular=$usuario->celular;
-      $departamento=$usuario->departamento;
-      $correos=$usuario->correos;
-      $interno=$usuario->interno;
-
-      $codigo=$solicitud->cod_form_pres;
-      $cantidad=$solicitud->cantidad;
-      $meses=$solicitud->meses;
-      $porcentaje=$solicitud->porcentaje;
-      $cheque=$solicitud->numero_cheque;
-      $fecha=$solicitud->fecha;
-
-      $garante=ClaseUsuario::encontrar_por_id($solicitud->idGarante);
-      $ci_ga=$garante->ci;
-      $nombre_ga=$garante->nombre;
-      $nombre2_ga= $garante->nombre2;
-      $apellido_p_ga= $garante->apellido_p;
-      $apellido_m_ga=$garante->apellido_m;
-
-      $ganancias=ClaseHistorial::historial_por_ci($ci);
-      $cantidad_sueldo= $ganancias->cantidad_sueldo;
-      $liquido=$ganancias->liquido;
-      $monto_aporte= $ganancias->monto_aporte;
-      
-
+			      $dia = date("d", strtotime($fecha));
+			      $mes = date("m", strtotime($fecha));
+			      $ano = date("Y", strtotime($fecha));
+			      $meses = array("","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiempre","Octubre","Noviembre","Diciembre");
+$mese=(string)(int)$mes;
+$cuota=1;    
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-$pdf->SetMargins(30,10,25,50);
+$pdf->SetMargins(20,10,25,50);
 
 // ---------------------------------------------------------
 // set margins
@@ -111,105 +79,126 @@ $image_file = K_PATH_IMAGES.'alpha.png';
 
 $pdf->SetFont('helvetica', '', 10);
 
-
 // set default header data
 $htmlcontent = '
-<style>
-table, tr, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+ <style>
+.negrita td{
+	font-weight: bold;
+	font-size: 10px;
 }
-table, tr, td {
-    padding: 5px;
+.titulo{
+	background-color: lightgray;
+}
+.letra{
+    font-size: 9.5px;
 }
 </style>
-            <h2 style="text-align: right;">&nbsp;FORMULARIO "A"</h2>
-            <h2 style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FONDO DE AHORRO Y CREDITO "SAN PABLO"</h2>
-            <h1 style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOLICITUD PRESTAMO<br><br></h1>
-  <table style="width:100%;">
-  <tr>
-    <td colspan="3">Solicitud Nº: '.$codigo.'</td>
-    <td >Fecha: '.$fechaform = date("d-m-Y", strtotime($fecha)).'</td>
-  </tr>
-  <tr>
-    <td>CI: '.$ci.'</td>
-  </tr>
-  <tr>
-    <td colspan="4">Nombres y Apellidos: &nbsp; '.$nombre.' '.$nombre2.' '.$apellido_p.' '.$apellido_m.'</td>
-  </tr>
-  <tr>
-    <td style="width:330px;">Dirección: &nbsp; '.$direccion.'</td>
-    <td style="width:150px;" >Nº de Celular: '.$celular.'</td>
-  </tr>
-  <tr>
-    <td style="width:330px;">Departamento UCB:&nbsp; '.$departamento.'</td>
-    <td style="width:150px;" >Interno: &nbsp; '.$interno.'</td>
-  </tr>
-  <tr>
-    <td colspan="4">Correo Electrónico: &nbsp; '.$correos.'</td>
-  </tr>
-  <tr>
-    <td colspan="4">Señores del Comité de Crédito:</td>
-  </tr>
-  <tr>
-    <td style="width:330px;">Presento a Uds. mi solicitud de préstamo por la cantidad de '.$cantidad.' Bs</td>
-  </tr>
-  <tr>
-    <td colspan="4">Comprometiéndome a su total cancelación en un plazo de '.$meses.' meses.</td>
-  </tr>
-  <tr>
-    <td colspan="4">a '.$porcentaje.' , mas el interés del 1% sobre saldo.</td>
-  </tr>
-  <tr>
-    <td colspan="4">También me comprometo a seguir aportando la cantidad de Bs '.$monto_aporte.' mensual,</td>
-  </tr>
-  <tr>
-    <td colspan="4">este monto acepté voluntariamente a que se me descuente por planilla.</td>
-  </tr>
-  <tr>
-    <td colspan="4">Ofrezco como garantía personal:</td>
-  </tr>
-  <tr>
-    <td style="width:330px;">Nombre y Apellido: '.$nombre_ga.' '.$nombre2_ga.' '.$apellido_p_ga.' '.$apellido_m_ga.'</td>
-    <td style="width:100px;" >CI: '.$ci_ga.'</td>
-  </tr>
-  <tr>
-    <td colspan="4">En caso de incumplimiento de pago, yo garante asumo la totalidad de la deuda contraída.</td>
-  </tr>
-  <tr>
-    <td colspan="4"><strong>Nº de Cheque: '.$cheque.'</strong></td>
-  </tr>
-  
-  <tr>
-    <td colspan="2"><p style="text-align: center;"><strong>DATOS ECONÓMICOS DEL SOLICITANTE</strong></p></td>
-  </tr>
-  <tr>
-    <td colspan="2">Total Ganado: '.$cantidad_sueldo.'</td>
-  </tr>
-  <tr>
-    <td colspan="2">Liquido pagable: '.$liquido.'</td>
-  </tr>
-  <br><br><br><br><br>
-  <tr>
-    <td style="width:200px;"><div style="text-align: center;"><strong style="text-decoration: overline;">FIRMA DEL SOLICITANTE</strong><br>'.$nombre.' '.$nombre2.' '.$apellido_p.' '.$apellido_m.'<br>CI:'.$ci.'</div></td>
-    <td style="width:200px;"><div style="text-align: center;"><strong style="text-decoration: overline;">FIRMA DEL SOLICITANTE</strong><br>'.$nombre_ga.' '.$nombre2_ga.' '.$apellido_p_ga.' '.$apellido_m_ga.'<br>CI: '.$ci_ga.'</div></td>
-  </tr>
-  <br><br><br><br><br>
-  <tr>
-    <td style="width:200px; text-decoration: overline;"><p style="text-align: center;"><strong>PDTE. COMITÉ ADMINISTRATIVO</strong></p></td>
-    <td style="width:200px; text-decoration: overline;"><p style="text-align: center;"><strong>PDTE. COMITÉ DE CRÉDITO</strong></p></td>
-  </tr>
-  </table>
 
+<table >
+	<tr>
+	<td colspan="7"><strong>N°:</strong>'.$cod_form_pres.'</td></tr>
+	<tr>
+	<td colspan="7"><strong>Garante:</strong>'.$nombre_ga.' '.$nombre2_ga.' '.$apellido_p_ga.' '.$apellido_m_ga.' </td>
+	</tr>
+	<tr>
+	<td colspan="7"><strong>CI:</strong>'.$ci_ga.'</td>
+	</tr>
+	<tr class="titulo">
+	<td colspan="6" ><h2 align="center" >PRÉSTAMO NUEVO</h2></td>
+	</tr>
+	<tr>
+	<td colspan="6"><h4 align="center">SOCIO: '.$nombre.' '.$nombre2.' '.$apellido_p.' '.$apellido_m.'</h4></td>
+	</tr>
+	<tr>
+	<td colspan="6"><h4 align="center">CI:'.$ci.'</h4></td>
+	</tr>
+	<tr>
+	<td colspan="6"><p align="center">Préstamo realizado el '.$dia.' de '.$meses[$mese].' de '.$ano.' </p></td>
+	</tr>
+<br>
+<tr class="negrita titulo" >
+<td align="center">Monto<br>Capital Bs<br>'.$cantidad.'</td>
+<td></td>
+<td align="center">Tasa de<br>interés<br>'.$porcentaje.'  %</td>
+<td align="center">Periodo de la<br>cuota en<br>meses<br> 12</td>
+<td align="center">Tasa<br>periodica<br>1,00%</td>
+<td align="center">N° de<br>cuotas<br>'.$meses_pre.' </td>
 
-
+</tr>
+<br>
+<tr class="negrita">
+<td align="center">N° de<br>Cuotas</td>
+<td align="center">Mes</td>
+<td align="center">Capital al<br>inicio del<br>periodo</td>
+<td align="center">Amortizacion</td>
+<td align="center">Intereses de<br>periodo</td>
+<td align="center">Cuota</td>
+</tr>
+</table>
 '; 
+$amorti=0;
+$cant=$cantidad;
+$pago_to=$meses_pre;
+$total_inte=0;
+$total_cuotas=0;
+for ($i=0; $i < $meses_pre; $i++) { 
+$mes_pre=$meses[$mese];
+if($mese==12){$mes_pre=$mes_pre.' '.$ano++;$mese=0;}
+if($mese==1){$mes_pre=$mes_pre.' '.$ano;}
+$monto=round($cant-$amorti, 2);
+$inter=round($monto*0.01, 2);
+$amorti=round($cuota_pres-$inter, 2);
+if($i<5){
+$htmlcontent.='
+<table >
+<tr class="letra">
+<td align="center">'.$cuota.'</td>
+<td >'.$mes_pre.'</td>
+<td align="center">'.$monto.'</td>
+<td align="center">'.$amorti.'</td>
+<td align="center">'.$inter.'</td>
+<td align="center">'.$cuota_pres.'</td>
+<td ></td>
+</tr>
+</table>
+';}else{
+	$mul=$pago_to-$i;
+$htmlcontent.='
+<table >
+<tr class="letra">
+<td align="center">'.$cuota.'</td>
+<td >'.$mes_pre.'</td>
+<td align="center">'.$monto.'</td>
+<td align="center">'.$amorti.'</td>
+<td align="center">'.$inter.'</td>
+<td align="center">'.$cuota_pres.'</td>
+<td align="center">'.$cuota_pres*$mul.'</td>
+</tr>
+</table>
+';}
+$cant=$monto;
+$cuota++;
+$mese++;
+$total_inte=$total_inte+$inter;
+$total_cuotas=$total_cuotas+$cuota_pres;
+}
+$htmlcontent.='
+<table>
 
-$w = 30;
-$h = 30;
+<tr>
+<br>
+
+<td align="center"></td>
+<td ></td>
+<td align="center"><strong>Totales</strong></td>
+<td align="center">'.$cantidad.'</td>
+<td align="center">'.$total_inte.'</td>
+<td align="center">'.$total_cuotas.'</td>
+<td ></td>
+</tr>
+</table>
+';
 // Example of Image from data stream ('PHP rules')
-$ser='images/logo_form.jpg';
-$pdf->Image($ser, 20, 17, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, 0, false, false);
 //$image_mask = $pdf->Image("images/image_alpha.png", 50, 50, 100, '', '', '', '', false, 300, '', true, false);
 //$pdf->Image("images/image.png", 50, 50, 100, '', '', '', '', false, 300, '', false, $image_mask);
 
