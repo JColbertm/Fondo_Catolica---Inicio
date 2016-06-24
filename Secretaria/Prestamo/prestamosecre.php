@@ -27,6 +27,8 @@
 
       <script type="text/javascript">
       	$(document).ready(function(){ 
+      
+          
         $('#formRealizarPrestamo').hide(); 
             $('.tooltipped').tooltip({delay: 50});
     
@@ -326,8 +328,8 @@
           }
            
           }
-                function buscar_prestamos_cancelar(){
-                  o = "&opcion=" + encodeURIComponent('tabla_prestamos');
+    function buscar_prestamos_cancelar(){
+                  o = "&opcion=" + encodeURIComponent('tabla_prestamos_cancelacion');
           $.ajax({
                 url: 'prestamo_php/prestamo_socio.php',
                 type: 'POST',
@@ -352,7 +354,8 @@
                    +resp[i].fecha+'</td><td style="display:none">'
                    +resp[i].ci_ga+'</td><td style="display:none">'
                    +resp[i].nombre_ga+' '+resp[i].nombre2_ga+'</td><td style="display:none">'
-                   +resp[i].apellido_p_ga+' '+resp[i].apellido_m_ga+'</td></tr>';
+                   +resp[i].apellido_p_ga+' '+resp[i].apellido_m_ga+'</td><td style="display:none">'
+                   +resp[i].ahorro+'</td></tr>';
                   }
                   html+= '</tbody></table></div>';
                   $('#resultado2').html(html);
@@ -362,7 +365,73 @@
               })
          event.preventDefault();
                 }
+function mostrar_datos_cancelar(f){
 
+              idpres_can=$(f).find('td:eq(0)').text();
+              num_pres_can=$(f).find('td:eq(1)').text();
+              ci_can_can = $(f).find('td:eq(2)').text();
+              nombre_can = $(f).find('td:eq(3)').text();
+              apellido_can = $(f).find('td:eq(4)').text();
+              cuotas_pre_can = $(f).find('td:eq(6)').text();
+              porcentaje_can = $(f).find('td:eq(7)').text();
+              cantidad_can = $(f).find('td:eq(8)').text();
+              meses_can = $(f).find('td:eq(9)').text();
+              fecha_can = $(f).find('td:eq(10)').text();
+              ci_ga_can = $(f).find('td:eq(11)').text();
+              nom_ga_can = $(f).find('td:eq(12)').text();
+              ape_ga_can = $(f).find('td:eq(13)').text();
+              ahorro_can = $(f).find('td:eq(14)').text();
+
+               var fe = new Date(fecha_can);
+               var dia = fe.getDate()+1;
+               var mes = 11-fe.getMonth();
+               var ano = fe.getFullYear();
+  
+               var fe_actual=new Date();
+               var dia_ac = fe_actual.getDate();
+               var mes_ac = fe_actual.getMonth()+1;
+               var ano_ac = fe_actual.getFullYear();
+            
+               var resto_ano=ano_ac-ano;
+               if(resto_ano==0){
+                var mul_mes=0;
+               var meses_pagar=mes_ac-fe.getMonth();
+
+               console.log(meses_pagar);
+               }else{
+               var mul_mes=resto_ano*12;
+               var meses_pagar=mul_mes-mes_ac+1+mes;
+               console.log(meses_pagar);
+               
+             }
+             var amorti=0;
+               var cant=cantidad_can;
+               var to_inte=0;
+               var to_cuota=0;
+               for(var i=0;i<=meses_pagar;i++){
+              var monto=(cant-amorti).toFixed(2);
+              var inter=(monto*0.01).toFixed(2);
+              amorti=(cuotas_pre_can-inter).toFixed(2);
+              cant=monto;
+              to_inte=eval(to_inte+'+'+inter);
+              to_cuota=eval(to_cuota+'+'+cuotas_pre_can);
+              }
+              console.log(monto);
+              console.log((meses_can-meses_pagar)*cuotas_pre_can);
+              var ver_ahorro=ahorro_can*3;
+              console.log(ahorro_can);
+              console.log((ver_ahorro).toFixed(2));
+
+              $('#ci-sc').val(ci_can_can);
+              $('#nombres-sc').val(nombre_can);
+              $('#apellidos-sc').val(apellido_can);
+              $('#direccion-sc').val();
+              $('#celular-sc').val();
+              $('#depar-ucb-sc').val();
+              $('#pagar-sc').val(monto);
+             
+
+}
     function buscar_prestamos_seguimiento(){
            o = "&opcion=" + encodeURIComponent('tabla_prestamos');
           $.ajax({
@@ -440,8 +509,9 @@
               amorti=(cuotas_pre-inter).toFixed(2);
               if(i<5){
                 if(jj==11){mes=mes+" "+sumar_years;}
-                if(jj==0){mes=mes+" "+eval(sumar_years+'+'+1);
-                sumar_years=eval(sumar_years+'+'+1);}
+                if(curr_month==0){sumar_years=eval(sumar_years);curr_month++;}else
+                {if(jj==0){mes=mes+" "+eval(sumar_years+'+'+1);
+                sumar_years=eval(sumar_years+'+'+1);}}
               html+='<tr><td style="text-align: center;">'+cuotas+'</td><td>'+mes+'</td><td style="text-align: center;">'+monto+'</td><td style="text-align: center;">'+amorti+'</td><td style="text-align: center;">'+inter+'</td><td style="text-align: center;">'+cuotas_pre+'</td></tr>';
               }else{
                 if(jj==11){mes=mes+" "+sumar_years;}

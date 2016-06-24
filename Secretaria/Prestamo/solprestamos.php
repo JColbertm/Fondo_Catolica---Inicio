@@ -34,7 +34,7 @@
         </div>
         <div class="row">       
           <div class="col s3 m3 l3">
-                      <img class="responsive-img" src="/Fondo_Catolica/Imagenes/logo_form.png" width="100%" heigth="100%">
+                      <img class="responsive-img" src="/Fondo_Catolica/Imagenes/logo_form.png" width="70%" heigth="70%">
                     </div>
                     <div class="col s8 m8 center">
                     <br>

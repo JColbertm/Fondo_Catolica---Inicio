@@ -147,6 +147,7 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 			$c=0;
 			$prestamo=ClasePrestamo::encontrar_prestamos();
 			 foreach ($prestamo as $pre) {
+			 $ahorro=ClaseAhorro::encontrar_ahorro_id($pre->idUsuario);			
 			 $usuario=ClaseUsuario::encontrar_por_id($pre->idUsuario);
 			 $garante=ClaseUsuario::encontrar_por_id($pre->idGarante);
 			 	$resultados[$c]=array(
@@ -167,9 +168,71 @@ $opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 				 	'nombre_ga'=>$garante->nombre,
 				 	'nombre2_ga'=> $garante->nombre2,
 				 	'apellido_p_ga'=> $garante->apellido_p,
-				 	'apellido_m_ga'=>$garante->apellido_m
+				 	'apellido_m_ga'=>$garante->apellido_m,
+				 	'ahorro'=>$ahorro->cantidad_ahorro
 				 	);
 					$c++;
+			 }
+			echo json_encode($resultados);
+			flush();
+
+		break;
+		case "tabla_prestamos_cancelacion":
+			$resultados=array();
+			$c=0;
+			$separa = explode("/",date('Y/m/d'),3);
+			$mes_ac = (string)(int)$separa[1];
+			$ano_ac = (string)(int)$separa[0];
+			$prestamo=ClasePrestamo::encontrar_prestamos();
+			 foreach ($prestamo as $pre) {
+			 $ahorro=ClaseAhorro::encontrar_ahorro_id($pre->idUsuario);			
+			 $usuario=ClaseUsuario::encontrar_por_id($pre->idUsuario);
+			  $separar = explode("-",$pre->fecha,3);
+			$mes = (string)(int)$separar[1];
+			$ano = (string)(int)$separar[0];
+			$to_ano=intval($ano)-intval($ano_ac);
+			$to_mes1=12-$mes;
+			$to_mes2=12-$mes_ac;
+			$too=$to_mes1-$to_mes2;
+			 if($to_ano==0){
+			 	if($too>5){
+				 	$resultados[$c]=array(
+				 		'idPrestamo'=>$pre->idPrestamo,
+				 		'cod_form_pres'=>$pre->cod_form_pres,
+				 		'estado'=>$pre->estado,
+				 		'cuota_pres'=>$pre->cuota_pres,
+				 		'cantidad'=>$pre->cantidad,
+				 		'meses'=>$pre->meses,
+				 		'fecha'=>$pre->fecha,
+				 		'ci'=> $usuario->ci,
+					 	'nombre'=>$usuario->nombre,
+					 	'nombre2'=> $usuario->nombre2,
+					 	'apellido_p'=> $usuario->apellido_p,
+					 	'apellido_m'=>$usuario->apellido_m,
+					 	'ahorro'=>$ahorro->cantidad_ahorro
+					 	);
+						$c++;
+					}
+			 	
+					
+				}else{
+					$resultados[$c]=array(
+				 		'idPrestamo'=>$pre->idPrestamo,
+				 		'cod_form_pres'=>$pre->cod_form_pres,
+				 		'estado'=>$pre->estado,
+				 		'cuota_pres'=>$pre->cuota_pres,
+				 		'cantidad'=>$pre->cantidad,
+				 		'meses'=>$pre->meses,
+				 		'fecha'=>$pre->fecha,
+				 		'ci'=> $usuario->ci,
+					 	'nombre'=>$usuario->nombre,
+					 	'nombre2'=> $usuario->nombre2,
+					 	'apellido_p'=> $usuario->apellido_p,
+					 	'apellido_m'=>$usuario->apellido_m,
+					 	'ahorro'=>$ahorro->cantidad_ahorro
+					 	);
+						$c++;
+				}
 			 }
 			echo json_encode($resultados);
 			flush();

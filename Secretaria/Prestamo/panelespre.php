@@ -11,7 +11,7 @@
             <ul class="tabs">
               <li class="tab col s4"><a class="active" href="#test1">Solicitudes Prestamo</a></li>
               <li class="tab col s4"><a href="#test2">Seguimiento Prestamos</a></li>
-              <li class="tab col s4"><a href="#test3">Registro Cancelacion Prestamo</a></li>
+              <li class="tab col s4"><a href="#test3">Cancelacion Prestamo</a></li>
               <li class="tab col s4"><a href="#test4">Realizar Prestamo</a></li>
             </ul>
           </div>
